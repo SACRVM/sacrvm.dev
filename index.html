@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SACRVM — Marcus Wilhelm</title>
+<meta name="description" content="Marcus Wilhelm builds audio tools for DJs. Open source, measured, from DJs to DJs.">
+<meta property="og:title" content="SACRVM — Marcus Wilhelm">
+<meta property="og:description" content="Audio tools for DJs. Open source, measured, from DJs to DJs.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sacrvm.dev/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ============================================================================
+   SACRVM - the personal hub.
+
+   Same palette as the JUST product pages (docs/index.html in just-play), on
+   purpose: this is the same hand. But deliberately QUIETER - a product page
+   sells, a business card states. So: one accent instead of three, type does the
+   work, and the neon stays for the products it belongs to.
+
+   No build step, no framework, no images. One file. It is a business card.
+   ========================================================================== */
+:root{
+  --void:      #060310;
+  --deep:      #0c0620;
+  --surface:   #130a2a;
+  --cyan:      #00e8ff;
+  --cyan-dim:  #6ce0ff;
+  --pink:      #ff2ab8;
+  --purple:    #7040ff;
+  --white:     #f0eaff;
+  --muted:     rgba(240,234,255,.62);
+  --dim:       rgba(240,234,255,.38);
+  --glass:     rgba(255,255,255,.04);
+  --glass-hi:  rgba(255,255,255,.07);
+  --border:    rgba(255,255,255,.08);
+  --border-hi: rgba(255,255,255,.16);
+  --maxw:      880px;
+  --font-d:    'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-m:    'Fira Code', 'Consolas', ui-monospace, monospace;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+  background:var(--void);
+  color:var(--white);
+  font-family:var(--font-d);
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  /* Two very soft pools of light rather than a gradient wash - the page should
+     read as dark with something behind it, not as a poster. */
+  background-image:
+    radial-gradient(900px 500px at 12% -10%, rgba(112,64,255,.20), transparent 60%),
+    radial-gradient(700px 420px at 92% 8%,  rgba(0,232,255,.10),  transparent 60%);
+  background-repeat:no-repeat;
+}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+
+/* -- Header ---------------------------------------------------------------- */
+
+header{padding:88px 0 0}
+
+.mark{display:flex;align-items:center;gap:16px;margin-bottom:34px}
+
+/* The keystone. os sacrum is the wedge at the base of the spine that carries
+   the load and passes it on - a shape, not a picture, so it is a path we ship
+   and it follows the text colour. */
+.mark svg{width:34px;height:34px;flex:none}
+
+.wordmark{
+  font-size:26px;letter-spacing:.34em;font-weight:600;
+  background:linear-gradient(92deg,var(--cyan) 0%,var(--purple) 58%,var(--pink) 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+
+h1{
+  font-size:clamp(34px,6vw,52px);
+  line-height:1.12;font-weight:700;letter-spacing:-.02em;
+  margin-bottom:22px;
+}
+
+.lede{font-size:clamp(17px,2.4vw,20px);color:var(--muted);max-width:52ch}
+
+.lede strong{color:var(--white);font-weight:500}
+
+/* -- Sections -------------------------------------------------------------- */
+
+section{padding:72px 0}
+
+h2{
+  font-size:12px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--dim);font-weight:600;margin-bottom:28px;
+}
+
+/* -- Projects -------------------------------------------------------------- */
+
+.projects{display:grid;gap:14px}
+
+.project{
+  display:block;text-decoration:none;color:inherit;
+  border:1px solid var(--border);border-radius:14px;
+  background:var(--glass);
+  padding:22px 24px;
+  transition:border-color .18s ease, background .18s ease, transform .18s ease;
+}
+.project:hover{border-color:var(--border-hi);background:var(--glass-hi);transform:translateY(-2px)}
+
+.project-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:8px}
+
+.project-name{font-size:18px;font-weight:600;letter-spacing:.01em}
+
+.tag{
+  font-family:var(--font-m);font-size:11px;letter-spacing:.08em;
+  padding:2px 9px;border-radius:999px;border:1px solid var(--border-hi);
+  color:var(--dim);
+}
+.tag.live{color:var(--cyan-dim);border-color:rgba(0,232,255,.3)}
+
+.project p{color:var(--muted);font-size:15px;max-width:60ch}
+
+.apps{
+  margin-top:14px;display:flex;flex-wrap:wrap;gap:8px;
+  font-family:var(--font-m);font-size:12px;color:var(--dim);
+}
+.apps span{border:1px solid var(--border);border-radius:8px;padding:3px 10px}
+
+/* -- How I work ------------------------------------------------------------ */
+
+.principles{display:grid;gap:26px}
+
+.principle h3{
+  font-size:16px;font-weight:600;margin-bottom:6px;
+  color:var(--white);
+}
+.principle p{color:var(--muted);font-size:15px;max-width:64ch}
+
+/* -- Links ----------------------------------------------------------------- */
+
+.links{display:flex;flex-wrap:wrap;gap:10px}
+
+.link{
+  display:inline-flex;align-items:center;gap:9px;
+  text-decoration:none;color:var(--white);font-size:15px;font-weight:500;
+  border:1px solid var(--border-hi);border-radius:11px;
+  padding:11px 18px;background:var(--glass);
+  transition:border-color .18s ease,background .18s ease;
+}
+.link:hover{border-color:var(--cyan);background:var(--glass-hi)}
+.link svg{width:16px;height:16px;flex:none}
+
+/* -- Footer ---------------------------------------------------------------- */
+
+footer{
+  border-top:1px solid var(--border);
+  padding:34px 0 64px;margin-top:40px;
+  color:var(--dim);font-size:14px;
+}
+footer a{color:var(--muted);text-decoration:none;border-bottom:1px solid var(--border-hi)}
+footer a:hover{color:var(--white)}
+
+.foot-row{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap}
+
+@media (max-width:560px){
+  header{padding-top:56px}
+  section{padding:52px 0}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header>
+    <div class="mark">
+      <!-- The keystone: a wedge that carries what is above it and passes the
+           load on. Vector, so it takes the text colour and scales to any DPI. -->
+      <svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
+        <defs>
+          <linearGradient id="g" x1="0" y1="0" x2="32" y2="32">
+            <stop offset="0%"   stop-color="#00e8ff"/>
+            <stop offset="58%"  stop-color="#7040ff"/>
+            <stop offset="100%" stop-color="#ff2ab8"/>
+          </linearGradient>
+        </defs>
+        <path d="M7 4h18l-3.2 17.5a6 6 0 0 1-5.9 4.9h-.8a6 6 0 0 1-5.9-4.9Z"
+              stroke="url(#g)" stroke-width="2" stroke-linejoin="round"/>
+        <path d="M11.5 10.5h9M12.4 15.5h7.2" stroke="url(#g)" stroke-width="1.6"
+              stroke-linecap="round" opacity=".55"/>
+      </svg>
+      <span class="wordmark">SACRVM</span>
+    </div>
+
+    <h1>Marcus Wilhelm</h1>
+
+    <p class="lede">
+      I build <strong>audio tools for DJs</strong> — and I DJ, which is why they
+      work the way they do. Everything here is open source, and everything it
+      claims has been measured.
+    </p>
+  </header>
+
+  <section>
+    <h2>What I build</h2>
+
+    <div class="projects">
+
+      <a class="project" href="https://github.com/SACRVM/just-play">
+        <div class="project-head">
+          <span class="project-name">J.U.S.T. — Just Useful Sound Tools</span>
+          <span class="tag live">shipping</span>
+        </div>
+        <p>
+          A suite of DJ tools on one shared engine: analysis, tagging, playback
+          and broadcast, installed side by side on a single runtime. Key, BPM,
+          energy and loudness detection built for harmonic mixing — not a
+          plug-in for someone else's library, but the library itself.
+        </p>
+        <div class="apps">
+          <span>JUST PLAY</span><span>JUST TAG</span><span>JUST STREAM</span><span>CLI</span>
+        </div>
+      </a>
+
+      <!-- Add the rest as they become public. A card per project, "shipping" on
+           the tag when it is, nothing on the tag when it is not. Do not list a
+           repository here that a visitor cannot open. -->
+
+    </div>
+  </section>
+
+  <section>
+    <h2>How I work</h2>
+
+    <div class="principles">
+
+      <div class="principle">
+        <h3>Measured, not guessed</h3>
+        <p>
+          Numbers in my code come with the measurement that produced them, in a
+          comment next to the line. When something surprising turns out to be
+          true, the surprise is written down; when a claim of mine turns out to
+          be wrong, the retraction stays in the file.
+        </p>
+      </div>
+
+      <div class="principle">
+        <h3>Protection in front of the action</h3>
+        <p>
+          There is no undo, by design. Anything that moves, renames or deletes
+          your files says exactly what it is about to do, names every file it
+          will touch, and waits. A move across drives copies, verifies byte for
+          byte, and only then removes the original.
+        </p>
+      </div>
+
+      <div class="principle">
+        <h3>One engine, four faces</h3>
+        <p>
+          The apps share a core rather than resembling each other. When two of
+          them disagree about something, that is a bug at the root — not a
+          difference to be documented per app.
+        </p>
+      </div>
+
+      <div class="principle">
+        <h3>From DJs to DJs</h3>
+        <p>
+          Every feature is measured against what actually happens in a booth. A
+          detector that scores well on a benchmark and fails on a track you are
+          about to mix has not earned anything.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <h2>Elsewhere</h2>
+    <div class="links">
+      <a class="link" href="https://github.com/SACRVM">
+        <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+          <path d="M8 0a8 8 0 0 0-2.53 15.59c.4.07.55-.17.55-.38l-.01-1.34c-2.23.48-2.7-1.07-2.7-1.07-.36-.93-.89-1.18-.89-1.18-.73-.5.05-.49.05-.49.8.06 1.23.83 1.23.83.71 1.23 1.87.87 2.33.67.07-.52.28-.87.5-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.03 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48l-.01 2.2c0 .21.15.46.55.38A8 8 0 0 0 8 0Z"/>
+        </svg>
+        GitHub
+      </a>
+      <!-- TODO: contact address, and anything else worth linking. -->
+    </div>
+  </section>
+
+  <footer>
+    <div class="foot-row">
+      <span>&copy; 2026 Marcus Wilhelm</span>
+      <span>Software published as <a href="https://github.com/SACRVM/just-play">Just Useful Sound Tools</a>, MIT-licensed.</span>
+    </div>
+  </footer>
+
+</div>
+
+</body>
+</html>
