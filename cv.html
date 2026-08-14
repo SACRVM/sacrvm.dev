@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CV — Marcus Wilhelm</title>
+<meta name="description" content="Marcus Wilhelm — Technical Lead Developer. Thirty years of software: C#, C++, JavaScript, Azure, and the architecture between them.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23A1C9C8'/%3E%3Crect x='5.5' y='5.5' width='53' height='53' fill='none' stroke='%23121211' stroke-width='3'/%3E%3Ctext x='32' y='44' font-family='monospace' font-size='34' font-weight='700' text-anchor='middle' fill='%23121211'%3ES%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/site.css">
+<script src="assets/site.js" defer></script>
+<style>
+/* The résumé. Same sheet-of-paper voice as the front page: a mono year
+   column, open rows, thin chips for the toolbox. */
+
+.head{
+  display:grid;grid-template-columns:1fr auto;gap:24px 48px;align-items:end;
+  padding:20px 0 52px;
+}
+.head h1{font-size:26px;font-weight:600;letter-spacing:-.01em}
+.head p{margin-top:8px;color:var(--ink-70);font-size:15px;max-width:60ch}
+
+/* The portrait: the photo, redrawn using only the six letters of the name.
+   Recognizable from arm's length, pure type up close. */
+.ascii{
+  font-family:var(--mono);font-size:4px;line-height:1;letter-spacing:0;
+  color:var(--ink);user-select:none;
+  margin-bottom:-52px;   /* cancels the header padding: the figure stands on the section line */
+}
+
+@media (max-width:720px){
+  .head{grid-template-columns:1fr;align-items:start}
+  .ascii{margin-bottom:0}
+}
+
+.entry{display:grid;grid-template-columns:12ch 1fr;gap:6px 32px}
+.entry+.entry{margin-top:30px}
+
+.years{
+  font-family:var(--mono);font-size:11px;letter-spacing:.08em;
+  color:var(--ink-45);padding-top:3px;
+}
+
+.entry h3{font-size:16px;font-weight:600}
+.entry .org{color:var(--ink-70);font-size:14.5px}
+.entry p{color:var(--ink-70);font-size:14.5px;max-width:58ch;margin-top:6px}
+
+.toolbox{display:flex;flex-wrap:wrap;gap:8px;max-width:70ch}
+
+@media (max-width:720px){
+  .entry{grid-template-columns:1fr;gap:2px}
+  .years{padding-top:0}
+  .entry h3{margin-top:2px}
+}
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <site-nav page="cv"><a href="./">SACRVM.DEV</a></site-nav>
+
+  <header class="head">
+    <div>
+    <h1>Marcus Wilhelm — CV</h1>
+    <p>
+      Technical Lead Developer. Thirty years of software — architecture,
+      frontend, backend — most of it for customers, all of it hands-on.
+    </p>
+    </div>
+    <pre class="ascii" role="img" aria-label="Marcus Wilhelm — portrait drawn from the letters S A C R V M">
+                                                           VVV
+                                                       VCVMACASSCVV
+                                                    S▒M▒▓█▒S▒▒▓█▓▒▒RC
+                                                   R█████▒M██████████▓S
+                                                 R▓██████▓▓████████████▒
+                                               S▒███████▓██▓▓███████████▒V
+                                             V▒██████████▓████████████████M
+                                            C█████████████▓▓████████████████S
+                                           C███████████▓M▒▒MMM▒▒▒▓███████████R
+                                          S██████████MASCSSCSARRRRR▒██████████▒
+                                         S████████▒SV      AARRRRRRRRM▓█████ ██▓ V    C
+                                        S███████▓S        MMMRRRRRRRRRRM▓██████ █A C
+                                       S█▓█████▒         CSMRRRRRR SRR R MR███ ███CC
+                                      V██▓████M         VACRRRRRRRRRRRRRR R █M███▒   V          C
+                                      ▓█▓████▒          VC SRRRRRRRRRRRRRRRR▒███   RA       S   S
+                                     R██▓███▓            C SMRRRRRRRRRRRRRRRA▒██▒  █ C       S    C
+                                    S███▓███C       VSSA ARMRRRRRRRRRRRRSRRRRA ███████V     S
+                                   V▓▓█▓▓██M        CSSMMRMRMARMMRRRRRRRRRRRRRM███████▓
+                                   M▒██▓███C           SAMMRMVSSRMRRRRRRRRRRRRR████████R
+                                  S▒▓▓█████V             SMM▒   SRRRRRRRRRRRRRR▒███████ V
+                                  R▒▓▓█████V               R█   CCCRRMMRRMRRRRAM ███▒███
+                                 V▒▒▓▓████▓V               C█VVRRRR▒▒▓▓▒▒▓▒▒MM▒S ▒██▒█ ██V
+                                 A▒▒▓▓████▓C CR▒▒▒▓▒MM▒▒▒S VMRR▒▒▒▓▒▒M▒MMM▒▓▒RR██▓▓ ███ █▒
+                                 M▒▓▒▓███▒RSMMASRMRRRRRRM█▓▓▓██▓▒███▓▒AMRRAR█SA█▓ M█ ██ █ R                C
+                                C▒▒▓▒▒C▒▓▓M▒A   VRM▒▒▒▒MSM▒RRR█M▓███▓████▓█▒▒ M█▓M██ █ ██▒█S
+                                AM▓▓MM▒▓M▓█M  R▒▓██▓▓█▓▒SRMSMA▓▒▒███M▓██▓▒██▓SM▒███ ▒RM█M█RA
+                               VMM█▓RM█▓▒██AC▓▒V▒█▓▒▓█▓▒ARCA▒RM█▒▓███▓▓▒MRAR▓▒M▓▓█R██████  ▓       V
+                               A▒▒█▓M▒██M█▓MMV  VAMM▒▓▓SSC S▒RA▒█▒▓██▓▒▒▒MMRRRRR █████ █  ██
+                               ▒M██▓▒▓██▒▒▓MV   VRMM▒MV    AMRRR▒RMM▒▓▒▒MR RRR RR██████RM█M      C
+                              AM▒█▓▒▓▓███▒▒     VRRMA     S▒RMRRRRRRRRRMRRRRRRRRR▓████ ███ █ A
+                             VMM█▓█▓▓█████A     SRCV      C▒MARMRMRMRRRRRRRR RRRR█ R██████ M A       V    V
+                             AR▓█▓██▓█████A       V VC      RACRRARM▒MRRRRRRMARRR▓████████ ██C
+                            VMM▓█▓████████S      CR RA      RMRRRCCRM▓▒RRRRRSSRRS  ██  ██▒██▒R  V
+                            R▒M███████████S       SS▒  V▓A  ▒M▒███MMRM█▒RRRMSSMRA███ ██ ███▒  V         V
+                            MM▒█▓█████████A       M█C   CVSCCR▒▓▓▓RRRR▒█MRRR MRCM█ ▓██ R █R ██
+                            ▒R▓▓▓█████████R      S█C   VS▒▓M▓▒███▓▒MRRR▓█MRRRCRR▓█R▒██  █  █ ██M  C        C
+                           V▒M▓▓█████▓████M      ▒ASV  ▒R▒RM██▒▓█M▓▒R▒M▒▓█ RSSRR▓▓R▒█████ █  █R         C    C  C
+                            M▒▓▓█████▓████▓      AS▒CVVMMSCM██▓A▒RR▓AMM▒▒▓▒RRRMA▓█ ▓█████MM███   MV
+                           C▒▒▓▓█████▓████▓     VSRAVCVMMSCSARRM▓▓▓▓▓▒▒▒█▓MRRRRV▓█████ █  █M R ██▓AS
+                            MM▒▓█████▓█████     A▓RM▒█▓▒M▒▓▒MM▒▓▓▓▒▓▓████▒MRR RR██ ██ ███ █ █R █    V         C
+                            R▒▓██████▓███▓█C    R▓▒█▒      SMRRRRRRRAR▒██▒▒RRMRM █ ██ ██ ████  M M█S
+                            A▓▓██████▓█████M   VSM▒▒V     VAMMRMRMMRRRR▒▓▓MRMMA▓██▒███  █ ▒M██ █               C    S V
+                            A▒█▓████████████    VR▒▒S     C▒RMRRRRRRRMM▓█▒MRMRM████▒███ M████ █████ █▒
+                            SR█▓████▓███████M    MAM▒C     AMMMMMRRRR▒█▓██▓RRM███ M███████ ▒ █    ██VR      V
+                            AA▒█████▓████████A  R▒AM▒▒ACV SRMRRMRMRM███▒███MM  ██  ▒█ █▒█V███ MR█ V R V   V      S
+                            SMR▒██████████████C R▓▓▒▓MM▒RS▒MA▒MA▒R▓████M██▒▒▒ █    ▒█▒█ █R  █RM█           V   V
+                            AMRR▒██▓███████████VC█▒▒RRR▒AMVMM▒MA▓S▓███▓▒▓ █▓█▒▒█M█ ██ █ █R ██ ███   R VV      S  S
+                            SMRMM▓█████████████MAMRMAMRSAMCM▒M▒ARM▓█ ▓▓▓██████M  █▒██▒        █▒ M█  R       C
+                            V▒MMM▒█████████████▒MMR▒MAM▒R▒SR▒▒MM▒▓████████  ███████R██  ██  M  █▒   S█C  V SS       V
+                            C▓RMM▒█████████████▓M▒▓▓█AM▒M▓▓M▓▓▒M▒▓████████████ ██▒████████████ █M █▒█      V
+                            S▒RMR▒▒█████████████MM███M▓█▓▓██████▓█████████ █████ █▒M██  █ ███RR  █▒ R█V
+                            R▒RMMM▒█████████████▒AM▓█▓▓███████████████████▓███████▒R██████ █▒█ █ ▒  R VC
+                            ▒MMMMM▒█████████████▓A  A▓▒████████████████▓▒▓▓▓██████████  ████VR███R█ RM█S
+                           R▒RRMMM▒█████████████▓M     VVCSAA▒MM▒▒▓▓▒▓▒MM▒▒██████M█▒██ █  ████  █ ███▒ █          C   VS
+                          C▒MRR▒▒M▓▓████████████▒▒V         VARRMRMMM▒MRMM▒████████▒███ ███ ████ M█V█M ▒█MRS
+                    VS  VSM▒MM▓▓▓M▒▓█▓██████████▓MC           RRRMMMMRRMRM▒ M████  ███ █▒▒R█ ██     █       R SS   C
+                    R▓RRM▒▓▓█████R▓██▒███████████SS           MRRRRRRRVR MA ▓█ ████▒  █MRMVMM█ ▒   ▒R▒█ S      C SS       V
+                     A▓▓█████████M███▒██████████▓A V          ▒▒RRRRRRRRRMM▒█ █M MM███MM █M ██  ██     RM█  VC     S S  C SC      C
+                      R▓█▓▓██████M▓██▓██████████▓MC           VAAMRRRRRRV  M▓███ █▒█ ██    S   █ R ▒      R SC  SV       S  V
+                      R▓▓████████▒▓██▓███████████▓▒S           VRMRRRRRRRMCR▒M▓█M R█  ██  R █ RS██      RV  C   S    V V  C   VCS   C
+                    SM▒MA▓███▓▓███▒██▓██████████████▒          CSCCSMRRRMMMRRA▒█ M █M██M█ ██  R ▒S██ CR  V  █ S█    █       SV
+                  C▒▓▒██▒R▒▓▓▓████▓▓█▓███████████████▒C            CMRRRRRR M▒██████ █M███ █RM█ ▒  █   █        V V    CC   S    C
+                 A█▒▓▓██████████████▓██████████████████▓MACV       VRRMM▒▓▓█ ███ ██████CR   ██▒███ ██▒█ ▒█     R S     █        V
+                R█▒████████████████████████████████████████████▓▓▓████████████████M███M █ ███ ████     █ VR V ▒CVM S  █     S
+               A█M█████▓███████████████████████████████████████████████████████████R███▒ █RM██ ██ ███   █R  ▒ ▒██S █ ██
+              V█M█████▓█████████████████████████████████████████████████████████ ██M███▒ S██ MM█ ▒M██  █RVR    █         SCC
+              ▒▓███████████████████████████████████████████████████████████ R█M ███ █ ██MR█R  M █M█  S   ██   █V V     C    C         V
+             V██████████████████████████████████████████████████████████████████M █  ██ ██R  █M VC ▒█ █▒ ▒CR M █ M  S       C      V
+             M█████████████████▓███████████████████████████████████████████M████ ███MR██ ▒  ██  ▒    █CR  ▒   █ █C █S  V    C C C
+            V█████████████████▓███████▓████████████████████████████M███████ ██████████▒ R▒█M█ █  █  RM▒█     CVM █ VV S    V         V
+            R▓██▓███████████▓█████████████████████████████████████████████R█████M█M█▒ M█M▒  M  █ █VV   R  S   VS M                   SC
+            ▓▒██▓███████████████████████████████████████████████████ ██▒████▒ ███R████R█ ▒██ ██R█ ██ █     R C                     V  V
+           R▓▓██▓███████████████████████████████████████████████████████████████R  █R█V██ █ ███▒    █▒▒S █   ██ VV           C   SS
+           ▓▒█████████████████████████████████████████████████████████████████████▒██M▒█ █████████ ██MR  █ R█ R    █▒▒C█     C  S
+          S▓▒█████████████████▓█████████████████████████████████████████████████████ R ████RM██▒█ █▒█ M██ M  R   V
+          ▒▒▒████▓███████████▓█████████████████████▓▓████████████████████████████████████M█ MR█   M█M█ M ██ M▒█ ██R  S ▒   C</pre>
+  </header>
+
+  <section>
+    <span class="tab">EXPERIENCE</span>
+
+    <div class="entry">
+      <span class="years">2024 — TODAY</span>
+      <div>
+        <h3>Technical Lead Developer</h3>
+        <div class="org">CANCOM GmbH, Munich — IT services</div>
+      </div>
+    </div>
+
+    <div class="entry">
+      <span class="years">2017 — 2024</span>
+      <div>
+        <h3>Senior Software Developer</h3>
+        <div class="org">CANCOM GmbH, Munich — IT services</div>
+      </div>
+    </div>
+
+    <div class="entry">
+      <span class="years">2011 — 2017</span>
+      <div>
+        <h3>Software Developer &amp; Architect</h3>
+        <div class="org">Convecto GmbH, Offenbach — internet and design agency</div>
+      </div>
+    </div>
+
+    <div class="entry">
+      <span class="years">2010 — 2011</span>
+      <div>
+        <h3>IT Services</h3>
+        <div class="org">Self-employed</div>
+      </div>
+    </div>
+
+    <div class="entry">
+      <span class="years">2002 — 2010</span>
+      <div>
+        <h3>Software Developer</h3>
+        <div class="org">ixact GmbH, Obertshausen — software for the printing industry (offset + digital)</div>
+      </div>
+    </div>
+
+    <div class="entry">
+      <span class="years">1997 — 2001</span>
+      <div>
+        <h3>Freelancer</h3>
+        <div class="org">Among others for Merck KGaA, Darmstadt — in-house IT — and DePfa IT Services</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <span class="tab">SELECTED PROJECTS</span>
+
+    <div class="entry">
+      <span class="years">CANCOM</span>
+      <div>
+        <h3>Azure management UI</h3>
+        <p>
+          Customizable management UI for Azure and Intune — users, groups,
+          rights, desktop and application distribution — in server-side
+          Blazor. Authored the proof of concept the whole project was
+          built on.
+        </p>
+      </div>
+    </div>
+
+    <div class="entry">
+      <span class="years">CANCOM</span>
+      <div>
+        <h3>Hybrid cloud digital workspace</h3>
+        <p>
+          Digital workplace architecture on Azure and Citrix, giving secure
+          access to applications and data across environments. Built the user
+          frontend in plain web technology — HTML, JavaScript, web components,
+          shadow DOM — plus intelligent logging that cut support resolution
+          times, and visual reporting on top of live metrics.
+        </p>
+      </div>
+    </div>
+
+    <div class="entry">
+      <span class="years">CANCOM</span>
+      <div>
+        <h3>Intranet business processes</h3>
+        <p>
+          Business processes on Microsoft SharePoint: a billing system for a
+          cloud provider, and a B2B personnel-management portal from request
+          to deployment planning.
+        </p>
+      </div>
+    </div>
+
+    <div class="entry">
+      <span class="years">CONVECTO</span>
+      <div>
+        <h3>Customer websites on a tailored CMS</h3>
+        <p>
+          Led the implementation of numerous customer sites on a custom
+          .NET CMS — specialized content modules, caching for performance,
+          including city-management modules for municipal services and news.
+        </p>
+      </div>
+    </div>
+
+    <div class="entry">
+      <span class="years">CONVECTO</span>
+      <div>
+        <h3>Franchise website construction kit</h3>
+        <p>
+          A bespoke homepage kit for franchise contractors: showcase your
+          services through a proprietary interface, stay discoverable through
+          a centralized search.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <span class="tab">TOOLBOX</span>
+    <div class="toolbox">
+      <span class="chip">C# / .NET</span>
+      <span class="chip">C++</span>
+      <span class="chip">JAVASCRIPT</span>
+      <span class="chip">WEB COMPONENTS</span>
+      <span class="chip">BLAZOR</span>
+      <span class="chip">AZURE</span>
+      <span class="chip">SQL / T-SQL</span>
+      <span class="chip">SHAREPOINT</span>
+      <span class="chip">NODE.JS</span>
+      <span class="chip">SCRUM</span>
+      <span class="chip">AI INTEGRATION</span>
+      <span class="chip">SOFTWARE ARCHITECTURE</span>
+      <span class="chip">CLIENT WORKSHOPS</span>
+      <span class="chip">ENGLISH</span>
+    </div>
+  </section>
+
+  <section>
+    <span class="tab">EDUCATION</span>
+
+    <div class="entry">
+      <span class="years">1996 — 2002</span>
+      <div>
+        <h3>Computer science studies</h3>
+        <div class="org">FH Darmstadt</div>
+      </div>
+    </div>
+
+    <div class="entry">
+      <span class="years">1992 — 1995</span>
+      <div>
+        <h3>High school diploma</h3>
+        <div class="org">Bertolt-Brecht-Schule, Darmstadt</div>
+      </div>
+    </div>
+  </section>
+
+  <site-footer page="cv"><a href="./">Home</a></site-footer>
+
+</div>
+
+</body>
+</html>

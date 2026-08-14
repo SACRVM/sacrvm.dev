@@ -4,246 +4,191 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SACRVM — Marcus Wilhelm</title>
-<meta name="description" content="Marcus Wilhelm builds audio tools for DJs. Open source, measured, from DJs to DJs.">
+<meta name="description" content="Marcus Wilhelm — full-stack developer for thirty years. Tools, games, bots; measured, not guessed.">
 <meta property="og:title" content="SACRVM — Marcus Wilhelm">
-<meta property="og:description" content="Audio tools for DJs. Open source, measured, from DJs to DJs.">
+<meta property="og:description" content="Software by Marcus Wilhelm. Measured, not guessed.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://sacrvm.dev/">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23A1C9C8'/%3E%3Crect x='5.5' y='5.5' width='53' height='53' fill='none' stroke='%23121211' stroke-width='3'/%3E%3Ctext x='32' y='44' font-family='monospace' font-size='34' font-weight='700' text-anchor='middle' fill='%23121211'%3ES%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/site.css">
+<script src="assets/site.js" defer></script>
 <style>
 /* ============================================================================
-   SACRVM - the personal hub.
-
-   Same palette as the JUST product pages (docs/index.html in just-play), on
-   purpose: this is the same hand. But deliberately QUIETER - a product page
-   sells, a business card states. So: one accent instead of three, type does the
-   work, and the neon stays for the products it belongs to.
-
-   No build step, no framework, no images. One file. It is a business card.
+   The front page. Shared base lives in assets/site.css; this block is only
+   what no other page needs: the wordmark and its anagram machinery, the
+   intro, the project cards, the principles.
    ========================================================================== */
-:root{
-  --void:      #060310;
-  --deep:      #0c0620;
-  --surface:   #130a2a;
-  --cyan:      #00e8ff;
-  --cyan-dim:  #6ce0ff;
-  --pink:      #ff2ab8;
-  --purple:    #7040ff;
-  --white:     #f0eaff;
-  --muted:     rgba(240,234,255,.62);
-  --dim:       rgba(240,234,255,.38);
-  --glass:     rgba(255,255,255,.04);
-  --glass-hi:  rgba(255,255,255,.07);
-  --border:    rgba(255,255,255,.08);
-  --border-hi: rgba(255,255,255,.16);
-  --maxw:      880px;
-  --font-d:    'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  --font-m:    'Fira Code', 'Consolas', ui-monospace, monospace;
+
+/* -- Wordmark --------------------------------------------------------------- */
+
+.hero{padding:48px 0 0}
+
+.wm{
+  display:flex;gap:.42em;
+  font-family:var(--mono);font-weight:600;
+  font-size:clamp(34px,8.5vw,88px);
+  line-height:1;
+  user-select:none;
+}
+.wm span{
+  display:inline-block;width:1ch;text-align:center;
+  transition:opacity .11s ease;
+}
+.wm span.dip{opacity:.15}
+
+/* The dictionary line: what the name means, and what it hides. */
+.define{
+  margin-top:22px;
+  font-family:var(--mono);font-size:11px;letter-spacing:.04em;
+  color:var(--ink-70);
 }
 
-*{box-sizing:border-box;margin:0;padding:0}
+/* -- Intro ------------------------------------------------------------------- */
 
-body{
-  background:var(--void);
-  color:var(--white);
-  font-family:var(--font-d);
-  line-height:1.65;
-  -webkit-font-smoothing:antialiased;
-  /* Two very soft pools of light rather than a gradient wash - the page should
-     read as dark with something behind it, not as a poster. */
-  background-image:
-    radial-gradient(900px 500px at 12% -10%, rgba(112,64,255,.20), transparent 60%),
-    radial-gradient(700px 420px at 92% 8%,  rgba(0,232,255,.10),  transparent 60%);
-  background-repeat:no-repeat;
+.intro{
+  display:grid;grid-template-columns:1.5fr 1fr;gap:24px 56px;
+  padding:44px 0 64px;
 }
 
-.wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+.lede{font-size:17px;color:var(--ink-70);max-width:52ch}
+.lede strong{color:var(--ink);font-weight:500}
 
-/* -- Header ---------------------------------------------------------------- */
-
-header{padding:88px 0 0}
-
-.mark{display:flex;align-items:center;gap:16px;margin-bottom:34px}
-
-/* The keystone. os sacrum is the wedge at the base of the spine that carries
-   the load and passes it on - a shape, not a picture, so it is a path we ship
-   and it follows the text colour. */
-.mark svg{width:34px;height:34px;flex:none}
-
-.wordmark{
-  font-size:26px;letter-spacing:.34em;font-weight:600;
-  background:linear-gradient(92deg,var(--cyan) 0%,var(--purple) 58%,var(--pink) 100%);
-  -webkit-background-clip:text;background-clip:text;color:transparent;
+.meta{
+  font-family:var(--mono);font-size:11px;letter-spacing:.06em;
+  display:flex;flex-direction:column;gap:14px;
 }
+.meta-row{display:flex;gap:12px;align-items:baseline}
+.meta-key{color:var(--ink-45);letter-spacing:.2em;flex:none;width:9ch}
+.meta a{text-decoration:none;border-bottom:1px solid var(--ink-45)}
+.meta a:hover{border-bottom-color:var(--ink)}
 
-h1{
-  font-size:clamp(34px,6vw,52px);
-  line-height:1.12;font-weight:700;letter-spacing:-.02em;
-  margin-bottom:22px;
-}
-
-.lede{font-size:clamp(17px,2.4vw,20px);color:var(--muted);max-width:52ch}
-
-.lede strong{color:var(--white);font-weight:500}
-
-/* -- Sections -------------------------------------------------------------- */
-
-section{padding:72px 0}
-
-h2{
-  font-size:12px;letter-spacing:.22em;text-transform:uppercase;
-  color:var(--dim);font-weight:600;margin-bottom:28px;
-}
-
-/* -- Projects -------------------------------------------------------------- */
-
-.projects{display:grid;gap:14px}
+/* -- Projects --------------------------------------------------------------- */
 
 .project{
-  display:block;text-decoration:none;color:inherit;
-  border:1px solid var(--border);border-radius:14px;
-  background:var(--glass);
-  padding:22px 24px;
-  transition:border-color .18s ease, background .18s ease, transform .18s ease;
+  display:block;text-decoration:none;
+  border:1px solid var(--line);
+  padding:26px 28px;
+  transition:background .15s ease,color .15s ease;
 }
-.project:hover{border-color:var(--border-hi);background:var(--glass-hi);transform:translateY(-2px)}
+.project:hover{background:var(--ink);color:var(--paper)}
+.project+.project{margin-top:14px}
 
-.project-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:8px}
+.project-head{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:10px}
+.project-name{font-size:19px;font-weight:600;letter-spacing:-.01em}
 
-.project-name{font-size:18px;font-weight:600;letter-spacing:.01em}
+.project p{opacity:.75;font-size:15px;max-width:62ch}
 
-.tag{
-  font-family:var(--font-m);font-size:11px;letter-spacing:.08em;
-  padding:2px 9px;border-radius:999px;border:1px solid var(--border-hi);
-  color:var(--dim);
-}
-.tag.live{color:var(--cyan-dim);border-color:rgba(0,232,255,.3)}
+.apps{margin-top:18px;display:flex;flex-wrap:wrap;gap:8px}
 
-.project p{color:var(--muted);font-size:15px;max-width:60ch}
+/* -- Principles: two open columns, no boxes ---------------------------------- */
 
-.apps{
-  margin-top:14px;display:flex;flex-wrap:wrap;gap:8px;
-  font-family:var(--font-m);font-size:12px;color:var(--dim);
-}
-.apps span{border:1px solid var(--border);border-radius:8px;padding:3px 10px}
+.principles{display:grid;grid-template-columns:1fr 1fr;gap:36px 64px}
 
-/* -- How I work ------------------------------------------------------------ */
+.principle h3{font-size:15px;font-weight:600;margin-bottom:8px}
+.principle p{color:var(--ink-70);font-size:14.5px;max-width:44ch}
 
-.principles{display:grid;gap:26px}
+/* -- Small screens ----------------------------------------------------------- */
 
-.principle h3{
-  font-size:16px;font-weight:600;margin-bottom:6px;
-  color:var(--white);
-}
-.principle p{color:var(--muted);font-size:15px;max-width:64ch}
-
-/* -- Links ----------------------------------------------------------------- */
-
-.links{display:flex;flex-wrap:wrap;gap:10px}
-
-.link{
-  display:inline-flex;align-items:center;gap:9px;
-  text-decoration:none;color:var(--white);font-size:15px;font-weight:500;
-  border:1px solid var(--border-hi);border-radius:11px;
-  padding:11px 18px;background:var(--glass);
-  transition:border-color .18s ease,background .18s ease;
-}
-.link:hover{border-color:var(--cyan);background:var(--glass-hi)}
-.link svg{width:16px;height:16px;flex:none}
-
-/* -- Footer ---------------------------------------------------------------- */
-
-footer{
-  border-top:1px solid var(--border);
-  padding:34px 0 64px;margin-top:40px;
-  color:var(--dim);font-size:14px;
-}
-footer a{color:var(--muted);text-decoration:none;border-bottom:1px solid var(--border-hi)}
-footer a:hover{color:var(--white)}
-
-.foot-row{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap}
-
-@media (max-width:560px){
-  header{padding-top:56px}
-  section{padding:52px 0}
+@media (max-width:720px){
+  .hero{padding-top:32px}
+  .intro{grid-template-columns:1fr;padding-bottom:48px}
+  .principles{grid-template-columns:1fr}
 }
 </style>
 </head>
 <body>
 
-<div class="wrap">
+<div class="page">
 
-  <header>
-    <div class="mark">
-      <!-- The keystone: a wedge that carries what is above it and passes the
-           load on. Vector, so it takes the text colour and scales to any DPI. -->
-      <svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
-        <defs>
-          <linearGradient id="g" x1="0" y1="0" x2="32" y2="32">
-            <stop offset="0%"   stop-color="#00e8ff"/>
-            <stop offset="58%"  stop-color="#7040ff"/>
-            <stop offset="100%" stop-color="#ff2ab8"/>
-          </linearGradient>
-        </defs>
-        <path d="M7 4h18l-3.2 17.5a6 6 0 0 1-5.9 4.9h-.8a6 6 0 0 1-5.9-4.9Z"
-              stroke="url(#g)" stroke-width="2" stroke-linejoin="round"/>
-        <path d="M11.5 10.5h9M12.4 15.5h7.2" stroke="url(#g)" stroke-width="1.6"
-              stroke-linecap="round" opacity=".55"/>
-      </svg>
-      <span class="wordmark">SACRVM</span>
-    </div>
+  <site-nav page="home"><a href="./">SACRVM.DEV</a></site-nav>
 
-    <h1>Marcus Wilhelm</h1>
-
-    <p class="lede">
-      I build <strong>audio tools for DJs</strong> — and I DJ, which is why they
-      work the way they do. Everything here is open source, and everything it
-      claims has been measured.
-    </p>
+  <header class="hero">
+    <h1 class="wm" aria-label="SACRVM — an anagram of MARCVS"><!--
+      --><span aria-hidden="true">S</span><!--
+      --><span aria-hidden="true">A</span><!--
+      --><span aria-hidden="true">C</span><!--
+      --><span aria-hidden="true">R</span><!--
+      --><span aria-hidden="true">V</span><!--
+      --><span aria-hidden="true">M</span><!--
+    --></h1>
+    <p class="define">sacrvm — Latin: &ldquo;a sacred thing; a rite.&rdquo; Also MARCVS, rearranged.</p>
   </header>
 
-  <section>
-    <h2>What I build</h2>
-
-    <div class="projects">
-
-      <a class="project" href="https://github.com/SACRVM/just-play">
-        <div class="project-head">
-          <span class="project-name">J.U.S.T. — Just Useful Sound Tools</span>
-          <span class="tag live">shipping</span>
-        </div>
-        <p>
-          A suite of DJ tools on one shared engine: analysis, tagging, playback
-          and broadcast, installed side by side on a single runtime. Key, BPM,
-          energy and loudness detection built for harmonic mixing — not a
-          plug-in for someone else's library, but the library itself.
-        </p>
-        <div class="apps">
-          <span>JUST PLAY</span><span>JUST TAG</span><span>JUST STREAM</span><span>CLI</span>
-        </div>
-      </a>
-
-      <!-- Add the rest as they become public. A card per project, "shipping" on
-           the tag when it is, nothing on the tag when it is not. Do not list a
-           repository here that a visitor cannot open. -->
-
+  <div class="intro">
+    <div>
+      <p class="lede">
+        Full-stack developer, architect, tech lead by day — .NET, Azure, and
+        whatever else the project needs. Visionary by night, using AI to raise
+        thirty years of craft to a higher power. What lives here are the
+        <strong>private passions</strong>.
+      </p>
     </div>
+    <div class="meta">
+      <div class="meta-row">
+        <span class="meta-key">NAME</span>
+        <span>Marcus Wilhelm</span>
+      </div>
+      <div class="meta-row">
+        <span class="meta-key">GITHUB</span>
+        <a href="https://github.com/SACRVM">github.com/SACRVM ↗</a>
+      </div>
+      <div class="meta-row">
+        <span class="meta-key">STACK</span>
+        <span>C# / .NET &middot; VANILLA JS</span>
+      </div>
+      <div class="meta-row">
+        <span class="meta-key">CV</span>
+        <a href="cv.html">career &amp; projects</a>
+      </div>
+    </div>
+  </div>
+
+  <section>
+    <span class="tab">WHAT I BUILD</span>
+
+    <a class="project" href="https://github.com/SACRVM/just-play">
+      <div class="project-head">
+        <span class="project-name">J.U.S.T. — Just Useful Sound Tools</span>
+        <span class="chip">SHIPPING</span>
+      </div>
+      <p>
+        A suite of DJ tools on one shared engine: analysis, tagging, playback
+        and broadcast, installed side by side on a single runtime. Key, BPM,
+        energy and loudness detection built for harmonic mixing — not a
+        plug-in for someone else's library, but the library itself.
+      </p>
+      <div class="apps">
+        <span class="chip">JUST PLAY</span><span class="chip">JUST TAG</span><span class="chip">JUST STREAM</span><span class="chip">CLI</span>
+      </div>
+    </a>
+
+    <!-- One card per project, and only repositories a visitor can open today.
+         The SHIPPING chip is for things you can download right now. -->
+
   </section>
 
   <section>
-    <h2>How I work</h2>
+    <span class="tab">HOW I WORK</span>
 
     <div class="principles">
 
       <div class="principle">
-        <h3>Measured, not guessed</h3>
+        <h3>Measured, derived, or chosen</h3>
         <p>
-          Numbers in my code come with the measurement that produced them, in a
-          comment next to the line. When something surprising turns out to be
-          true, the surprise is written down; when a claim of mine turns out to
-          be wrong, the retraction stays in the file.
+          Every number in my code is one of three things: measured, derived,
+          or chosen — there is no fourth case. Claims keep the measurement
+          that produced them, and when one turns out wrong, the retraction
+          stays in the file.
+        </p>
+      </div>
+
+      <div class="principle">
+        <h3>The premise before the math</h3>
+        <p>
+          The expensive bug is not a wrong calculation — it is a correct
+          calculation on a false premise, because nothing breaks. A surprising
+          result gets checked against something external before it gets
+          believed.
         </p>
       </div>
 
@@ -252,53 +197,126 @@ footer a:hover{color:var(--white)}
         <p>
           There is no undo, by design. Anything that moves, renames or deletes
           your files says exactly what it is about to do, names every file it
-          will touch, and waits. A move across drives copies, verifies byte for
-          byte, and only then removes the original.
+          will touch, and waits.
         </p>
       </div>
 
       <div class="principle">
-        <h3>One engine, four faces</h3>
+        <h3>The flaws are written down</h3>
         <p>
-          The apps share a core rather than resembling each other. When two of
-          them disagree about something, that is a bug at the root — not a
-          difference to be documented per app.
+          Each project keeps a ledger of what is known to be broken and what
+          was built on top of it anyway. A workaround that lives only in code
+          gets explained away — and an empty list proves nothing.
         </p>
       </div>
 
       <div class="principle">
-        <h3>From DJs to DJs</h3>
+        <h3>Judged on the shipped thing</h3>
         <p>
-          Every feature is measured against what actually happens in a booth. A
-          detector that scores well on a benchmark and fails on a track you are
-          about to mix has not earned anything.
+          Verdicts come from the product — the built executable, the real
+          screen — never from a flattering preview. A green test that proves
+          nothing is a bug like any other.
+        </p>
+      </div>
+
+      <div class="principle">
+        <h3>AI behind a gate</h3>
+        <p>
+          Agents build for me around the clock, budgeted and scoped. Nothing
+          they make is committed, shipped or believed until my own eyes and
+          ears have signed it.
         </p>
       </div>
 
     </div>
   </section>
 
-  <section>
-    <h2>Elsewhere</h2>
-    <div class="links">
-      <a class="link" href="https://github.com/SACRVM">
-        <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
-          <path d="M8 0a8 8 0 0 0-2.53 15.59c.4.07.55-.17.55-.38l-.01-1.34c-2.23.48-2.7-1.07-2.7-1.07-.36-.93-.89-1.18-.89-1.18-.73-.5.05-.49.05-.49.8.06 1.23.83 1.23.83.71 1.23 1.87.87 2.33.67.07-.52.28-.87.5-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.03 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48l-.01 2.2c0 .21.15.46.55.38A8 8 0 0 0 8 0Z"/>
-        </svg>
-        GitHub
-      </a>
-      <!-- TODO: contact address, and anything else worth linking. -->
-    </div>
-  </section>
-
-  <footer>
-    <div class="foot-row">
-      <span>&copy; 2026 Marcus Wilhelm</span>
-      <span>Software published as <a href="https://github.com/SACRVM/just-play">Just Useful Sound Tools</a>, MIT-licensed.</span>
-    </div>
-  </footer>
+  <site-footer page="home"><a href="imprint.html">Imprint &amp; Disclaimer</a></site-footer>
 
 </div>
+
+<script>
+/* The anagram. SACRVM rattles, settles letter by letter into MARCVS, holds,
+   the Roman V becomes U, holds — then shuffles back to the name and rests.
+   Fixed 1ch cells, so nothing moves but the glyphs. */
+(function(){
+  'use strict';
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  var cells = Array.prototype.slice.call(document.querySelectorAll('.wm span'));
+  var GLYPHS = 'SACRVMUWXKTZEN';
+  var TICK = 62;                 /* ms per rattle frame */
+
+  function rnd(n){ return Math.random()*n|0; }
+  function glyph(){ return GLYPHS[rnd(GLYPHS.length)]; }
+  function sleep(ms){ return new Promise(function(r){ setTimeout(r, ms); }); }
+
+  /* Browsers throttle timers in hidden tabs; don't rattle into the void. */
+  function waitVisible(){
+    return new Promise(function(r){
+      if (!document.hidden) return r();
+      document.addEventListener('visibilitychange', function h(){
+        if (!document.hidden){ document.removeEventListener('visibilitychange', h); r(); }
+      });
+    });
+  }
+
+  /* Rattle every cell, then lock them one by one onto `word`.
+     opts: lockStart (ms before the first lock), lockStep (ms between locks),
+     jitter (random extra per cell), shuffle (lock in random order instead of
+     left to right). */
+  function scrambleTo(word, opts){
+    var order = cells.map(function(_, i){ return i; });
+    if (opts.shuffle){
+      for (var i = order.length-1; i > 0; i--){
+        var j = rnd(i+1), t = order[i]; order[i] = order[j]; order[j] = t;
+      }
+    }
+    var lockAt = [];
+    order.forEach(function(idx, rank){
+      lockAt[idx] = opts.lockStart + rank*opts.lockStep + Math.random()*opts.jitter;
+    });
+    return new Promise(function(res){
+      var t0 = performance.now();
+      var iv = setInterval(function(){
+        var t = performance.now() - t0, done = true;
+        cells.forEach(function(c, i){
+          if (t >= lockAt[i]){ c.textContent = word[i]; }
+          else { c.textContent = glyph(); done = false; }
+        });
+        if (done){ clearInterval(iv); res(); }
+      }, TICK);
+    });
+  }
+
+  /* The quiet one: V dims for a blink and comes back as U. */
+  function romanToU(){
+    var v = cells[4];
+    v.classList.add('dip');
+    return sleep(110).then(function(){
+      v.textContent = 'U';
+      v.classList.remove('dip');
+      return sleep(140);
+    });
+  }
+
+  function run(){
+    return sleep(2600).then(loop);           /* let the page land */
+  }
+  function loop(){
+    return waitVisible()
+      .then(function(){ return scrambleTo('MARCVS', {lockStart:650, lockStep:190, jitter:230, shuffle:false}); })
+      .then(function(){ return sleep(1400); })               /* MARCVS holds */
+      .then(romanToU)
+      .then(function(){ return sleep(2800); })               /* MARCUS holds */
+      .then(waitVisible)
+      .then(function(){ return scrambleTo('SACRVM', {lockStart:450, lockStep:150, jitter:260, shuffle:true}); })
+      .then(function(){ return sleep(9500); })               /* the name rests */
+      .then(loop);
+  }
+  run();
+})();
+</script>
 
 </body>
 </html>
