@@ -64,6 +64,20 @@
 
 ::selection{background:var(--ink);color:var(--paper)}
 
+/* -- Scrollbar: a thin ink bar on paper, square like everything else --------- */
+
+::-webkit-scrollbar{width:12px;height:12px}
+::-webkit-scrollbar-track{background:var(--paper)}
+::-webkit-scrollbar-thumb{background:var(--ink);border:3px solid var(--paper)}
+::-webkit-scrollbar-thumb:hover{border-width:2px}
+::-webkit-scrollbar-corner{background:var(--paper)}
+
+/* Firefox (the @supports guard keeps Chromium on the rules above —
+   a set scrollbar-color would disable them there). */
+@supports (-moz-appearance:none){
+  :root{scrollbar-width:thin;scrollbar-color:var(--ink) var(--paper)}
+}
+
 body{
   background:var(--paper);
   color:var(--ink);
