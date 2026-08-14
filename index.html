@@ -5,10 +5,28 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SACRVM — Marcus Wilhelm</title>
 <meta name="description" content="Marcus Wilhelm — full-stack developer for thirty years. Tools, games, bots; measured, not guessed.">
+<link rel="canonical" href="https://sacrvm.dev/">
+<meta property="og:site_name" content="SACRVM">
 <meta property="og:title" content="SACRVM — Marcus Wilhelm">
 <meta property="og:description" content="Software by Marcus Wilhelm. Measured, not guessed.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://sacrvm.dev/">
+<meta property="og:image" content="https://sacrvm.dev/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Marcus Wilhelm",
+  "alternateName": "SACRVM",
+  "url": "https://sacrvm.dev/",
+  "jobTitle": "Technical Lead Developer",
+  "knowsAbout": ["C#", ".NET", "JavaScript", "Software Architecture", "Azure"],
+  "sameAs": ["https://github.com/SACRVM"]
+}
+</script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23A1C9C8'/%3E%3Crect x='5.5' y='5.5' width='53' height='53' fill='none' stroke='%23121211' stroke-width='3'/%3E%3Ctext x='32' y='44' font-family='monospace' font-size='34' font-weight='700' text-anchor='middle' fill='%23121211'%3ES%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="assets/site.css">
 <script src="assets/site.js" defer></script>
@@ -80,6 +98,31 @@
 
 .apps{margin-top:18px;display:flex;flex-wrap:wrap;gap:8px}
 
+/* A private project is a button, not a link: clicking opens the dialog. */
+.project-private{
+  width:100%;text-align:left;font:inherit;line-height:inherit;
+  background:none;color:inherit;cursor:pointer;
+}
+
+/* -- The dialog: one thin box, mid-page ------------------------------------- */
+
+dialog{
+  margin:auto;   /* the global reset removed the UA centering — restore it */
+  border:1px solid var(--line);background:var(--paper);color:var(--ink);
+  padding:30px 34px;max-width:400px;
+}
+dialog::backdrop{background:rgba(18,18,17,.45)}
+dialog p{font-size:15px;color:var(--ink-70)}
+dialog form{margin-top:22px}
+
+.dialog-close{
+  font-family:var(--mono);font-size:10px;letter-spacing:.2em;
+  border:1px solid var(--ink);background:none;color:var(--ink);
+  padding:8px 16px;cursor:pointer;
+  transition:background .15s ease,color .15s ease;
+}
+.dialog-close:hover{background:var(--ink);color:var(--paper)}
+
 /* -- Principles: two open columns, no boxes ---------------------------------- */
 
 .principles{display:grid;grid-template-columns:1fr 1fr;gap:36px 64px}
@@ -144,7 +187,7 @@
   </div>
 
   <section>
-    <span class="tab">WHAT I BUILD</span>
+    <h2 class="tab">WHAT I BUILD</h2>
 
     <a class="project" href="https://github.com/SACRVM/just-play">
       <div class="project-head">
@@ -162,13 +205,34 @@
       </div>
     </a>
 
-    <!-- One card per project, and only repositories a visitor can open today.
+    <button class="project project-private" id="aftermatch-card" type="button">
+      <div class="project-head">
+        <span class="project-name">After Match</span>
+        <span class="chip">IN DEVELOPMENT</span>
+      </div>
+      <p>
+        A multiplayer social world, built in Unity: meet, chat, dance. Custom
+        avatar base, server-authoritative netcode, a dedicated server that
+        updates itself. The repository stays private while it grows.
+      </p>
+      <div class="apps">
+        <span class="chip">UNITY</span><span class="chip">FISHNET</span><span class="chip">DEDICATED SERVER</span>
+      </div>
+    </button>
+
+    <!-- One card per project. Cards link out only to repositories a visitor
+         can open today; private work gets a card that says so when clicked.
          The SHIPPING chip is for things you can download right now. -->
 
   </section>
 
+  <dialog id="private-dialog">
+    <p>Private repository &mdash; more public information coming soon.</p>
+    <form method="dialog"><button class="dialog-close">CLOSE</button></form>
+  </dialog>
+
   <section>
-    <span class="tab">HOW I WORK</span>
+    <h2 class="tab">HOW I WORK</h2>
 
     <div class="principles">
 
@@ -241,6 +305,16 @@
    Fixed 1ch cells, so nothing moves but the glyphs. */
 (function(){
   'use strict';
+
+  /* The private-project card opens the dialog; backdrop click closes it.
+     Wired before the reduced-motion gate: the dialog is not motion. */
+  var card = document.getElementById('aftermatch-card');
+  var dlg = document.getElementById('private-dialog');
+  if (card && dlg && dlg.showModal){
+    card.addEventListener('click', function(){ dlg.showModal(); });
+    dlg.addEventListener('click', function(e){ if (e.target === dlg) dlg.close(); });
+  }
+
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
   var cells = Array.prototype.slice.call(document.querySelectorAll('.wm span'));

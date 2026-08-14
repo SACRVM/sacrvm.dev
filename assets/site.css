@@ -102,7 +102,7 @@ section{position:relative;border-top:1px solid var(--line);padding:56px 0}
   position:absolute;top:0;left:0;transform:translateY(-50%);
   background:var(--paper);border:1px solid var(--line);
   padding:6px 14px;
-  font-family:var(--mono);font-size:10px;letter-spacing:.3em;
+  font-family:var(--mono);font-size:10px;font-weight:400;letter-spacing:.3em;
 }
 
 /* -- Chips: thin boxed labels, used wherever a list needs naming ------------- */
