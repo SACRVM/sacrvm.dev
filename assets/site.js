@@ -7,19 +7,21 @@
 (function(){
   'use strict';
 
-  /* <site-nav page="home|cv|imprint"> — the top navigation. Brand on the
-     left, the site's pages on the right, the one you are on marked. */
+  /* <site-nav page="home|blog|cv|imprint"> — the top navigation. Brand on
+     the left, the site's pages on the right, the one you are on marked.
+     Root-absolute hrefs: blog pages live a directory deep. */
   class SiteNav extends HTMLElement{
     connectedCallback(){
       var page = this.getAttribute('page') || '';
       var links = [
-        { id:'home',    href:'./',           label:'HOME' },
-        { id:'cv',      href:'cv.html',      label:'CV' },
-        { id:'imprint', href:'imprint.html', label:'IMPRINT' }
+        { id:'home',    href:'/',             label:'HOME' },
+        { id:'blog',    href:'/blog/',        label:'BLOG' },
+        { id:'cv',      href:'/cv.html',      label:'CV' },
+        { id:'imprint', href:'/imprint.html', label:'IMPRINT' }
       ];
       this.innerHTML =
         '<nav class="bar">' +
-          '<a class="brand" href="./">SACRVM.DEV</a>' +
+          '<a class="brand" href="/">SACRVM.DEV</a>' +
           '<div class="links">' +
             links.map(function(l){
               var here = l.id === page;
@@ -32,15 +34,16 @@
     }
   }
 
-  /* <site-footer page="home|imprint"> — copyright plus the site links,
-     minus the page you are already on. */
+  /* <site-footer page="home|blog|cv|imprint"> — copyright plus the site
+     links, minus the page you are already on. */
   class SiteFooter extends HTMLElement{
     connectedCallback(){
       var page = this.getAttribute('page') || '';
       var links = [
-        { id:'home',    href:'./',           label:'HOME' },
-        { id:'cv',      href:'cv.html',      label:'CV' },
-        { id:'imprint', href:'imprint.html', label:'IMPRINT &amp; DISCLAIMER' }
+        { id:'home',    href:'/',             label:'HOME' },
+        { id:'blog',    href:'/blog/',        label:'BLOG' },
+        { id:'cv',      href:'/cv.html',      label:'CV' },
+        { id:'imprint', href:'/imprint.html', label:'IMPRINT &amp; DISCLAIMER' }
       ].filter(function(l){ return l.id !== page; });
 
       this.innerHTML =
