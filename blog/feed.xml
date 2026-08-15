@@ -6,4 +6,24 @@
   <id>https://sacrvm.dev/blog/</id>
   <author><name>SACRVM</name></author>
   <updated>2026-08-15T00:00:00Z</updated>
+  <entry>
+    <title>JUST PLAY 0.6.0 beta — The Library</title>
+    <link href="https://sacrvm.dev/blog/2026-08-15-just-play-0-6-0-beta.html"/>
+    <id>https://sacrvm.dev/blog/2026-08-15-just-play-0-6-0-beta.html</id>
+    <updated>2026-08-15T00:00:00Z</updated>
+    <summary>JUST TAG ships — multi-file tag editing, pattern renaming, previewed file operations. Plus the indexed Pre-Cue Finder and one shared track table.</summary>
+    <content type="html">&lt;p&gt;&lt;a href=&quot;https://just.sacrvm.dev/&quot;&gt;JUST PLAY&lt;/a&gt; is the music player for DJs and music lovers. Drop tracks in, double-click to play. Camelot key, BPM and energy detected on the spot — no library to build, no sign-in, no nag.&lt;/p&gt;
+&lt;h2&gt;JUST TAG ships&lt;/h2&gt;
+&lt;p&gt;The tag editor is packaged, installed and on the Start menu for the first time. It browses the disk, not a library — the tool for a download that just landed somewhere no index has seen.&lt;/p&gt;
+&lt;ul&gt;&lt;li&gt;Multi-file editing, a tick per field. Fields the selection disagrees on say &lt;em&gt;different values&lt;/em&gt;, so nothing is flattened by accident.&lt;/li&gt;&lt;li&gt;&lt;code&gt;%artist% - %title%&lt;/code&gt; builds a file name from tags, or reads tags out of a name. Both directions, one language.&lt;/li&gt;&lt;li&gt;Move, copy and delete, every one previewed. There is no overwrite, ever — a taken name is a collision, and the answer is &quot;leave both alone&quot; or &quot;keep both&quot;.&lt;/li&gt;&lt;li&gt;Search that reads as a sentence: sixteen fields, seven comparisons, including &lt;em&gt;is empty&lt;/em&gt;. &quot;Genre is empty&quot; is the one that finds the damage.&lt;/li&gt;&lt;/ul&gt;
+&lt;h2&gt;Also in 0.6&lt;/h2&gt;
+&lt;ul&gt;&lt;li&gt;The Pre-Cue Finder gained the index. Folders paint instantly and verify behind you, and you can filter across every playlist below a folder.&lt;/li&gt;&lt;li&gt;One track table across queue, finder and JUST TAG — same rows, same widths, sized to what is actually in them.&lt;/li&gt;&lt;li&gt;JUST STREAM shows the listener count, with no admin password stored.&lt;/li&gt;&lt;/ul&gt;
+&lt;h2&gt;Still pre-1.0&lt;/h2&gt;
+&lt;p&gt;What is not done, said up front:&lt;/p&gt;
+&lt;ul&gt;&lt;li&gt;Nothing watches your library folder yet. The index catches up when you press Scan.&lt;/li&gt;&lt;li&gt;A scan indexes, it does not analyse. Use right-click &lt;em&gt;Analyse&lt;/em&gt;, or the CLI.&lt;/li&gt;&lt;li&gt;macOS and Linux share the codebase and are not validated.&lt;/li&gt;&lt;/ul&gt;
+&lt;hr&gt;
+&lt;p&gt;One installer, four tools, one shared runtime: JUST PLAY, JUST STREAM, JUST TAG and the headless CLI. Per-user, no admin prompt.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/SACRVM/just-play/releases/tag/v0.6.0-beta.1&quot;&gt;Download 0.6.0-beta.1&lt;/a&gt; — feedback and bug reports to &lt;a href=&quot;mailto:info@sacrvm.dev&quot;&gt;info@sacrvm.dev&lt;/a&gt; or the &lt;a href=&quot;https://github.com/SACRVM/just-play/issues&quot;&gt;issue tracker&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;From DJs to DJs.&lt;/em&gt;&lt;/p&gt;</content>
+  </entry>
 </feed>

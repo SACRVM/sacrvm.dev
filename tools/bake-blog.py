@@ -77,8 +77,12 @@ def render(md: str) -> str:
             ordered = bool(re.match(r"\d", line))
             items = []
             while i < len(lines) and re.match(r"[-*] |\d+\. ", lines[i]):
-                items.append("<li>" + inline(re.sub(r"^([-*]|\d+\.) ", "", lines[i])) + "</li>")
+                item = re.sub(r"^([-*]|\d+\.) ", "", lines[i])
                 i += 1
+                while i < len(lines) and lines[i].startswith("  ") and lines[i].strip():
+                    item += " " + lines[i].strip()   # wrapped item continues
+                    i += 1
+                items.append("<li>" + inline(item) + "</li>")
             tag = "ol" if ordered else "ul"
             out.append("<%s>%s</%s>" % (tag, "".join(items), tag))
         else:
