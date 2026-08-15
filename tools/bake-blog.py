@@ -167,13 +167,29 @@ for f in sorted(SRC.glob("*.md"), reverse=True):
 
 # --- entry pages ------------------------------------------------------------
 
-for e in entries:
+for idx, e in enumerate(entries):
     url = f"{SITE}/blog/{e['name']}"
     extra = f'<meta property="article:published_time" content="{e["date"]}">\n'
+
+    # entries are newest-first: the neighbour above is newer, below is older
+    newer = entries[idx - 1] if idx > 0 else None
+    older = entries[idx + 1] if idx + 1 < len(entries) else None
+    hops = ""
+    if older:
+        hops += (f'    <a rel="prev" href="/blog/{older["name"]}">'
+                 f'<span class="lbl">&larr; OLDER</span>'
+                 f'<span class="t">{html.escape(older["title"])}</span></a>\n')
+    if newer:
+        hops += (f'    <a rel="next" class="newer" href="/blog/{newer["name"]}">'
+                 f'<span class="lbl">NEWER &rarr;</span>'
+                 f'<span class="t">{html.escape(newer["title"])}</span></a>\n')
+    entry_nav = f'\n  <nav class="entry-nav">\n{hops}  </nav>\n' if hops else ""
+
     page = (
         head(f"{e['title']} — SACRVM", e["description"], url, "article", extra)
         + f"""
   <header class="blog-head">
+    <a class="back" href="/blog/">&larr; BLOG</a>
     <div class="date">{e['date']}</div>
     <h1>{html.escape(e['title'])}</h1>
   </header>
@@ -181,7 +197,7 @@ for e in entries:
   <article class="prose">
 {e['body']}
   </article>
-"""
+{entry_nav}"""
         + FOOT
     )
     (OUT / e["name"]).write_text(page, encoding="utf-8", newline="\n")
