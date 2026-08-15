@@ -33,8 +33,8 @@ nothing from third-party servers. GitHub account: https://github.com/SACRVM.
 ## Pages
 
 - [Home](https://sacrvm.dev/): who I am, what I build, how I work.
-- [Blog](https://sacrvm.dev/blog/): notes — drafted by the author, polished
-  with AI, signed off by the author. Atom feed at
+- [Blog](https://sacrvm.dev/blog/): updates on the tools and libraries built
+  here — releases, changes, plans. Atom feed at
   https://sacrvm.dev/blog/feed.xml — full text, no tracking.
 - [CV](https://sacrvm.dev/cv.html): career and selected projects, 1997 to
   today. Currently Technical Lead Developer at CANCOM.
