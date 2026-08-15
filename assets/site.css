@@ -64,6 +64,11 @@
 
 *{box-sizing:border-box;margin:0;padding:0;border-radius:0}
 
+/* Reserve the scrollbar's lane on every page. Short pages (no scrollbar) and
+   long pages (scrollbar) get the same viewport width, so nothing shifts
+   sideways when navigating between them. */
+html{scrollbar-gutter:stable}
+
 ::selection{background:var(--ink);color:var(--paper)}
 
 /* -- Scrollbar: a thin ink bar on paper, square like everything else --------- */
@@ -151,9 +156,9 @@ site-footer a:hover{color:var(--ink)}
 
 .blog-head{padding:20px 0 52px}
 .blog-head .back{
-  display:inline-block;margin-bottom:18px;
-  font-family:var(--mono);font-size:10px;letter-spacing:.25em;
-  color:var(--ink-45);text-decoration:none;
+  display:inline-block;margin-bottom:20px;
+  font-family:var(--mono);font-size:12px;letter-spacing:.2em;
+  color:var(--ink-70);text-decoration:none;
 }
 .blog-head .back:hover{color:var(--ink)}
 .blog-head .date{font-family:var(--mono);font-size:12px;letter-spacing:.08em;color:var(--ink-45)}
@@ -180,13 +185,20 @@ site-footer a:hover{color:var(--ink)}
 .prose pre code{background:none;padding:0;font-size:12.5px;line-height:1.6}
 .prose hr{border:0;border-top:1px solid var(--ink-45);margin:32px 0}
 
-.entry-nav{display:flex;justify-content:space-between;gap:24px;border-top:1px solid var(--ink-14);padding:20px 0 52px}
-.entry-nav a{text-decoration:none;max-width:45%}
-.entry-nav .newer{margin-left:auto;text-align:right}
+.entry-nav{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;border-top:1px solid var(--ink-14);padding:24px 0 52px}
+.entry-nav>*{flex:1}
+.entry-nav a{text-decoration:none}
+.entry-nav .newer{text-align:right}
 .entry-nav .lbl{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.25em;color:var(--ink-45)}
 .entry-nav .t{display:block;font-size:14px;font-weight:600;margin-top:6px}
 .entry-nav a:hover .lbl{color:var(--ink)}
 .entry-nav a:hover .t{text-decoration:underline}
+.entry-nav .index{
+  flex:0 0 auto;align-self:center;
+  font-family:var(--mono);font-size:11px;letter-spacing:.25em;
+  color:var(--ink);border:1px solid var(--ink);padding:9px 18px;
+}
+.entry-nav .index:hover{background:var(--ink);color:var(--paper)}
 
 .entries{padding-top:32px;padding-bottom:52px}
 .entry-row{display:block;padding:16px 0;border-bottom:1px solid var(--ink-14);text-decoration:none}

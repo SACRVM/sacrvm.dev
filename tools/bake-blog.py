@@ -171,19 +171,30 @@ for idx, e in enumerate(entries):
     url = f"{SITE}/blog/{e['name']}"
     extra = f'<meta property="article:published_time" content="{e["date"]}">\n'
 
-    # entries are newest-first: the neighbour above is newer, below is older
+    # entries are newest-first: the neighbour above is newer, below is older.
+    # The boxed BLOG link sits in the middle and is always there — after
+    # reading, the way back matters most at the bottom.
     newer = entries[idx - 1] if idx > 0 else None
     older = entries[idx + 1] if idx + 1 < len(entries) else None
-    hops = ""
-    if older:
-        hops += (f'    <a rel="prev" href="/blog/{older["name"]}">'
-                 f'<span class="lbl">&larr; OLDER</span>'
-                 f'<span class="t">{html.escape(older["title"])}</span></a>\n')
-    if newer:
-        hops += (f'    <a rel="next" class="newer" href="/blog/{newer["name"]}">'
-                 f'<span class="lbl">NEWER &rarr;</span>'
-                 f'<span class="t">{html.escape(newer["title"])}</span></a>\n')
-    entry_nav = f'\n  <nav class="entry-nav">\n{hops}  </nav>\n' if hops else ""
+    hop_older = (
+        f'<a rel="prev" href="/blog/{older["name"]}">'
+        f'<span class="lbl">&larr; OLDER</span>'
+        f'<span class="t">{html.escape(older["title"])}</span></a>'
+        if older else "<span></span>"
+    )
+    hop_newer = (
+        f'<a rel="next" class="newer" href="/blog/{newer["name"]}">'
+        f'<span class="lbl">NEWER &rarr;</span>'
+        f'<span class="t">{html.escape(newer["title"])}</span></a>'
+        if newer else "<span></span>"
+    )
+    entry_nav = f"""
+  <nav class="entry-nav">
+    {hop_older}
+    <a class="index" href="/blog/">&larr; BLOG</a>
+    {hop_newer}
+  </nav>
+"""
 
     page = (
         head(f"{e['title']} — SACRVM", e["description"], url, "article", extra)
