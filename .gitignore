@@ -2,3 +2,4 @@
 Thumbs.db
 .mcp.json
 *.stackdump
+.firepit/inbox/
