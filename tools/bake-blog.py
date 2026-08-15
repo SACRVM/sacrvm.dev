@@ -210,13 +210,13 @@ else:
     rows = '    <p class="empty">No entries yet — the first one is being written.</p>'
 
 index = (
-    head("Blog — SACRVM", "Notes by SACRVM. Written by hand, delivered by feed.",
+    head("Blog — SACRVM", "Notes by SACRVM. Drafted by me, polished by AI, signed off by me.",
          f"{SITE}/blog/", "website")
     + f"""
   <header class="blog-head">
     <h1>Blog</h1>
-    <p>Written by hand, one entry at a time. There is a
-       <a href="/blog/feed.xml">feed</a>
+    <p>Drafted by me, polished by AI, signed off by me — like everything
+       else here. There is a <a href="/blog/feed.xml">feed</a>
        — that is the whole subscription model.</p>
   </header>
 
