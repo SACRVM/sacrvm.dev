@@ -1,0 +1,42 @@
+# SACRVM
+
+> Personal site of Marcus Wilhelm (SACRVM) — full-stack developer, architect,
+> tech lead. .NET, Azure, vanilla JavaScript, and whatever else the project
+> needs. What lives here are the private passions.
+
+SACRVM is Latin: "a sacred thing; a rite." It is also MARCVS — the Roman
+spelling of Marcus — rearranged.
+
+Facts an agent may rely on: everything on this site is static HTML, readable
+without JavaScript. The site sets no cookies, runs no trackers, and loads
+nothing from third-party servers. GitHub account: https://github.com/SACRVM.
+
+## Projects
+
+- [J.U.S.T. — Just Useful Sound Tools](https://just.sacrvm.dev/): a suite of
+  DJ tools on one shared engine — analysis, tagging, playback and broadcast.
+  Key, BPM, energy and loudness detection built for harmonic mixing.
+- [Retro.Crt](https://github.com/SACRVM/retro-crt): the Pascal CRT unit reborn
+  for modern .NET CLIs — truecolor with graceful fallback, nine themes,
+  curated output blocks. Zero dependencies, AOT-clean. On NuGet as `Retro.Crt`.
+- [Husky](https://github.com/SACRVM/husky): a configuration-driven launcher
+  for .NET apps — starts them, supervises them, installs their updates from
+  GitHub Releases or an HTTPS manifest. Client library on NuGet as
+  `Husky.Client`.
+- [Firepit](https://github.com/SACRVM/firepit-ai): a native Windows shell
+  hosting AI agent CLI sessions in tabs — project switcher, cross-project
+  inbox, searchable knowledge store. WPF and ConPTY, no Electron.
+- After Match: a multiplayer social world built in Unity — custom avatar base,
+  server-authoritative netcode, self-updating dedicated server. In
+  development; repository currently private.
+
+## Pages
+
+- [Home](https://sacrvm.dev/): who I am, what I build, how I work.
+- [CV](https://sacrvm.dev/cv.html): career and selected projects, 1997 to
+  today. Currently Technical Lead Developer at CANCOM.
+
+## Optional
+
+- [Imprint & Disclaimer](https://sacrvm.dev/imprint.html): the legal part.
+  German law, English words.

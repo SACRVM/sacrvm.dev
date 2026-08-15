@@ -18,13 +18,93 @@
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "Person",
-  "name": "Marcus Wilhelm",
-  "alternateName": "SACRVM",
-  "url": "https://sacrvm.dev/",
-  "jobTitle": "Technical Lead Developer",
-  "knowsAbout": ["C#", ".NET", "JavaScript", "Software Architecture", "Azure"],
-  "sameAs": ["https://github.com/SACRVM"]
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://sacrvm.dev/#website",
+      "url": "https://sacrvm.dev/",
+      "name": "SACRVM",
+      "author": { "@id": "https://sacrvm.dev/#person" }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://sacrvm.dev/#person",
+      "name": "Marcus Wilhelm",
+      "alternateName": "SACRVM",
+      "url": "https://sacrvm.dev/",
+      "jobTitle": "Technical Lead Developer",
+      "knowsAbout": ["C#", ".NET", "JavaScript", "Software Architecture", "Azure"],
+      "sameAs": ["https://github.com/SACRVM"]
+    },
+    {
+      "@type": "ItemList",
+      "name": "Projects",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "item": {
+            "@type": "SoftwareApplication",
+            "name": "J.U.S.T. — Just Useful Sound Tools",
+            "url": "https://just.sacrvm.dev/",
+            "description": "A suite of DJ tools on one shared engine: analysis, tagging, playback and broadcast. Key, BPM, energy and loudness detection built for harmonic mixing.",
+            "applicationCategory": "MultimediaApplication",
+            "operatingSystem": "Windows",
+            "author": { "@id": "https://sacrvm.dev/#person" }
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "item": {
+            "@type": "SoftwareSourceCode",
+            "name": "Retro.Crt",
+            "url": "https://github.com/SACRVM/retro-crt",
+            "codeRepository": "https://github.com/SACRVM/retro-crt",
+            "description": "The Pascal CRT unit reborn for modern .NET CLIs: truecolor with graceful fallback, nine themes, curated output blocks. Zero dependencies, AOT-clean. On NuGet as Retro.Crt.",
+            "programmingLanguage": "C#",
+            "author": { "@id": "https://sacrvm.dev/#person" }
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "item": {
+            "@type": "SoftwareSourceCode",
+            "name": "Husky",
+            "url": "https://github.com/SACRVM/husky",
+            "codeRepository": "https://github.com/SACRVM/husky",
+            "description": "A configuration-driven launcher for .NET apps: starts them, supervises them, installs their updates from GitHub Releases or an HTTPS manifest. Client library on NuGet as Husky.Client.",
+            "programmingLanguage": "C#",
+            "author": { "@id": "https://sacrvm.dev/#person" }
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "item": {
+            "@type": "SoftwareSourceCode",
+            "name": "Firepit",
+            "url": "https://github.com/SACRVM/firepit-ai",
+            "codeRepository": "https://github.com/SACRVM/firepit-ai",
+            "description": "A native Windows shell hosting AI agent CLI sessions in tabs, with a project switcher, cross-project inbox and a searchable knowledge store. WPF and ConPTY, no Electron.",
+            "programmingLanguage": "C#",
+            "author": { "@id": "https://sacrvm.dev/#person" }
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 5,
+          "item": {
+            "@type": "VideoGame",
+            "name": "After Match",
+            "description": "A multiplayer social world built in Unity: custom avatar base, server-authoritative netcode, self-updating dedicated server. In development; repository currently private.",
+            "author": { "@id": "https://sacrvm.dev/#person" }
+          }
+        }
+      ]
+    }
+  ]
 }
 </script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23A1C9C8'/%3E%3Crect x='5.5' y='5.5' width='53' height='53' fill='none' stroke='%23121211' stroke-width='3'/%3E%3Ctext x='32' y='44' font-family='monospace' font-size='34' font-weight='700' text-anchor='middle' fill='%23121211'%3ES%3C/text%3E%3C/svg%3E">
