@@ -189,6 +189,9 @@ for f in OUT.glob("*.html"):
         f.unlink()
 
 # --- index ------------------------------------------------------------------
+# Deliberately one flat list for now. When it grows past roughly a year of
+# entries, this is where the archive goes: per-year pages (/blog/2026.html),
+# the index keeps the current year plus an archive row.
 
 if entries:
     rows = "\n".join(
