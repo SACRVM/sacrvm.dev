@@ -31,7 +31,7 @@ ENDPOINT = "https://api.indexnow.org/indexnow"  # shared by every participant
 
 STATUS = {
     200: "accepted",
-    202: "accepted — key validation pending",
+    202: "accepted, key validation pending",
     400: "bad request",
     403: "key not valid for this host",
     422: "a URL does not belong to the host",
