@@ -305,3 +305,4 @@ sm.write_text(
 )
 
 print(f"baked {len(entries)} entr{'y' if len(entries) == 1 else 'ies'}: index, feed, sitemap updated")
+print("next: commit, push, and once the deploy is live: python tools/indexnow.py")

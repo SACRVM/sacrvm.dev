@@ -29,6 +29,9 @@ static page.
 | `assets/site.css` | shared base: fonts, tokens, sections/tabs, chips, component styles |
 | `assets/site.js` | vanilla web components: `<site-nav>`, `<site-footer page="…">` |
 | `assets/fonts/` | self-hosted variable woff2 (Martian Mono, Instrument Sans) |
+| `blog/src/*.md` | blog sources, `YYYY-MM-DD-slug.md`; everything else under `blog/` is baked |
+| `tools/` | the generators: blog baker, favicons, ASCII portrait, IndexNow ping |
+| `<key>.txt` | IndexNow ownership key — the file name **is** the key; never rename or delete it |
 
 The components are light-DOM custom elements on purpose — every page links one
 stylesheet, and a shadow root would wall it off. The markup inside the tags is
@@ -56,6 +59,18 @@ outright. That is a feature here and costs nothing: Pages issues and renews the
 certificate itself.
 
 Deployment after that is `git push`.
+
+## Publishing a blog entry
+
+1. Write `blog/src/YYYY-MM-DD-slug.md` with a `title:` / `description:`
+   frontmatter block. The date in the file name is the publication date.
+2. `python tools/bake-blog.py` — renders the entry page, rebuilds the index,
+   the Atom feed and the sitemap. A deleted source unpublishes its page.
+3. Commit and push, then wait for Pages to serve the change.
+4. `python tools/indexnow.py` — tells IndexNow (Bing, Yandex, Seznam and the
+   other participants) what changed. **After** the deploy, never before: the
+   ping makes them fetch the URL right away, so an early ping indexes the old
+   page. Google ignores IndexNow and comes via the sitemap.
 
 ## Editing
 
