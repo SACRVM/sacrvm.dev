@@ -29,11 +29,18 @@ stage does not start empty:
   its own chrome, the note list is the rail, and every note gets its own
   link.
 
-Their repos are the minimal examples to copy when you write your own app:
-an `app.json` the desktop reads, an `app.js` it mounts, nothing else. And
-handing somebody your app is just a link —
-`https://desktop.sacrvm.dev/?install=<your-repo-url>` runs the
-ordinary confirm flow.
+Their repos are worked examples — see it done properly. To start your own
+app, don't strip a calculator down to a skeleton; there is a starting
+point built for the job. Zero to running on the desktop is three steps:
+
+1. **Use this template** on
+   [sacrvm-app-template](https://github.com/SACRVM/sacrvm-app-template) —
+   a clean repo with the right shape from commit one: `app.json`,
+   `app.js`, `app.css`, a vendored `kit/`. Rename five strings.
+2. **Enable GitHub Pages** — now your app has a URL.
+3. **Hand out the link** —
+   `https://desktop.sacrvm.dev/?install=<your-pages-url>` runs the
+   ordinary confirm flow, and your app is on the desktop.
 
 # The kit itself
 
@@ -50,6 +57,9 @@ ordinary confirm flow.
 - **A runtime, not just widgets.** `window.sac.*` brings the router, the
   dialog and toast services, a Ctrl-K command palette, sandboxed storage,
   and `sac.apps` — the install-by-URL system the desktop is built on.
+- **Scaffolds included.** `kit/templates/` ships complete app skeletons
+  and page-level scaffolds — the folder of plain files contains its own
+  starting points.
 
 # No build step, on purpose
 
