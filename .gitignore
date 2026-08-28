@@ -1,13 +1,2 @@
-.DS_Store
-Thumbs.db
-.mcp.json
-*.stackdump
-.firepit/inbox/
-
-# Firepit + Claude Code — shared config versioned, runtime/personal local
-.firepit/runs/
-.firepit/knowledge.db*
-!.firepit/config.json
-.claude/settings.local.json
-.claude/*.lock
-.claude/agent-memory/
+# Firepit session state — local to each machine, never content.
+.firepit/artifacts.json
