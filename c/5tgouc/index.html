@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contact — Marcus Wilhelm</title>
+<meta name="description" content="Contact card for Marcus Wilhelm.">
+<meta name="robots" content="noindex,nofollow">
+<meta name="referrer" content="no-referrer">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="stylesheet" href="/assets/site.css">
+<script src="/assets/site.js" defer></script>
+<style>
+/* The card landing. Reached by QR from the printed card, linked from
+   nowhere, and kept out of the sitemap on purpose. */
+
+.head{padding:20px 0 52px}
+.head h1{font-size:26px;font-weight:600;letter-spacing:-.01em}
+.head p{margin-top:8px;color:var(--ink-70);font-family:var(--mono);font-size:12px;letter-spacing:.08em}
+
+.meta{
+  font-family:var(--mono);font-size:13px;letter-spacing:.04em;
+  display:flex;flex-direction:column;gap:16px;
+}
+.meta-row{display:flex;gap:14px;align-items:baseline;flex-wrap:wrap}
+.meta-key{color:var(--ink-45);font-size:11px;letter-spacing:.2em;flex:none;width:9ch}
+.meta a{text-decoration:none;border-bottom:1px solid var(--ink-45)}
+.meta a:hover{border-bottom-color:var(--ink)}
+
+.save{margin-top:40px}
+.save-btn{
+  display:inline-block;
+  font-family:var(--mono);font-size:11px;letter-spacing:.25em;
+  border:1px solid var(--ink);background:none;color:var(--ink);
+  padding:12px 22px;cursor:pointer;
+  transition:background .15s ease,color .15s ease;
+}
+.save-btn:hover{background:var(--ink);color:var(--paper)}
+
+.note{margin-top:26px;color:var(--ink-70);font-size:14px;max-width:52ch}
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <site-nav><a href="/">SACRVM.DEV</a></site-nav>
+
+  <header class="head">
+    <h1>Marcus Wilhelm</h1>
+    <p>SENIOR SOFTWARE DEVELOPER / TECHNICAL LEAD</p>
+  </header>
+
+  <section>
+    <h2 class="tab">CONTACT</h2>
+
+    <div class="meta">
+      <div class="meta-row">
+        <span class="meta-key">MOBILE</span>
+        <a id="tel" href="#"><noscript>see below</noscript></a>
+      </div>
+      <div class="meta-row">
+        <span class="meta-key">MAIL</span>
+        <a href="mailto:mail@sacrvm.dev">mail@sacrvm.dev</a>
+      </div>
+      <div class="meta-row">
+        <span class="meta-key">WEB</span>
+        <a href="/">sacrvm.dev</a>
+      </div>
+      <div class="meta-row">
+        <span class="meta-key">GITHUB</span>
+        <a href="https://github.com/SACRVM">github.com/SACRVM ↗</a>
+      </div>
+    </div>
+
+    <div class="save">
+      <button class="save-btn" id="save" type="button">SAVE CONTACT ↓ VCF</button>
+    </div>
+
+    <p class="note">
+      The button builds a vCard right here in your browser and hands it to
+      your address book. Like the rest of this site: no cookies, no tracking,
+      nothing loaded from anywhere else.
+    </p>
+    <noscript>
+      <p class="note">
+        Without JavaScript the number stays unassembled &mdash; write to
+        <a href="mailto:mail@sacrvm.dev">mail@sacrvm.dev</a> and I will send
+        it over.
+      </p>
+    </noscript>
+  </section>
+
+  <site-footer><a href="/imprint.html">Imprint &amp; Disclaimer</a></site-footer>
+
+</div>
+
+<script>
+/* The phone number is assembled at runtime — deliberately not stored in
+   plain text anywhere in this public repository. Keep it that way. */
+(function(){
+  'use strict';
+
+  function dec(b64, key){
+    var raw = atob(b64), out = '';
+    for (var i = 0; i < raw.length; i++)
+      out += String.fromCharCode(raw.charCodeAt(i) ^ key.charCodeAt(i % key.length));
+    return out;
+  }
+
+  var phone = dec('eHV6cmd6ZWFwYGB8c3JzZWc=', 'SACRVM');
+
+  var tel = document.getElementById('tel');
+  tel.textContent = phone;
+  tel.href = 'tel:' + phone.replace(/ /g, '');
+
+  document.getElementById('save').addEventListener('click', function(){
+    var vcf = [
+      'BEGIN:VCARD',
+      'VERSION:3.0',
+      'N:Wilhelm;Marcus;;;',
+      'FN:Marcus Wilhelm',
+      'TITLE:Senior Software Developer / Technical Lead',
+      'TEL;TYPE=CELL:' + phone.replace(/ /g, ''),
+      'EMAIL;TYPE=INTERNET:mail@sacrvm.dev',
+      'URL:https://sacrvm.dev/',
+      'END:VCARD'
+    ].join('\r\n') + '\r\n';
+
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([vcf], {type:'text/vcard'}));
+    a.download = 'marcus-wilhelm.vcf';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(function(){ URL.revokeObjectURL(a.href); }, 4000);
+  });
+})();
+</script>
+
+</body>
+</html>
