@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SACRVM APPKIT — the kit, a desktop, and two apps to prove it — SACRVM</title>
+<meta name="description" content="A zero-dependency HTML UI kit — forty-one web components, one-variable theming, install-by-URL apps — with a live desktop at desktop.sacrvm.dev to try in the browser.">
+<link rel="canonical" href="https://sacrvm.dev/blog/2026-08-28-sacrvm-appkit.html">
+<meta property="og:site_name" content="SACRVM">
+<meta property="og:title" content="SACRVM APPKIT — the kit, a desktop, and two apps to prove it — SACRVM">
+<meta property="og:description" content="A zero-dependency HTML UI kit — forty-one web components, one-variable theming, install-by-URL apps — with a live desktop at desktop.sacrvm.dev to try in the browser.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://sacrvm.dev/blog/2026-08-28-sacrvm-appkit.html">
+<meta property="og:image" content="https://sacrvm.dev/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="article:published_time" content="2026-08-28">
+<link rel="alternate" type="application/atom+xml" title="SACRVM — Blog" href="/blog/feed.xml">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="stylesheet" href="/assets/site.css">
+<script src="/assets/site.js" defer></script>
+</head>
+<body>
+
+<div class="page">
+
+  <site-nav page="blog"><a href="/">SACRVM.DEV</a></site-nav>
+
+  <header class="blog-head">
+    <a class="back" href="/blog/">&larr; BLOG</a>
+    <div class="date">2026-08-28</div>
+    <h1>SACRVM APPKIT — the kit, a desktop, and two apps to prove it</h1>
+  </header>
+
+  <article class="prose">
+<p><a href="https://github.com/SACRVM/sacrvm-appkit">SACRVM APPKIT</a> is a UI kit for the web with no build step: some forty <code>sac-*</code> web components, a theming engine that derives every colour from one <code>--accent</code> variable, and an app system that installs apps by URL. You vendor one folder of plain files, link one stylesheet and one script, and write HTML. No framework, no bundler, no node_modules — F5 is the toolchain.</p>
+<h2>Try it before reading on</h2>
+<p>The proof runs at <a href="https://desktop.sacrvm.dev/">desktop.sacrvm.dev</a>: a desktop in your browser. It is a <strong>host, not an app</strong> — it owns the home screen and the bare stage, and every app on it is installed by URL from somebody else's repository. Reading a manifest and running code are two separate steps: the desktop shows what it found, names the origin on every tile, and asks before anything executes. The app list lives in your browser's localStorage — no server, no account.</p>
+<p>On your first visit the desktop offers its two reference apps, so the stage does not start empty:</p>
+<ul><li><a href="https://github.com/SACRVM/sacrvm-calculator">Calculator</a> — a <code>window</code> app: one custom element, one classic script, and a proper two-register pocket-calculator brain in ~400 dependency-free lines.</li><li><a href="https://github.com/SACRVM/sacrvm-notes">Notes</a> — a <code>view</code> app: it draws its own chrome, the note list is the rail, and every note gets its own link.</li></ul>
+<p>Their repos are the minimal examples to copy when you write your own app: an <code>app.json</code> the desktop reads, an <code>app.js</code> it mounts, nothing else. And handing somebody your app is just a link — <code>https://desktop.sacrvm.dev/?install=&lt;your-repo-url&gt;</code> runs the ordinary confirm flow.</p>
+<h2>The kit itself</h2>
+<ul><li><strong>Two files.</strong> <code>kit/css/ui.css</code> carries the design tokens and the global stylesheet, <code>kit/js/all.js</code> carries every component. The <code>kit/</code> folder is vendored verbatim; <code>kit/VERSION</code> says which release you hold.</li><li><strong>The components.</strong> Floating draggable windows, a nav ribbon with burger panel, sidebar and split workspace layouts, dialogs, menus, toasts, tooltips, tabs — and form controls down to a colour picker and a date field.</li><li><strong>Seed-derived theming.</strong> Light, dark and auto via <code>data-theme</code>; every colour is <code>color-mix()</code>-derived from one <code>--accent</code>. An app re-themes from a single variable, at runtime, with no build.</li><li><strong>A runtime, not just widgets.</strong> <code>window.sac.*</code> brings the router, the dialog and toast services, a Ctrl-K command palette, sandboxed storage, and <code>sac.apps</code> — the install-by-URL system the desktop is built on.</li></ul>
+<h2>No build step, on purpose</h2>
+<p>Vendoring is the whole upgrade story: delete <code>kit/</code>, unzip the new release, F5. The kit ships as a ZIP of plain files from <a href="https://github.com/SACRVM/sacrvm-appkit/releases">GitHub Releases</a>, MIT licensed. Nothing is transpiled, nothing is locked — what you commit is what runs.</p>
+<hr>
+<p>The style guide with every token and component lives in the <a href="https://github.com/SACRVM/sacrvm-appkit">appkit repo</a>; the desktop's long-form "How this works" is at <a href="https://desktop.sacrvm.dev/how.html">desktop.sacrvm.dev/how.html</a>. Feedback and bug reports to the <a href="https://github.com/SACRVM/sacrvm-appkit/issues">issue tracker</a> or <a href="mailto:mail@sacrvm.dev">mail@sacrvm.dev</a>.</p>
+<p><em>F5 is the toolchain.</em></p>
+  </article>
+
+  <nav class="entry-nav">
+    <a rel="prev" href="/blog/2026-08-15-just-play-0-6-0-beta.html"><span class="lbl">&larr; OLDER</span><span class="t">JUST PLAY 0.6.0 beta — The Library</span></a>
+    <a class="index" href="/blog/">&larr; BLOG</a>
+    <span></span>
+  </nav>
+
+  <site-footer page="blog"><a href="/">Home</a></site-footer>
+
+</div>
+
+</body>
+</html>
