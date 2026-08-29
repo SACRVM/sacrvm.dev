@@ -1,0 +1,610 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SACRVM — The Map</title>
+<meta name="description" content="The SACRVM repositories and who uses whom — one constellation, lines drawn direct. Click a box for the dense version and the links.">
+<link rel="canonical" href="https://sacrvm.dev/map.html">
+<meta property="og:site_name" content="SACRVM">
+<meta property="og:title" content="SACRVM — The Map">
+<meta property="og:description" content="The SACRVM repositories and who uses whom — one constellation, lines drawn direct.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sacrvm.dev/map.html">
+<meta property="og:image" content="https://sacrvm.dev/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" type="application/atom+xml" title="SACRVM — Blog" href="/blog/feed.xml">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon.ico" sizes="32x32">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="stylesheet" href="assets/site.css">
+<script src="assets/site.js" defer></script>
+<style>
+/* ============================================================================
+   The map. Eighteen public repositories as one constellation: 1px boxes
+   scattered off-grid, straight lines flying box to box. Solid lines are
+   code dependencies (arrow points at the thing being used), dashed lines
+   are runtime relations. Lines may cross — that is the weather up here.
+   Everything else on this page is the shared base.
+   ========================================================================== */
+
+.map-head{padding:20px 0 44px}
+.map-head h1{font-size:26px;font-weight:600;letter-spacing:-.01em}
+.map-head p{margin-top:10px;color:var(--ink-70);font-size:15px;max-width:62ch}
+
+.legend{
+  margin-top:18px;
+  font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:var(--ink-70);
+  display:flex;gap:26px;flex-wrap:wrap;align-items:center;
+}
+.legend svg{vertical-align:-2px}
+
+/* The board pans sideways on small screens rather than shrinking to fog.
+   940px fits inside the page column, so desktop never grows a scrollbar. */
+.board-scroll{overflow-x:auto;padding-bottom:6px}
+.board{display:block;min-width:940px;width:100%;height:auto}
+
+.board .edge{stroke:var(--ink);stroke-width:1;fill:none;opacity:.42}
+.board .edge.run{stroke-dasharray:3 4;opacity:.34}
+.board .arrow{fill:var(--ink);opacity:.42}
+
+/* will-change + translateZ + backface: the appkit fix — each box lives on
+   its own compositor layer, so the label rasterizes once and the drift
+   moves a texture instead of re-snapping glyphs every frame. */
+.board .node{
+  cursor:pointer;
+  will-change:transform;transform:translateZ(0);backface-visibility:hidden;
+}
+.board .node:focus,.board .node:focus-visible{outline:none}
+.board .node rect{fill:var(--paper);stroke:var(--ink);stroke-width:1}
+.board .node text{
+  font-family:var(--mono);font-size:11px;letter-spacing:.04em;
+  fill:var(--ink);text-rendering:geometricPrecision;
+}
+.board .node:hover rect,.board .node.sel rect{fill:var(--ink)}
+.board .node:hover text,.board .node.sel text{fill:var(--paper)}
+
+/* The click: a quick press-and-release before the dialog opens. Scale
+   lives on an inner group so it never fights the drift's translate. */
+.board .node .press{transform-box:fill-box;transform-origin:center}
+.board .node.pressed .press{animation:press .26s ease}
+@keyframes press{
+  0%{transform:scale(1)}
+  35%{transform:scale(.92)}
+  70%{transform:scale(1.05)}
+  100%{transform:scale(1)}
+}
+
+/* Hovering a node dims everything that is not its neighborhood. */
+.board .node,.board .edge,.board .arrow{transition:opacity .18s ease}
+.board.dim .node{opacity:.3}
+.board.dim .edge,.board.dim .arrow{opacity:.12}
+.board.dim .node.lit{opacity:1}
+.board.dim .edge.lit,.board.dim .arrow.lit{opacity:.85}
+
+/* -- The popup: one thin dialog, filled by clicking a box -------------------- */
+
+dialog{
+  margin:auto;
+  border:1px solid var(--line);background:var(--paper);color:var(--ink);
+  padding:30px 32px;max-width:600px;width:calc(100% - 48px);
+}
+dialog::backdrop{background:rgba(18,18,17,.45)}
+
+dialog .panel-head{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+dialog .panel-head h3{font-size:19px;font-weight:600;letter-spacing:-.01em;font-family:var(--mono)}
+dialog p.blurb{margin-top:10px;color:var(--ink-70);font-size:15px;max-width:70ch}
+
+dialog .rel{
+  margin-top:14px;
+  font-family:var(--mono);font-size:11px;letter-spacing:.06em;
+  display:flex;flex-direction:column;gap:6px;
+}
+dialog .rel-row{display:flex;gap:12px;align-items:baseline;flex-wrap:wrap}
+dialog .rel-key{color:var(--ink-45);letter-spacing:.2em;flex:none;width:10ch;white-space:nowrap}
+dialog .rel button{
+  font:inherit;background:none;border:none;padding:0;cursor:pointer;color:var(--ink);
+  border-bottom:1px solid var(--ink-45);
+}
+dialog .rel button:hover{border-bottom-color:var(--ink)}
+
+dialog .links{margin-top:20px;display:flex;flex-wrap:wrap;gap:8px}
+dialog .links a{
+  font-family:var(--mono);font-size:10px;letter-spacing:.2em;
+  border:1px solid var(--ink);padding:8px 14px;text-decoration:none;
+  transition:background .15s ease,color .15s ease;
+}
+dialog .links a:hover{background:var(--ink);color:var(--paper)}
+
+dialog form{margin-top:24px}
+.dialog-close{
+  font-family:var(--mono);font-size:10px;letter-spacing:.2em;
+  border:1px solid var(--ink);background:none;color:var(--ink);
+  padding:8px 16px;cursor:pointer;
+  transition:background .15s ease,color .15s ease;
+}
+.dialog-close:hover{background:var(--ink);color:var(--paper)}
+
+.no-js-list{columns:2;gap:48px;font-size:15px;line-height:2}
+
+@media (max-width:720px){
+  dialog{padding:22px 20px}
+  .no-js-list{columns:1}
+}
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <site-nav page="map"><a href="./">SACRVM.DEV</a></site-nav>
+
+  <header class="map-head">
+    <h1>The map</h1>
+    <p>
+      Sixteen public repositories on <a href="https://github.com/SACRVM">github.com/SACRVM</a>,
+      and who uses whom. Lines fly direct, the loners float free &mdash; and
+      the site you are reading sits this one out. Click a box for the dense
+      version and the links.
+    </p>
+    <div class="legend">
+      <span><svg width="34" height="10" aria-hidden="true"><line x1="0" y1="5" x2="26" y2="5" stroke="currentColor"/><path d="M26 2 32 5 26 8 Z" fill="currentColor"/></svg> USES</span>
+      <span><svg width="34" height="10" aria-hidden="true"><line x1="0" y1="5" x2="26" y2="5" stroke="currentColor" stroke-dasharray="3 4"/><path d="M26 2 32 5 26 8 Z" fill="currentColor"/></svg> RUNS ON</span>
+    </div>
+  </header>
+
+  <section>
+    <h2 class="tab">16 PUBLIC REPOSITORIES</h2>
+
+    <div class="board-scroll">
+      <svg class="board" id="board" viewBox="0 0 1060 700" role="group"
+           aria-label="Dependency map of all public SACRVM repositories"></svg>
+    </div>
+
+    <noscript>
+      <ul class="no-js-list">
+        <li><a href="https://github.com/SACRVM/sacrvm-appkit">sacrvm-appkit</a></li>
+        <li><a href="https://github.com/SACRVM/sacrvm-desktop">sacrvm-desktop</a></li>
+        <li><a href="https://github.com/SACRVM/sacrvm-calculator">sacrvm-calculator</a></li>
+        <li><a href="https://github.com/SACRVM/sacrvm-notes">sacrvm-notes</a></li>
+        <li><a href="https://github.com/SACRVM/color-bucket">color-bucket</a></li>
+        <li><a href="https://github.com/SACRVM/sacrvm-app-template">sacrvm-app-template</a></li>
+        <li><a href="https://github.com/SACRVM/sac-md-editor">sac-md-editor</a></li>
+        <li><a href="https://github.com/SACRVM/sacrvm-newskit">sacrvm-newskit</a></li>
+        <li><a href="https://github.com/SACRVM/just-play">just-play</a></li>
+        <li><a href="https://github.com/SACRVM/the-fishbowl">the-fishbowl</a></li>
+        <li><a href="https://github.com/SACRVM/husky">husky</a></li>
+        <li><a href="https://github.com/SACRVM/retro-crt">retro-crt</a></li>
+        <li><a href="https://github.com/SACRVM/firepit-ai">firepit-ai</a></li>
+        <li><a href="https://github.com/SACRVM/grok-mcp">grok-mcp</a></li>
+        <li><a href="https://github.com/SACRVM/admin-discord-mcp-bot">admin-discord-mcp-bot</a></li>
+        <li><a href="https://github.com/SACRVM/claude-code-statusline">claude-code-statusline</a></li>
+      </ul>
+    </noscript>
+
+    <dialog id="repo-dialog">
+      <div id="repo-dialog-body"></div>
+      <form method="dialog"><button class="dialog-close">CLOSE</button></form>
+    </dialog>
+  </section>
+
+  <site-footer page="map"><a href="imprint.html">Imprint &amp; Disclaimer</a></site-footer>
+
+</div>
+
+<script>
+/* The board. Hand-placed coordinates — scattered on purpose, but never
+   guessed: every node and edge below is verified against the repositories
+   themselves — NuGet PackageReferences, vendored kit/ folders, the
+   desktop's install flow. Placement rule: lines may cross lines, lines
+   never cross an unrelated box. */
+(function(){
+  'use strict';
+
+  var GH = 'https://github.com/SACRVM/';
+
+  /* [x, y] is the box center. Box width derives from the label: Martian
+     Mono's advance is 0.7em (measured for the CV portrait), so at 11px a
+     character is 7.7px wide — computed, not guessed. */
+  var NODES = [
+    { id:'sacrvm-appkit', x:310, y:400, lang:'JAVASCRIPT',
+      blurb:'A zero-dependency HTML UI kit, vendored as plain files: 41 sac-* web components — floating windows, workspace layouts, dialogs, toasts, a Ctrl-K command palette — with seed-derived theming, every colour mixed at runtime from one --accent variable. window.sac.* adds a router, sandboxed storage and the install-by-URL app system. No framework, no bundler; F5 is the toolchain.',
+      links:[['SOURCE', GH+'sacrvm-appkit'],['STYLE GUIDE','https://sacrvm.github.io/sacrvm-appkit/'],['RELEASES', GH+'sacrvm-appkit/releases']] },
+
+    { id:'sacrvm-desktop', x:600, y:520, lang:'JAVASCRIPT',
+      blurb:'A web desktop you fill yourself: paste an app repository’s URL and it installs. A host, not an app — it reads the manifest, names the origin on every tile, and asks before anything runs. The app list lives in your browser’s localStorage; no server, no account. The standing proof that the APPKIT app system carries weight.',
+      links:[['SOURCE', GH+'sacrvm-desktop'],['LIVE','https://desktop.sacrvm.dev/'],['RELEASES', GH+'sacrvm-desktop/releases']] },
+
+    { id:'sacrvm-calculator', x:700, y:100, lang:'JAVASCRIPT',
+      blurb:'The desktop’s first reference app: a four-function pocket calculator with a proper two-register brain in ~400 dependency-free lines. One custom element, one classic script — the worked example of a window app, installable on any desktop by URL.',
+      links:[['SOURCE', GH+'sacrvm-calculator'],['PAGES','https://sacrvm.github.io/sacrvm-calculator/'],['RELEASES', GH+'sacrvm-calculator/releases']] },
+
+    { id:'sacrvm-notes', x:790, y:225, lang:'JAVASCRIPT',
+      blurb:'The second reference app, and the other archetype: a view app that draws its own chrome. The note list is the desktop’s rail, every note gets its own link, and the notes live in the kit’s sandboxed storage.',
+      links:[['SOURCE', GH+'sacrvm-notes'],['PAGES','https://sacrvm.github.io/sacrvm-notes/'],['RELEASES', GH+'sacrvm-notes/releases']] },
+
+    { id:'color-bucket', x:830, y:355, lang:'JAVASCRIPT',
+      blurb:'Mix colours like paint, not like numbers: paint pots combined in parts — 3 parts cadmium yellow, 1 part ultramarine — on shelves from oils and earths to the C64’s sixteen. A revival of the 2013 iPhone app of the same name, rebuilt as an APPKIT app.',
+      links:[['SOURCE', GH+'color-bucket'],['PAGES','https://sacrvm.github.io/color-bucket/'],['RELEASES', GH+'color-bucket/releases']] },
+
+    { id:'sacrvm-app-template', x:840, y:465, lang:'JAVASCRIPT',
+      blurb:'Start here: one repo, one app, the right shape from commit one — app.json, app.js, app.css, a vendored kit/. Use the template, rename five strings, enable Pages, and hand the desktop your URL.',
+      links:[['SOURCE', GH+'sacrvm-app-template'],['PAGES','https://sacrvm.github.io/sacrvm-app-template/']] },
+
+    { id:'sac-md-editor', x:135, y:555, lang:'JAVASCRIPT',
+      blurb:'An Obsidian-style live-preview markdown editor as a single web component: the line your caret sits on shows raw markdown, every other line shows the rendered result, syntax markers dimmed. No mode switch, no build step — an APPKIT add-on usable on any page that provides marked and DOMPurify.',
+      links:[['SOURCE', GH+'sac-md-editor']] },
+
+    { id:'sacrvm-newskit', x:120, y:300, lang:'JAVASCRIPT',
+      blurb:'APPKIT’s editorial sister: the same tokens and theming, specialised for reading. Article primitives, a condensed headline treatment, a publication hub — and sources and provenance as first-class citizens, because that is what a researched article stands on. Scaffold stage.',
+      links:[['SOURCE', GH+'sacrvm-newskit']] },
+
+    { id:'just-play', x:975, y:90, lang:'C#',
+      blurb:'The J.U.S.T. suite — JUST PLAY, JUST TAG, JUST STREAM and a headless CLI on one engine: Camelot key, BPM, energy and loudness analysis built for harmonic mixing. Not a plug-in for someone else’s library; the library itself. .NET 10 and Avalonia, in beta.',
+      links:[['SOURCE', GH+'just-play'],['JUST.SACRVM.DEV','https://just.sacrvm.dev/'],['RELEASES', GH+'just-play/releases']] },
+
+    { id:'the-fishbowl', x:990, y:210, lang:'C#',
+      blurb:'Self-hosted personal memory and an assistant on top of it: your data is a single SQLite file you can take anywhere, the API is OpenAPI-described, and agents reach the memory over MCP. Runs under the Husky launcher — supervised, self-updating, graceful stop before each binary swap — and its startup banner is drawn with Retro.Crt. Early, and deliberately being slimmed.',
+      links:[['SOURCE', GH+'the-fishbowl'],['RELEASES', GH+'the-fishbowl/releases']] },
+
+    { id:'husky', x:940, y:350, lang:'C#',
+      blurb:'The launcher your .NET app doesn’t have to write: Husky starts it, watches it, restarts it when it crashes, and fetches updates from GitHub Releases or a plain JSON manifest — graceful stop, binary swap, back up again. Its console-first UI is drawn with Retro.Crt. Three lines of Husky.Client and any long-running app ships supervised. Woof.',
+      links:[['SOURCE', GH+'husky'],['RELEASES', GH+'husky/releases'],['NUGET','https://www.nuget.org/packages/Husky.Client']] },
+
+    { id:'retro-crt', x:1000, y:480, lang:'C#',
+      blurb:'The Pascal CRT unit reborn for modern .NET: TextColor, GotoXY and friends, truecolor with graceful fallback down to NO_COLOR, nine themes, curated blocks from framed banners to spinners, and a DOS-style full-screen TUI layer. Tiny, dependency-free, trim- and AOT-clean — with Snake, Tetris and Invaders in the repo to prove it.',
+      links:[['SOURCE', GH+'retro-crt'],['DOCS','https://sacrvm.github.io/retro-crt/'],['RELEASES', GH+'retro-crt/releases'],['NUGET','https://www.nuget.org/packages/Retro.Crt']] },
+
+    { id:'firepit-ai', x:170, y:120, lang:'C#',
+      blurb:'A native Windows shell hosting AI agent sessions — Claude Code and friends — in tabs that glow from igniting to embers. WPF and ConPTY, no Electron; an MCP bridge lets the agents inside open tabs, message neighboring projects, and search a shared knowledge store. Local-first, self-updating — and sacrvm.dev is written inside it.',
+      links:[['SOURCE', GH+'firepit-ai'],['RELEASES', GH+'firepit-ai/releases']] },
+
+    { id:'grok-mcp', x:490, y:180, lang:'C#',
+      blurb:'A local MCP server wrapping the xAI Grok API, so Claude Code has a second opinion on call: chat with sessions, a fast non-reasoning lane, a multi-agent mode for the hard problems — plus image generation, editing, vision and video. One background process, many parallel clients, loopback-only.',
+      links:[['SOURCE', GH+'grok-mcp'],['RELEASES', GH+'grok-mcp/releases']] },
+
+    { id:'admin-discord-mcp-bot', x:460, y:645, lang:'C#',
+      blurb:'Full Discord guild administration for AI agents, over the REST API only: 62 tools across channels, roles, members, events, webhooks, emojis. Multi-tenant — the bot token arrives per request — and every write is dryRun by default: the agent proposes, you confirm. Self-hosted, no gateway socket, no presence.',
+      links:[['SOURCE', GH+'admin-discord-mcp-bot'],['RELEASES', GH+'admin-discord-mcp-bot/releases']] },
+
+    { id:'claude-code-statusline', x:860, y:630, lang:'SHELL',
+      blurb:'A status line for Claude Code showing real usage straight from Anthropic’s rate-limit numbers — no self-invented limits, no token guessing. Project, branch, model, context bar, 5-hour and 7-day budgets with reset countdowns. One shell script, Catppuccin Mocha, no jq.',
+      links:[['SOURCE', GH+'claude-code-statusline']] }
+  ];
+
+  /* kind 'uses' = code dependency (vendored kit/ or NuGet reference),
+     kind 'run'  = runtime relation (installs on the desktop; HTTP redirect). */
+  var EDGES = [
+    { from:'sacrvm-desktop',      to:'sacrvm-appkit', kind:'uses' },
+    { from:'sacrvm-calculator',   to:'sacrvm-appkit', kind:'uses' },
+    { from:'sacrvm-notes',        to:'sacrvm-appkit', kind:'uses' },
+    { from:'color-bucket',        to:'sacrvm-appkit', kind:'uses' },
+    { from:'sacrvm-app-template', to:'sacrvm-appkit', kind:'uses' },
+    { from:'sac-md-editor',       to:'sacrvm-appkit', kind:'uses' },
+    { from:'sacrvm-newskit',      to:'sacrvm-appkit', kind:'uses' },
+    { from:'husky',               to:'retro-crt',     kind:'uses' },
+    { from:'the-fishbowl',        to:'husky',         kind:'run' },
+    { from:'the-fishbowl',        to:'retro-crt',     kind:'uses' },
+    { from:'sacrvm-calculator',   to:'sacrvm-desktop', kind:'run' },
+    { from:'sacrvm-notes',        to:'sacrvm-desktop', kind:'run' },
+    { from:'color-bucket',        to:'sacrvm-desktop', kind:'run' },
+    { from:'sacrvm-app-template', to:'sacrvm-desktop', kind:'run' }
+  ];
+
+  var BOX_H = 34, CHAR_W = 7.7, PAD = 26;
+
+  var byId = {};
+  NODES.forEach(function(n){
+    n.w = Math.max(Math.round(n.id.length * CHAR_W) + PAD, 64);
+    n.l = n.x - n.w/2; n.r = n.x + n.w/2;
+    n.t = n.y - BOX_H/2; n.b = n.y + BOX_H/2;
+    n.ox = 0; n.oy = 0;   /* the drift offset, moved by the loop below */
+    byId[n.id] = n;
+  });
+
+  var SVG = 'http://www.w3.org/2000/svg';
+  var board = document.getElementById('board');
+  var dlg = document.getElementById('repo-dialog');
+  var dlgBody = document.getElementById('repo-dialog-body');
+
+  function el(name, attrs, parent){
+    var e = document.createElementNS(SVG, name);
+    for (var a in attrs) e.setAttribute(a, attrs[a]);
+    (parent || board).appendChild(e);
+    return e;
+  }
+
+  /* -- Edges: straight shots, box edge to box edge -------------------------- */
+
+  function r1(v){ return Math.round(v * 10) / 10; }
+
+  /* Where the line from (cx,cy) toward (tx,ty) leaves a w×BOX_H rectangle
+     centered on (cx,cy). */
+  function borderPoint(cx, cy, w, tx, ty){
+    var dx = tx - cx, dy = ty - cy;
+    var s = Math.min(
+      dx ? (w / 2) / Math.abs(dx) : Infinity,
+      dy ? (BOX_H / 2) / Math.abs(dy) : Infinity);
+    return [cx + dx * s, cy + dy * s];
+  }
+
+  /* All edge geometry lives here, so the drift below can keep re-aiming
+     the lines while the boxes wander. Arrowhead rotates along the line;
+     the stroke stops where the arrowhead begins. */
+  function aimEdge(e){
+    var a = byId[e.edge.from], b = byId[e.edge.to];
+    var ax = a.x + a.ox, ay = a.y + a.oy, bx = b.x + b.ox, by = b.y + b.oy;
+    var p1 = borderPoint(ax, ay, a.w, bx, by);
+    var p2 = borderPoint(bx, by, b.w, ax, ay);
+    var dx = p2[0] - p1[0], dy = p2[1] - p1[1];
+    var len = Math.sqrt(dx * dx + dy * dy) || 1;
+    var q = [p2[0] - dx / len * 6, p2[1] - dy / len * 6];
+    e.path.setAttribute('d',
+      'M' + r1(p1[0]) + ' ' + r1(p1[1]) + ' L' + r1(q[0]) + ' ' + r1(q[1]));
+    e.arrow.setAttribute('transform',
+      'translate(' + r1(p2[0]) + ' ' + r1(p2[1]) + ') rotate(' +
+      r1(Math.atan2(dy, dx) * 180 / Math.PI) + ')');
+  }
+
+  var edgeEls = [];
+  EDGES.forEach(function(edge){
+    var cls = 'edge' + (edge.kind === 'run' ? ' run' : '');
+    var e = {
+      edge: edge,
+      path: el('path', { 'class': cls, 'data-from': edge.from, 'data-to': edge.to }),
+      arrow: el('polygon', { points: '0,0 -7,-3.5 -7,3.5', 'class': 'arrow',
+        'data-from': edge.from, 'data-to': edge.to })
+    };
+    aimEdge(e);
+    edgeEls.push(e);
+  });
+
+  /* -- Nodes ---------------------------------------------------------------- */
+
+  var nodeEls = {};
+  NODES.forEach(function(n){
+    var g = el('g', { 'class':'node', tabindex:0, role:'button',
+      'data-id':n.id, 'aria-label':n.id + ' — show description and links' });
+    /* Inner group carries the press animation, outer carries the drift. */
+    var press = el('g', { 'class':'press' }, g);
+    el('rect', { x:n.l, y:n.t, width:n.w, height:BOX_H }, press);
+    var t = el('text', { x:n.x, y:n.y, 'text-anchor':'middle',
+      'dominant-baseline':'central' }, press);
+    t.textContent = n.id;
+    nodeEls[n.id] = g;
+  });
+
+  /* -- Neighborhood highlight on hover/focus -------------------------------- */
+
+  function neighborhood(id){
+    var lit = { nodes:{}, edges:[] };
+    lit.nodes[id] = true;
+    edgeEls.forEach(function(e){
+      if (e.edge.from === id || e.edge.to === id){
+        lit.nodes[e.edge.from] = true;
+        lit.nodes[e.edge.to] = true;
+        lit.edges.push(e);
+      }
+    });
+    return lit;
+  }
+
+  function light(id){
+    var lit = neighborhood(id);
+    board.classList.add('dim');
+    NODES.forEach(function(n){
+      nodeEls[n.id].classList.toggle('lit', !!lit.nodes[n.id]);
+    });
+    edgeEls.forEach(function(e){
+      var on = lit.edges.indexOf(e) !== -1;
+      e.path.classList.toggle('lit', on);
+      e.arrow.classList.toggle('lit', on);
+    });
+  }
+
+  function unlight(){
+    board.classList.remove('dim');
+  }
+
+  /* -- Selection and the popup ---------------------------------------------- */
+
+  var selected = null;
+
+  function relNames(id, dir){
+    return EDGES.filter(function(e){ return e[dir === 'uses' ? 'from' : 'to'] === id; })
+      .map(function(e){ return dir === 'uses' ? e.to : e.from; });
+  }
+
+  function select(id, fromHash){
+    var n = byId[id];
+    if (!n || !dlg.showModal) return;
+    if (selected) nodeEls[selected].classList.remove('sel');
+    selected = id;
+    nodeEls[id].classList.add('sel');
+
+    var uses = relNames(id, 'uses'), usedBy = relNames(id, 'usedBy');
+    var html = '<div class="panel-head"><h3>' + n.id + '</h3>' +
+               '<span class="chip">' + n.lang + '</span></div>' +
+               '<p class="blurb">' + n.blurb + '</p>';
+    if (uses.length || usedBy.length){
+      html += '<div class="rel">';
+      if (uses.length)
+        html += '<div class="rel-row"><span class="rel-key">USES</span>' +
+          uses.map(function(x){ return '<button type="button" data-goto="' + x + '">' + x + '</button>'; }).join('') + '</div>';
+      if (usedBy.length)
+        html += '<div class="rel-row"><span class="rel-key">USED BY</span>' +
+          usedBy.map(function(x){ return '<button type="button" data-goto="' + x + '">' + x + '</button>'; }).join('') + '</div>';
+      html += '</div>';
+    }
+    html += '<div class="links">' + n.links.map(function(l){
+      return '<a href="' + l[1] + '">' + l[0] + ' ↗</a>';
+    }).join('') + '</div>';
+    dlgBody.innerHTML = html;
+    if (!dlg.open) dlg.showModal();
+
+    if (!fromHash && history.replaceState)
+      history.replaceState(null, '', '#' + encodeURIComponent(id));
+  }
+
+  /* Press first, popup after — the click is felt before it is answered.
+     `reduced` is assigned below, before anyone can click. */
+  function clickNode(id){
+    var g = nodeEls[id];
+    if (reduced){ select(id); return; }
+    g.classList.remove('pressed');
+    void g.getBoundingClientRect();   /* restart the animation */
+    g.classList.add('pressed');
+    setTimeout(function(){ g.classList.remove('pressed'); }, 300);
+    setTimeout(function(){ select(id); }, 180);
+  }
+
+  dlgBody.addEventListener('click', function(ev){
+    var b = ev.target.closest('button[data-goto]');
+    if (b) select(b.getAttribute('data-goto'));
+  });
+  /* Backdrop click closes, like the dialog on the front page. */
+  dlg.addEventListener('click', function(ev){
+    if (ev.target === dlg) dlg.close();
+  });
+  dlg.addEventListener('close', function(){
+    if (selected) nodeEls[selected].classList.remove('sel');
+    selected = null;
+  });
+
+  NODES.forEach(function(n){
+    var g = nodeEls[n.id];
+    g.addEventListener('mouseenter', function(){ light(n.id); });
+    g.addEventListener('mouseleave', unlight);
+    g.addEventListener('focus', function(){ light(n.id); });
+    g.addEventListener('blur', unlight);
+    g.addEventListener('click', function(){ clickNode(n.id); });
+    g.addEventListener('keydown', function(ev){
+      if (ev.key === 'Enter' || ev.key === ' '){ ev.preventDefault(); clickNode(n.id); }
+    });
+  });
+
+  var hash = decodeURIComponent(location.hash.replace('#',''));
+  if (hash && byId[hash]) setTimeout(function(){ select(hash, true); }, 350);
+
+  /* -- Motion, behind the same gate as everything else on this site --------- */
+
+  /* ?still renders the finished board with no motion — for screenshots
+     and anyone who wants the quiet version without an OS setting. */
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduced || /(^|[?&])still\b/.test(location.search)) return;
+
+  /* Traces draw themselves in, solid first, then the dashed runtime layer
+     and the boxes fade up. */
+  edgeEls.forEach(function(e, i){
+    var isRun = e.edge.kind === 'run';
+    var p = e.path;
+    if (!isRun){
+      var len = p.getTotalLength();
+      p.style.strokeDasharray = len;
+      p.style.strokeDashoffset = len;
+      p.style.transition = 'stroke-dashoffset .5s ease ' + (i * 45) + 'ms';
+    } else {
+      p.style.opacity = 0;
+      p.style.transition = 'opacity .4s ease ' + (500 + i * 30) + 'ms';
+    }
+    e.arrow.style.opacity = 0;
+    e.arrow.style.transition = 'opacity .3s ease ' + (600 + i * 30) + 'ms';
+  });
+  requestAnimationFrame(function(){ requestAnimationFrame(function(){
+    edgeEls.forEach(function(e){
+      if (e.edge.kind !== 'run') e.path.style.strokeDashoffset = 0;
+      else e.path.style.opacity = '';
+      e.arrow.style.opacity = '';
+    });
+    /* Clean up inline dash styles once drawn, so hover-dimming and the
+       dashed pattern are back in CSS's hands. */
+    setTimeout(function(){
+      edgeEls.forEach(function(e){
+        e.path.style.strokeDasharray = '';
+        e.path.style.strokeDashoffset = '';
+        e.path.style.transition = '';
+        e.arrow.style.transition = '';
+      });
+    }, 1400);
+  }); });
+
+  /* -- The drift: every box wanders, slow and random ------------------------ */
+
+  /* Two incommensurate sines per axis, random phase, rate and reach per
+     box — organic, cheap, and never in step with a neighbor. Hovering a
+     box freezes the whole picture where it stands, pulls that box's
+     neighbors a step closer, and lets go on mouse-out. */
+  var APPROACH = 26;
+  var drift = { t: Math.random() * 100, frozen: false, hovered: null };
+
+  NODES.forEach(function(n){
+    n.ph = [0, 0, 0, 0].map(function(){ return Math.random() * 6.283; });
+    n.fr = [0, 0, 0, 0].map(function(){ return 0.3 + Math.random() * 0.5; });
+    n.amp = 12 + Math.random() * 8;
+    n.fx = 0; n.fy = 0;   /* offsets captured at freeze time */
+  });
+
+  var adj = {};
+  EDGES.forEach(function(e){
+    (adj[e.from] = adj[e.from] || {})[e.to] = true;
+    (adj[e.to]   = adj[e.to]   || {})[e.from] = true;
+  });
+
+  function freezeBoard(id){
+    NODES.forEach(function(n){ n.fx = n.ox; n.fy = n.oy; });
+    drift.hovered = id;
+    drift.frozen = true;
+  }
+  function thawBoard(){
+    drift.frozen = false;
+    drift.hovered = null;
+  }
+  NODES.forEach(function(n){
+    var g = nodeEls[n.id];
+    g.addEventListener('mouseenter', function(){ freezeBoard(n.id); });
+    g.addEventListener('mouseleave', thawBoard);
+    g.addEventListener('focus', function(){ freezeBoard(n.id); });
+    g.addEventListener('blur', thawBoard);
+  });
+
+  var last = null;
+  function tick(ts){
+    if (last === null) last = ts;
+    var dt = Math.min((ts - last) / 1000, 0.1); last = ts;
+    if (!drift.frozen) drift.t += dt;
+    var k = 1 - Math.exp(-dt * 5), moved = false;
+    NODES.forEach(function(n){
+      var tx, ty;
+      if (drift.frozen){
+        tx = n.fx; ty = n.fy;
+        if (n.id !== drift.hovered && adj[drift.hovered] && adj[drift.hovered][n.id]){
+          var h = byId[drift.hovered];
+          var vx = (h.x + h.ox) - (n.x + n.fx), vy = (h.y + h.oy) - (n.y + n.fy);
+          var d = Math.sqrt(vx * vx + vy * vy) || 1;
+          tx += vx / d * APPROACH; ty += vy / d * APPROACH;
+        }
+      } else {
+        tx = n.amp * (0.6 * Math.sin(drift.t * n.fr[0] + n.ph[0]) +
+                      0.4 * Math.sin(drift.t * n.fr[1] + n.ph[1]));
+        ty = n.amp * (0.6 * Math.sin(drift.t * n.fr[2] + n.ph[2]) +
+                      0.4 * Math.sin(drift.t * n.fr[3] + n.ph[3]));
+      }
+      var nx = n.ox + (tx - n.ox) * k, ny = n.oy + (ty - n.oy) * k;
+      if (Math.abs(nx - n.ox) > 0.02 || Math.abs(ny - n.oy) > 0.02){
+        n.ox = nx; n.oy = ny; moved = true;
+        /* CSS transform, full precision: the compositor slides the box's
+           layer sub-pixel instead of re-rastering the label. */
+        nodeEls[n.id].style.transform =
+          'translate(' + n.ox + 'px,' + n.oy + 'px)';
+      }
+    });
+    if (moved) edgeEls.forEach(aimEdge);
+    requestAnimationFrame(tick);
+  }
+  /* Start once the draw-in has finished and cleaned up after itself. */
+  setTimeout(function(){ requestAnimationFrame(tick); }, 1600);
+})();
+</script>
+
+</body>
+</html>

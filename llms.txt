@@ -16,6 +16,9 @@ nothing from third-party servers. GitHub account: https://github.com/SACRVM.
 - [J.U.S.T. — Just Useful Sound Tools](https://just.sacrvm.dev/): a suite of
   DJ tools on one shared engine — analysis, tagging, playback and broadcast.
   Key, BPM, energy and loudness detection built for harmonic mixing.
+- [SACRVM APPKIT](https://github.com/SACRVM/sacrvm-appkit): a zero-dependency
+  HTML UI kit — 41 `sac-*` web components, one-variable theming, install-by-URL
+  apps. No build step. Live desktop at https://desktop.sacrvm.dev/.
 - [Retro.Crt](https://github.com/SACRVM/retro-crt): the Pascal CRT unit reborn
   for modern .NET CLIs — truecolor with graceful fallback, nine themes,
   curated output blocks. Zero dependencies, AOT-clean. On NuGet as `Retro.Crt`.
@@ -33,6 +36,10 @@ nothing from third-party servers. GitHub account: https://github.com/SACRVM.
 ## Pages
 
 - [Home](https://sacrvm.dev/): who I am, what I build, how I work.
+- [Map](https://sacrvm.dev/map.html): the public repositories and who uses
+  whom, drawn as one constellation — per-repo descriptions, source, Pages and
+  release links. The site's own repository is deliberately left off the map.
+  JavaScript draws the board; without it, a plain list stands in.
 - [Blog](https://sacrvm.dev/blog/): updates on the tools and libraries built
   here — releases, changes, plans. Atom feed at
   https://sacrvm.dev/blog/feed.xml — full text, no tracking.

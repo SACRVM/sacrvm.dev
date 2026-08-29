@@ -15,6 +15,7 @@
       var page = this.getAttribute('page') || '';
       var links = [
         { id:'home',    href:'/',             label:'HOME' },
+        { id:'map',     href:'/map.html',     label:'MAP' },
         { id:'blog',    href:'/blog/',        label:'BLOG' },
         { id:'cv',      href:'/cv.html',      label:'CV' },
         { id:'imprint', href:'/imprint.html', label:'IMPRINT' }
@@ -41,6 +42,7 @@
       var page = this.getAttribute('page') || '';
       var links = [
         { id:'home',    href:'/',             label:'HOME' },
+        { id:'map',     href:'/map.html',     label:'MAP' },
         { id:'blog',    href:'/blog/',        label:'BLOG' },
         { id:'cv',      href:'/cv.html',      label:'CV' },
         { id:'imprint', href:'/imprint.html', label:'IMPRINT &amp; DISCLAIMER' }
