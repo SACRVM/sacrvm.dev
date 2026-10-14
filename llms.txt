@@ -26,9 +26,11 @@ nothing from third-party servers. GitHub account: https://github.com/SACRVM.
   for .NET apps — starts them, supervises them, installs their updates from
   GitHub Releases or an HTTPS manifest. Client library on NuGet as
   `Husky.Client`.
-- [Firepit](https://github.com/SACRVM/firepit-ai): a native Windows shell
-  hosting AI agent CLI sessions in tabs — project switcher, cross-project
-  inbox, searchable knowledge store. WPF and ConPTY, no Electron.
+- [Firepit](https://github.com/SACRVM/firepit-ai): a plugin for Claude Code
+  for many projects on one machine — each project's commands, inbox and
+  artifacts in the Claude window, backed by a local service reached over
+  MCP: shared knowledge base, cross-project messages, scheduled jobs,
+  blueprints. Until v0.30.0 it was a native Windows shell.
 - After Match: a multiplayer social world built in Unity — custom avatar base,
   server-authoritative netcode, self-updating dedicated server. In
   development; repository currently private.
