@@ -157,7 +157,7 @@ dialog form{margin-top:24px}
     <h2 class="tab">16 PUBLIC REPOSITORIES</h2>
 
     <div class="board-scroll">
-      <svg class="board" id="board" viewBox="0 0 1060 700" role="group"
+      <svg class="board" id="board" viewBox="-10 0 1086 700" role="group"
            aria-label="Dependency map of all public SACRVM repositories"></svg>
     </div>
 
@@ -293,12 +293,47 @@ dialog form{margin-top:24px}
 
   var BOX_H = 34, CHAR_W = 7.7, PAD = 26;
 
+  /* The board's own coordinates, and the margin a drifting box has to keep
+     to them. Nothing masks the edge — a box that wanders past the viewBox
+     is simply outside the picture and gets sheared off. */
+  var VB_X = -10, VB_Y = 0, VB_W = 1086, VB_H = 700, RIM = 4;
+
+  /* The clock starts at a random point, so no two loads look alike. */
+  var drift = { t: Math.random() * 100, frozen: false, hovered: null };
+
+  /* Two incommensurate sines per axis — organic, cheap, never in step with
+     a neighbor. Reach is random per box and then capped against the rim:
+     a box near the edge wanders less rather than off it. */
+  function driftAt(n, t){
+    return [
+      n.ampX * (0.6 * Math.sin(t * n.fr[0] + n.ph[0]) +
+                0.4 * Math.sin(t * n.fr[1] + n.ph[1])),
+      n.ampY * (0.6 * Math.sin(t * n.fr[2] + n.ph[2]) +
+                0.4 * Math.sin(t * n.fr[3] + n.ph[3]))
+    ];
+  }
+
   var byId = {};
   NODES.forEach(function(n){
     n.w = Math.max(Math.round(n.id.length * CHAR_W) + PAD, 64);
     n.l = n.x - n.w/2; n.r = n.x + n.w/2;
     n.t = n.y - BOX_H/2; n.b = n.y + BOX_H/2;
-    n.ox = 0; n.oy = 0;   /* the drift offset, moved by the loop below */
+
+    n.ph = [0, 0, 0, 0].map(function(){ return Math.random() * 6.283; });
+    n.fr = [0, 0, 0, 0].map(function(){ return 0.3 + Math.random() * 0.5; });
+    var amp = 12 + Math.random() * 8;
+    n.ampX = Math.max(0, Math.min(amp, n.l - (VB_X + RIM),
+                                       (VB_X + VB_W - RIM) - n.r));
+    n.ampY = Math.max(0, Math.min(amp, n.t - (VB_Y + RIM),
+                                       (VB_Y + VB_H - RIM) - n.b));
+    n.fx = 0; n.fy = 0;   /* offsets captured at freeze time */
+    n.moved = true;
+
+    /* Start ON the curve, not at zero. From zero all eighteen boxes sprinted
+       to their drift position the instant the loop began — that lurch was
+       the stutter at the start, not the frame rate. */
+    var d0 = driftAt(n, drift.t);
+    n.ox = d0[0]; n.oy = d0[1];
     byId[n.id] = n;
   });
 
@@ -530,19 +565,11 @@ dialog form{margin-top:24px}
 
   /* -- The drift: every box wanders, slow and random ------------------------ */
 
-  /* Two incommensurate sines per axis, random phase, rate and reach per
-     box — organic, cheap, and never in step with a neighbor. Hovering a
-     box freezes the whole picture where it stands, pulls that box's
-     neighbors a step closer, and lets go on mouse-out. */
+  /* Phase, rate and reach are set up with the node geometry above, so the
+     very first edge already sits on the curve. Hovering a box freezes the
+     whole picture where it stands, pulls that box's neighbors a step
+     closer, and lets go on mouse-out. */
   var APPROACH = 26;
-  var drift = { t: Math.random() * 100, frozen: false, hovered: null };
-
-  NODES.forEach(function(n){
-    n.ph = [0, 0, 0, 0].map(function(){ return Math.random() * 6.283; });
-    n.fr = [0, 0, 0, 0].map(function(){ return 0.3 + Math.random() * 0.5; });
-    n.amp = 12 + Math.random() * 8;
-    n.fx = 0; n.fy = 0;   /* offsets captured at freeze time */
-  });
 
   var adj = {};
   EDGES.forEach(function(e){
@@ -584,21 +611,32 @@ dialog form{margin-top:24px}
           tx += vx / d * APPROACH; ty += vy / d * APPROACH;
         }
       } else {
-        tx = n.amp * (0.6 * Math.sin(drift.t * n.fr[0] + n.ph[0]) +
-                      0.4 * Math.sin(drift.t * n.fr[1] + n.ph[1]));
-        ty = n.amp * (0.6 * Math.sin(drift.t * n.fr[2] + n.ph[2]) +
-                      0.4 * Math.sin(drift.t * n.fr[3] + n.ph[3]));
+        var d = driftAt(n, drift.t);
+        tx = d[0]; ty = d[1];
       }
+      /* The hover-approach gets the same rim: it may not shove a box off
+         the board either. */
+      tx = Math.min(Math.max(tx, VB_X + RIM - n.l), VB_X + VB_W - RIM - n.r);
+      ty = Math.min(Math.max(ty, VB_Y + RIM - n.t), VB_Y + VB_H - RIM - n.b);
       var nx = n.ox + (tx - n.ox) * k, ny = n.oy + (ty - n.oy) * k;
-      if (Math.abs(nx - n.ox) > 0.02 || Math.abs(ny - n.oy) > 0.02){
-        n.ox = nx; n.oy = ny; moved = true;
+      /* 0.05 board units stays under a rendered pixel at every width this
+         page is read at. Below that, moving costs more than it shows. */
+      if (Math.abs(nx - n.ox) > 0.05 || Math.abs(ny - n.oy) > 0.05){
+        n.ox = nx; n.oy = ny; n.moved = true; moved = true;
         /* CSS transform, full precision: the compositor slides the box's
            layer sub-pixel instead of re-rastering the label. */
         nodeEls[n.id].style.transform =
           'translate(' + n.ox + 'px,' + n.oy + 'px)';
+      } else {
+        n.moved = false;
       }
     });
-    if (moved) edgeEls.forEach(aimEdge);
+    /* Only lines whose endpoints actually moved get rebuilt. Every aimEdge
+       writes a fresh path 'd' and the browser re-parses it — that string
+       work, twenty-odd times a frame, is what the drift really costs. */
+    if (moved) edgeEls.forEach(function(e){
+      if (byId[e.edge.from].moved || byId[e.edge.to].moved) aimEdge(e);
+    });
     requestAnimationFrame(tick);
   }
   /* Start once the draw-in has finished and cleaned up after itself. */
