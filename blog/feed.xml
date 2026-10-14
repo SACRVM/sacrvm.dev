@@ -5,7 +5,31 @@
   <link href="https://sacrvm.dev/blog/"/>
   <id>https://sacrvm.dev/blog/</id>
   <author><name>SACRVM</name></author>
-  <updated>2026-08-28T00:00:00Z</updated>
+  <updated>2026-10-14T00:00:00Z</updated>
+  <entry>
+    <title>Hello, CachyOS — new machine, new OS, one move</title>
+    <link href="https://sacrvm.dev/blog/2026-10-14-hello-cachyos.html"/>
+    <id>https://sacrvm.dev/blog/2026-10-14-hello-cachyos.html</id>
+    <updated>2026-10-14T00:00:00Z</updated>
+    <summary>Why I left Windows for CachyOS: a laptop screen I could barely use, a desktop I wanted anyway, and the wish to own my system again — swapped in one go.</summary>
+    <content type="html">&lt;p&gt;Two days ago this site moved house. Not the server — GitHub Pages still serves it — but the machine it is written on. The Windows laptop is retired, a new AMD desktop runs &lt;a href=&quot;https://cachyos.org/&quot;&gt;CachyOS&lt;/a&gt;, and this is the first entry written on it.&lt;/p&gt;
+&lt;h2&gt;Why leave&lt;/h2&gt;
+&lt;p&gt;The short answer: control over my own system. The long answer has a switch in it.&lt;/p&gt;
+&lt;p&gt;My laptop is an ASUS gaming machine — sinfully expensive, once. It pairs an Intel iGPU with an NVIDIA card and a MUX chip, the piece of hardware that decides which of the two drives the built-in display. Windows and that wretched MUX stopped getting along, to the point where I could barely use the laptop&#x27;s own screen. A machine you have to work around is not quite your machine anymore.&lt;/p&gt;
+&lt;p&gt;Linux has a fix for that MUX, down at the kernel level. But Intel plus NVIDIA on Linux is a chapter of its own, I wanted a desktop again anyway, and hardware prices were only going one way. So the computer and the operating system changed in one move.&lt;/p&gt;
+&lt;h2&gt;The machine&lt;/h2&gt;
+&lt;ul&gt;&lt;li&gt;&lt;strong&gt;AMD all the way.&lt;/strong&gt; Ryzen 9 9900X, Radeon RX 9070 XT, 32 GB of RAM. The graphics driver ships with the kernel and Mesa — nothing to download, nothing to install separately.&lt;/li&gt;&lt;li&gt;&lt;strong&gt;CachyOS.&lt;/strong&gt; Arch underneath, with its own tuned kernel, an LTS kernel next to it as the fallback, and package repositories built specifically for Zen 4 and Zen 5 CPUs.&lt;/li&gt;&lt;li&gt;&lt;strong&gt;KDE Plasma on Wayland.&lt;/strong&gt; The desktop closest to what a Windows user already knows.&lt;/li&gt;&lt;li&gt;&lt;strong&gt;btrfs with Snapper.&lt;/strong&gt; Every package transaction leaves a snapshot behind, and the Limine boot menu lists them. A bad update is a reboot away from undone.&lt;/li&gt;&lt;/ul&gt;
+&lt;h2&gt;Games&lt;/h2&gt;
+&lt;p&gt;Steam runs with CachyOS&#x27;s own Proton build; Lutris and Heroic cover everything outside Steam, with Wine underneath. Cyberpunk 2077 and Onimusha: Way of the Sword are the first two on the drive.&lt;/p&gt;
+&lt;h2&gt;Work&lt;/h2&gt;
+&lt;ul&gt;&lt;li&gt;&lt;strong&gt;.NET&lt;/strong&gt; runs natively — SDK, runtime, the lot. Most of what I build is .NET or vanilla JavaScript, and both are at home here.&lt;/li&gt;&lt;li&gt;&lt;strong&gt;VS Code, git and the GitHub CLI&lt;/strong&gt;, the same tools as before.&lt;/li&gt;&lt;li&gt;&lt;strong&gt;fish&lt;/strong&gt; as the shell.&lt;/li&gt;&lt;li&gt;&lt;strong&gt;The repositories&lt;/strong&gt; moved from &lt;code&gt;D:\repos&lt;/code&gt; to &lt;code&gt;~/Projects/repos&lt;/code&gt;.&lt;/li&gt;&lt;/ul&gt;
+&lt;h2&gt;The rough edges&lt;/h2&gt;
+&lt;p&gt;Not everything is smooth. The UI is fiddly now and then. Discord wants a different launcher — here it is Vesktop. Some things don&#x27;t run on the first try.&lt;/p&gt;
+&lt;p&gt;None of it was big. And this is where the old line &quot;Linux is for people who enjoy fixing Linux&quot; stops being true: with Claude in the terminal, an error message becomes a conversation, and a Linux is tamed in no time.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;Questions, or your own switch story: &lt;a href=&quot;mailto:mail@sacrvm.dev&quot;&gt;mail@sacrvm.dev&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Mine again.&lt;/em&gt;&lt;/p&gt;</content>
+  </entry>
   <entry>
     <title>SACRVM APPKIT — the kit, a desktop, and two apps to prove it</title>
     <link href="https://sacrvm.dev/blog/2026-08-28-sacrvm-appkit.html"/>
