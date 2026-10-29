@@ -21,7 +21,7 @@
 <script src="assets/site.js" defer></script>
 <style>
 /* ============================================================================
-   The map. Eighteen public repositories as one constellation: 1px boxes
+   The map. Twenty-three public repositories as one constellation: 1px boxes
    scattered off-grid, straight lines flying box to box. Solid lines are
    code dependencies (arrow points at the thing being used), dashed lines
    are runtime relations. Lines may cross — that is the weather up here.
@@ -142,7 +142,7 @@ dialog form{margin-top:24px}
   <header class="map-head">
     <h1>The map</h1>
     <p>
-      Sixteen public repositories on <a href="https://github.com/SACRVM">github.com/SACRVM</a>,
+      Twenty-three public repositories on <a href="https://github.com/SACRVM">github.com/SACRVM</a>,
       and who uses whom. Lines fly direct, the loners float free &mdash; and
       the site you are reading sits this one out. Click a box for the dense
       version and the links.
@@ -154,10 +154,10 @@ dialog form{margin-top:24px}
   </header>
 
   <section>
-    <h2 class="tab">16 PUBLIC REPOSITORIES</h2>
+    <h2 class="tab">23 PUBLIC REPOSITORIES</h2>
 
     <div class="board-scroll">
-      <svg class="board" id="board" viewBox="-10 0 1086 700" role="group"
+      <svg class="board" id="board" viewBox="-10 0 1086 860" role="group"
            aria-label="Dependency map of all public SACRVM repositories"></svg>
     </div>
 
@@ -169,7 +169,14 @@ dialog form{margin-top:24px}
         <li><a href="https://github.com/SACRVM/sacrvm-notes">sacrvm-notes</a></li>
         <li><a href="https://github.com/SACRVM/color-bucket">color-bucket</a></li>
         <li><a href="https://github.com/SACRVM/sacrvm-app-template">sacrvm-app-template</a></li>
+        <li><a href="https://github.com/SACRVM/markdown-pad">markdown-pad</a></li>
+        <li><a href="https://github.com/SACRVM/background-remover">background-remover</a></li>
+        <li><a href="https://github.com/SACRVM/mesh-optimizer">mesh-optimizer</a></li>
+        <li><a href="https://github.com/SACRVM/pixel-atelier">pixel-atelier</a></li>
+        <li><a href="https://github.com/SACRVM/svg-to-3d">svg-to-3d</a></li>
+        <li><a href="https://github.com/SACRVM/vectorizer">vectorizer</a></li>
         <li><a href="https://github.com/SACRVM/sac-md-editor">sac-md-editor</a></li>
+        <li><a href="https://github.com/SACRVM/sac-data-grid">sac-data-grid</a></li>
         <li><a href="https://github.com/SACRVM/sacrvm-newskit">sacrvm-newskit</a></li>
         <li><a href="https://github.com/SACRVM/just-play">just-play</a></li>
         <li><a href="https://github.com/SACRVM/the-fishbowl">the-fishbowl</a></li>
@@ -207,72 +214,100 @@ dialog form{margin-top:24px}
      Mono's advance is 0.7em (measured for the CV portrait), so at 11px a
      character is 7.7px wide — computed, not guessed. */
   var NODES = [
-    { id:'sacrvm-appkit', x:310, y:400, lang:'JAVASCRIPT',
+    { id:'sacrvm-appkit', x:520, y:425, lang:'JAVASCRIPT',
       blurb:'A zero-dependency HTML UI kit, vendored as plain files: 41 sac-* web components — floating windows, workspace layouts, dialogs, toasts, a Ctrl-K command palette — with seed-derived theming, every colour mixed at runtime from one --accent variable. window.sac.* adds a router, sandboxed storage and the install-by-URL app system. No framework, no bundler; F5 is the toolchain.',
       links:[['SOURCE', GH+'sacrvm-appkit'],['STYLE GUIDE','https://sacrvm.github.io/sacrvm-appkit/'],['RELEASES', GH+'sacrvm-appkit/releases']] },
 
-    { id:'sacrvm-desktop', x:600, y:520, lang:'JAVASCRIPT',
+    { id:'sacrvm-desktop', x:815, y:410, lang:'JAVASCRIPT',
       blurb:'A web desktop you fill yourself: paste an app repository’s URL and it installs. A host, not an app — it reads the manifest, names the origin on every tile, and asks before anything runs. The app list lives in your browser’s localStorage; no server, no account. The standing proof that the APPKIT app system carries weight.',
       links:[['SOURCE', GH+'sacrvm-desktop'],['LIVE','https://desktop.sacrvm.dev/'],['RELEASES', GH+'sacrvm-desktop/releases']] },
 
-    { id:'sacrvm-calculator', x:700, y:100, lang:'JAVASCRIPT',
+    { id:'sacrvm-calculator', x:660, y:105, lang:'JAVASCRIPT',
       blurb:'The desktop’s first reference app: a four-function pocket calculator with a proper two-register brain in ~400 dependency-free lines. One custom element, one classic script — the worked example of a window app, installable on any desktop by URL.',
       links:[['SOURCE', GH+'sacrvm-calculator'],['PAGES','https://sacrvm.github.io/sacrvm-calculator/'],['RELEASES', GH+'sacrvm-calculator/releases']] },
 
-    { id:'sacrvm-notes', x:790, y:225, lang:'JAVASCRIPT',
+    { id:'sacrvm-notes', x:830, y:155, lang:'JAVASCRIPT',
       blurb:'The second reference app, and the other archetype: a view app that draws its own chrome. The note list is the desktop’s rail, every note gets its own link, and the notes live in the kit’s sandboxed storage.',
       links:[['SOURCE', GH+'sacrvm-notes'],['PAGES','https://sacrvm.github.io/sacrvm-notes/'],['RELEASES', GH+'sacrvm-notes/releases']] },
 
-    { id:'color-bucket', x:830, y:355, lang:'JAVASCRIPT',
+    { id:'color-bucket', x:940, y:245, lang:'JAVASCRIPT',
       blurb:'Mix colours like paint, not like numbers: paint pots combined in parts — 3 parts cadmium yellow, 1 part ultramarine — on shelves from oils and earths to the C64’s sixteen. A revival of the 2013 iPhone app of the same name, rebuilt as an APPKIT app.',
       links:[['SOURCE', GH+'color-bucket'],['PAGES','https://sacrvm.github.io/color-bucket/'],['RELEASES', GH+'color-bucket/releases']] },
 
-    { id:'sacrvm-app-template', x:840, y:465, lang:'JAVASCRIPT',
+    { id:'sacrvm-app-template', x:945, y:625, lang:'JAVASCRIPT',
       blurb:'Start here: one repo, one app, the right shape from commit one — app.json, app.js, app.css, a vendored kit/. Use the template, rename five strings, enable Pages, and hand the desktop your URL.',
       links:[['SOURCE', GH+'sacrvm-app-template'],['PAGES','https://sacrvm.github.io/sacrvm-app-template/']] },
 
-    { id:'sac-md-editor', x:135, y:555, lang:'JAVASCRIPT',
+    { id:'markdown-pad', x:365, y:645, lang:'JAVASCRIPT',
+      blurb:'A Markdown file editor for SACRVM desktops: open a .md file, write, save. The line under the caret shows its source and every other line is rendered — sac-md-editor at work, with no preview mode to switch to. Real files wherever the desktop keeps them, a dot for unsaved changes, and drafts that survive a reload or a crash.',
+      links:[['SOURCE', GH+'markdown-pad'],['PAGES','https://sacrvm.github.io/markdown-pad/']] },
+
+    { id:'background-remover', x:655, y:750, lang:'JAVASCRIPT',
+      blurb:'Cut the background out of any photo with AI, entirely in the browser — no upload, no account. Two models, RMBG-1.4 for objects and MODNet for hair, a magic wand to tidy up, transparent or solid output with auto-crop. The cut-out goes straight on to the vectorizer when you want an SVG silhouette.',
+      links:[['SOURCE', GH+'background-remover'],['PAGES','https://sacrvm.github.io/background-remover/'],['RELEASES', GH+'background-remover/releases']] },
+
+    { id:'mesh-optimizer', x:835, y:735, lang:'JAVASCRIPT',
+      blurb:'Clean up and slim down 3D meshes in the browser: OBJ, STL, GLB or glTF in, OBJ or glTF out. Simplify by density or by quality (meshoptimizer, in WASM), find and split loose parts, fill holes, fix the winding, and edit faces, edges and vertices with undo. No upload, no install, no build step.',
+      links:[['SOURCE', GH+'mesh-optimizer'],['PAGES','https://sacrvm.github.io/mesh-optimizer/'],['RELEASES', GH+'mesh-optimizer/releases']] },
+
+    { id:'pixel-atelier', x:475, y:130, lang:'JAVASCRIPT',
+      blurb:'A pixel and sprite editor with frames, onion skin and palettes. The canvas fills the screen; tools, selection, palette and a live animation preview float over it as windows you place yourself. No install, no build step.',
+      links:[['SOURCE', GH+'pixel-atelier'],['PAGES','https://sacrvm.github.io/pixel-atelier/'],['RELEASES', GH+'pixel-atelier/releases']] },
+
+    { id:'svg-to-3d', x:495, y:715, lang:'JAVASCRIPT',
+      blurb:'Turn SVG logos, icons and lettering into extruded 3D models — GLB, OBJ or STL. Every free-standing form becomes one closed, watertight body, computed as exact 2D regions rather than stacked pieces, and the bodies are grouped by colour, so the model prints as-is. A real 3D preview, all in the browser.',
+      links:[['SOURCE', GH+'svg-to-3d'],['PAGES','https://sacrvm.github.io/svg-to-3d/'],['RELEASES', GH+'svg-to-3d/releases']] },
+
+    { id:'vectorizer', x:350, y:205, lang:'JAVASCRIPT',
+      blurb:'Trace black-and-white images into clean SVG paths — logos, line art, stencils. A true raster-to-vector tracer, the kind behind Inkscape’s Trace Bitmap: automatic or manual threshold, despeckle, crisp corners, right-angle enhance for letterforms. Source and result side by side; the right pane is exactly what gets saved.',
+      links:[['SOURCE', GH+'vectorizer'],['PAGES','https://sacrvm.github.io/vectorizer/'],['RELEASES', GH+'vectorizer/releases']] },
+
+    { id:'sac-md-editor', x:240, y:520, lang:'JAVASCRIPT',
       blurb:'An Obsidian-style live-preview markdown editor as a single web component: the line your caret sits on shows raw markdown, every other line shows the rendered result, syntax markers dimmed. No mode switch, no build step — an APPKIT add-on usable on any page that provides marked and DOMPurify.',
       links:[['SOURCE', GH+'sac-md-editor']] },
 
-    { id:'sacrvm-newskit', x:120, y:300, lang:'JAVASCRIPT',
+    { id:'sac-data-grid', x:215, y:345, lang:'JAVASCRIPT',
+      blurb:'A spreadsheet-grade, editable data table as one web component, built from the kit’s own tokens and fields. Virtualized rows (100k+ scroll smoothly), frozen columns, multi-column sort and type-aware filters; read, sheet or form editing, switchable at runtime; an Excel-style keyboard and TSV copy and paste that round-trips with Excel. Zero build — vendored like the kit.',
+      links:[['SOURCE', GH+'sac-data-grid'],['API & DEMO','https://sacrvm.github.io/sac-data-grid/'],['RELEASES', GH+'sac-data-grid/releases']] },
+
+    { id:'sacrvm-newskit', x:155, y:225, lang:'JAVASCRIPT',
       blurb:'APPKIT’s editorial sister: the same tokens and theming, specialised for reading. Article primitives, a condensed headline treatment, a publication hub — and sources and provenance as first-class citizens, because that is what a researched article stands on. Scaffold stage.',
       links:[['SOURCE', GH+'sacrvm-newskit']] },
 
-    { id:'just-play', x:975, y:90, lang:'C#',
+    { id:'just-play', x:1000, y:45, lang:'C#',
       blurb:'The J.U.S.T. suite — JUST PLAY, JUST TAG, JUST STREAM and a headless CLI on one engine: Camelot key, BPM, energy and loudness analysis built for harmonic mixing. Not a plug-in for someone else’s library; the library itself. .NET 10 and Avalonia, in beta.',
       links:[['SOURCE', GH+'just-play'],['JUST.SACRVM.DEV','https://just.sacrvm.dev/'],['RELEASES', GH+'just-play/releases']] },
 
-    { id:'the-fishbowl', x:990, y:210, lang:'C#',
-      blurb:'Self-hosted personal memory and an assistant on top of it: your data is a single SQLite file you can take anywhere, the API is OpenAPI-described, and agents reach the memory over MCP. Runs under the Husky launcher — supervised, self-updating, graceful stop before each binary swap — and its startup banner is drawn with Retro.Crt. Early, and deliberately being slimmed.',
+    { id:'the-fishbowl', x:85, y:450, lang:'C#',
+      blurb:'Self-hosted personal memory and assistant: notes, todos, calendar, contacts, mail and files on a desktop in the browser. Every workspace — personal, or a space shared with others — is its own SQLite database in its own folder. Search blends words and meaning with a local multilingual model; agents reach it over MCP with 40 tools and scoped keys. Built on SACRVM APPKIT, sac-md-editor and sac-data-grid, runs under the Husky launcher, startup banner drawn with Retro.Crt. AGPL-3.0.',
       links:[['SOURCE', GH+'the-fishbowl'],['RELEASES', GH+'the-fishbowl/releases']] },
 
-    { id:'husky', x:940, y:350, lang:'C#',
+    { id:'husky', x:60, y:645, lang:'C#',
       blurb:'The launcher your .NET app doesn’t have to write: Husky starts it, watches it, restarts it when it crashes, and fetches updates from GitHub Releases or a plain JSON manifest — graceful stop, binary swap, back up again. Its console-first UI is drawn with Retro.Crt. Three lines of Husky.Client and any long-running app ships supervised. Woof.',
       links:[['SOURCE', GH+'husky'],['RELEASES', GH+'husky/releases'],['NUGET','https://www.nuget.org/packages/Husky.Client']] },
 
-    { id:'retro-crt', x:1000, y:480, lang:'C#',
+    { id:'retro-crt', x:220, y:720, lang:'C#',
       blurb:'The Pascal CRT unit reborn for modern .NET: TextColor, GotoXY and friends, truecolor with graceful fallback down to NO_COLOR, nine themes, curated blocks from framed banners to spinners, and a DOS-style full-screen TUI layer. Tiny, dependency-free, trim- and AOT-clean — with Snake, Tetris and Invaders in the repo to prove it.',
       links:[['SOURCE', GH+'retro-crt'],['DOCS','https://sacrvm.github.io/retro-crt/'],['RELEASES', GH+'retro-crt/releases'],['NUGET','https://www.nuget.org/packages/Retro.Crt']] },
 
-    { id:'firepit-ai', x:170, y:120, lang:'C#',
+    { id:'firepit-ai', x:95, y:45, lang:'C#',
       blurb:'A plugin for Claude Code, for many projects on one machine: each project’s commands, inbox and artifacts right in the Claude window, and behind them a small local service reached over MCP — one shared knowledge base, project-to-project messages, scheduled jobs, and blueprints that keep every repository in step. It began as a native Windows shell; v0.30.0 was the last of those. No cloud, no account — and sacrvm.dev is written with it.',
       links:[['SOURCE', GH+'firepit-ai'],['RELEASES', GH+'firepit-ai/releases']] },
 
-    { id:'grok-mcp', x:490, y:180, lang:'C#',
+    { id:'grok-mcp', x:320, y:50, lang:'C#',
       blurb:'A local MCP server wrapping the xAI Grok API, so Claude Code has a second opinion on call: chat with sessions, a fast non-reasoning lane, a multi-agent mode for the hard problems — plus image generation, editing, vision and video. One background process, many parallel clients, loopback-only.',
       links:[['SOURCE', GH+'grok-mcp'],['RELEASES', GH+'grok-mcp/releases']] },
 
-    { id:'admin-discord-mcp-bot', x:460, y:645, lang:'C#',
+    { id:'admin-discord-mcp-bot', x:165, y:810, lang:'C#',
       blurb:'Full Discord guild administration for AI agents, over the REST API only: 62 tools across channels, roles, members, events, webhooks, emojis. Multi-tenant — the bot token arrives per request — and every write is dryRun by default: the agent proposes, you confirm. Self-hosted, no gateway socket, no presence.',
       links:[['SOURCE', GH+'admin-discord-mcp-bot'],['RELEASES', GH+'admin-discord-mcp-bot/releases']] },
 
-    { id:'claude-code-statusline', x:860, y:630, lang:'SHELL',
+    { id:'claude-code-statusline', x:925, y:805, lang:'SHELL',
       blurb:'A status line for Claude Code showing real usage straight from Anthropic’s rate-limit numbers — no self-invented limits, no token guessing. Project, branch, model, context bar, 5-hour and 7-day budgets with reset countdowns. One shell script, Catppuccin Mocha, no jq.',
       links:[['SOURCE', GH+'claude-code-statusline']] }
   ];
 
-  /* kind 'uses' = code dependency (vendored kit/ or NuGet reference),
+  /* kind 'uses' = code dependency (vendored kit/ or component, NuGet reference),
      kind 'run'  = runtime relation (installs on the desktop; HTTP redirect). */
   var EDGES = [
     { from:'sacrvm-desktop',      to:'sacrvm-appkit', kind:'uses' },
@@ -282,13 +317,30 @@ dialog form{margin-top:24px}
     { from:'sacrvm-app-template', to:'sacrvm-appkit', kind:'uses' },
     { from:'sac-md-editor',       to:'sacrvm-appkit', kind:'uses' },
     { from:'sacrvm-newskit',      to:'sacrvm-appkit', kind:'uses' },
+    { from:'sac-data-grid',       to:'sacrvm-appkit', kind:'uses' },
+    { from:'markdown-pad',        to:'sacrvm-appkit', kind:'uses' },
+    { from:'background-remover',  to:'sacrvm-appkit', kind:'uses' },
+    { from:'mesh-optimizer',      to:'sacrvm-appkit', kind:'uses' },
+    { from:'pixel-atelier',       to:'sacrvm-appkit', kind:'uses' },
+    { from:'svg-to-3d',           to:'sacrvm-appkit', kind:'uses' },
+    { from:'vectorizer',          to:'sacrvm-appkit', kind:'uses' },
+    { from:'markdown-pad',        to:'sac-md-editor', kind:'uses' },
+    { from:'the-fishbowl',        to:'sacrvm-appkit', kind:'uses' },
+    { from:'the-fishbowl',        to:'sac-md-editor', kind:'uses' },
+    { from:'the-fishbowl',        to:'sac-data-grid', kind:'uses' },
     { from:'husky',               to:'retro-crt',     kind:'uses' },
     { from:'the-fishbowl',        to:'husky',         kind:'run' },
     { from:'the-fishbowl',        to:'retro-crt',     kind:'uses' },
     { from:'sacrvm-calculator',   to:'sacrvm-desktop', kind:'run' },
     { from:'sacrvm-notes',        to:'sacrvm-desktop', kind:'run' },
     { from:'color-bucket',        to:'sacrvm-desktop', kind:'run' },
-    { from:'sacrvm-app-template', to:'sacrvm-desktop', kind:'run' }
+    { from:'sacrvm-app-template', to:'sacrvm-desktop', kind:'run' },
+    { from:'markdown-pad',        to:'sacrvm-desktop', kind:'run' },
+    { from:'background-remover',  to:'sacrvm-desktop', kind:'run' },
+    { from:'mesh-optimizer',      to:'sacrvm-desktop', kind:'run' },
+    { from:'pixel-atelier',       to:'sacrvm-desktop', kind:'run' },
+    { from:'svg-to-3d',           to:'sacrvm-desktop', kind:'run' },
+    { from:'vectorizer',          to:'sacrvm-desktop', kind:'run' }
   ];
 
   var BOX_H = 34, CHAR_W = 7.7, PAD = 26;
@@ -296,7 +348,7 @@ dialog form{margin-top:24px}
   /* The board's own coordinates, and the margin a drifting box has to keep
      to them. Nothing masks the edge — a box that wanders past the viewBox
      is simply outside the picture and gets sheared off. */
-  var VB_X = -10, VB_Y = 0, VB_W = 1086, VB_H = 700, RIM = 4;
+  var VB_X = -10, VB_Y = 0, VB_W = 1086, VB_H = 860, RIM = 4;
 
   /* The clock starts at a random point, so no two loads look alike. */
   var drift = { t: Math.random() * 100, frozen: false, hovered: null };
@@ -329,7 +381,7 @@ dialog form{margin-top:24px}
     n.fx = 0; n.fy = 0;   /* offsets captured at freeze time */
     n.moved = true;
 
-    /* Start ON the curve, not at zero. From zero all eighteen boxes sprinted
+    /* Start ON the curve, not at zero. From zero every box sprinted
        to their drift position the instant the loop began — that lurch was
        the stutter at the start, not the frame rate. */
     var d0 = driftAt(n, drift.t);
@@ -530,6 +582,9 @@ dialog form{margin-top:24px}
 
   /* Traces draw themselves in, solid first, then the dashed runtime layer
      and the boxes fade up. */
+  /* The stagger shrinks as edges are added, so the draw-in stays about
+     as long as it was with fourteen, and ends before the cleanup below. */
+  var STEP = Math.min(45, 630 / edgeEls.length);
   edgeEls.forEach(function(e, i){
     var isRun = e.edge.kind === 'run';
     var p = e.path;
@@ -537,13 +592,13 @@ dialog form{margin-top:24px}
       var len = p.getTotalLength();
       p.style.strokeDasharray = len;
       p.style.strokeDashoffset = len;
-      p.style.transition = 'stroke-dashoffset .5s ease ' + (i * 45) + 'ms';
+      p.style.transition = 'stroke-dashoffset .5s ease ' + Math.round(i * STEP) + 'ms';
     } else {
       p.style.opacity = 0;
-      p.style.transition = 'opacity .4s ease ' + (500 + i * 30) + 'ms';
+      p.style.transition = 'opacity .4s ease ' + Math.round(500 + i * STEP * 2 / 3) + 'ms';
     }
     e.arrow.style.opacity = 0;
-    e.arrow.style.transition = 'opacity .3s ease ' + (600 + i * 30) + 'ms';
+    e.arrow.style.transition = 'opacity .3s ease ' + Math.round(600 + i * STEP * 2 / 3) + 'ms';
   });
   requestAnimationFrame(function(){ requestAnimationFrame(function(){
     edgeEls.forEach(function(e){
@@ -633,7 +688,7 @@ dialog form{margin-top:24px}
     });
     /* Only lines whose endpoints actually moved get rebuilt. Every aimEdge
        writes a fresh path 'd' and the browser re-parses it — that string
-       work, twenty-odd times a frame, is what the drift really costs. */
+       work, thirty-odd times a frame, is what the drift really costs. */
     if (moved) edgeEls.forEach(function(e){
       if (byId[e.edge.from].moved || byId[e.edge.to].moved) aimEdge(e);
     });
