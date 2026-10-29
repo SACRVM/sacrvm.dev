@@ -5,7 +5,45 @@
   <link href="https://sacrvm.dev/blog/"/>
   <id>https://sacrvm.dev/blog/</id>
   <author><name>SACRVM</name></author>
-  <updated>2026-10-14T00:00:00Z</updated>
+  <updated>2026-10-29T00:00:00Z</updated>
+  <entry>
+    <title>Voxcade — an arcade engine made of little cubes</title>
+    <link href="https://sacrvm.dev/blog/2026-10-29-voxcade.html"/>
+    <id>https://sacrvm.dev/blog/2026-10-29-voxcade.html</id>
+    <updated>2026-10-29T00:00:00Z</updated>
+    <summary>A voxel arcade engine in Rust, two weeks old: destructible worlds that fill the screen, games written in Lua, and built from the first commit so an AI agent can help write them.</summary>
+    <content type="html">&lt;p&gt;Voxcade is a voxel arcade engine. Everything is made of little cubes, everything can be blown apart, and it has to feel like an arcade machine. The plan: the classic 2D genres, rebuilt in voxels — with an AI agent at your side that can see, test and change what you build. It is two weeks old, the repository is still private and there is nothing to download yet — but there is enough to tell.&lt;/p&gt;
+&lt;h2&gt;Where it comes from&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.lexaloffle.com/voxatron.php&quot;&gt;Voxatron&lt;/a&gt; proved the idea: a whole world of destructible voxels, small games, instant fun. It never left alpha and is no longer developed. Voxcade keeps the idea and the feel, not the implementation, and changes three things:&lt;/p&gt;
+&lt;ul&gt;&lt;li&gt;&lt;strong&gt;The world fills the screen&lt;/strong&gt; instead of floating in a box.&lt;/li&gt;&lt;li&gt;&lt;strong&gt;The GPU does the drawing.&lt;/strong&gt; Rust and wgpu, on Vulkan, Metal or DirectX 12; SDL3 for the window, gamepads and sound.&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Open formats, own editors.&lt;/strong&gt; Models are MagicaVoxel &lt;code&gt;.vox&lt;/code&gt; files and levels are plain JSON, so the voxel editor you already use works. The IDE brings its own voxel and level editors as well, and Tiled maps come in with one import.&lt;/li&gt;&lt;/ul&gt;
+&lt;h2&gt;The look&lt;/h2&gt;
+&lt;p&gt;One fixed camera per game, in perspective, that only moves across the ground. A top-down RPG, a 2.5D jump &amp;amp; run and an arena shooter are just different angles. The figures are small and plain — 10 to 20 voxels tall, one colour per material, every voxel deliberate: the 8-bit charm in clean cubes. The engine does the light and the shade, sun shadows included, and a model can be lit voxel by voxel like pixel art, so a round shape shades softly and only its outline stays blocky.&lt;/p&gt;
+&lt;p&gt;And things break the way they look. After a blast the debris settles back into the world, and whatever no longer connects to the ground falls.&lt;/p&gt;
+&lt;h2&gt;A game is a folder&lt;/h2&gt;
+&lt;p&gt;After &lt;a href=&quot;https://love2d.org/&quot;&gt;LÖVE&lt;/a&gt;: &lt;code&gt;conf.lua&lt;/code&gt; sets the game up, &lt;code&gt;main.lua&lt;/code&gt; is the game.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;function on_level_start(how)              -- the level begins
+  level:fill(0, 0, 0, 127, 127, 0, &quot;#3b4150&quot;)   -- a floor
+  level.state.keeper = level:spawn(&quot;keeper&quot;, 64, 64)
+  level.camera:look_at(64, 64)
+end
+
+function on_tick()                        -- 60 times a second
+  local keeper = level.state.keeper
+  keeper:walk(input.dir, 40)
+  if input:pressed(&quot;jump&quot;) then keeper:jump(8) end
+end&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Every length is in voxels, every speed in voxels per second. Whoever prefers Rust uses the engine as a library instead.&lt;/p&gt;
+&lt;h2&gt;Built for agents&lt;/h2&gt;
+&lt;p&gt;The goal from the first commit: anyone should be able to write a great game with it, and an AI agent should be able to help. That shaped the engine as much as the cubes did.&lt;/p&gt;
+&lt;ul&gt;&lt;li&gt;&lt;strong&gt;Everything is text.&lt;/strong&gt; Rules in Lua, settings in &lt;code&gt;conf.lua&lt;/code&gt;, models as &lt;code&gt;.vox&lt;/code&gt;, levels as JSON, music as MML, sound effects as a few numbers each. People, agents and editors work on the same files, and the game plays a change the moment it is saved.&lt;/li&gt;&lt;li&gt;&lt;strong&gt;The API documents itself.&lt;/strong&gt; It ships as a Lua definition file with LuaLS annotations, so editors and agents get completion and checks from the same source, and &lt;code&gt;voxcade api&lt;/code&gt; prints any part of it.&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Seeing without a window.&lt;/strong&gt; &lt;code&gt;voxcade shot&lt;/code&gt; plays a game with scripted input and saves one frame; the same command always gives the same picture. That is how an agent sees what it built. &lt;code&gt;voxcade inspect&lt;/code&gt; prints how the game stands as JSON, and &lt;code&gt;voxcade film&lt;/code&gt; turns a run into an MP4 or GIF.&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Checking without playing.&lt;/strong&gt; The simulation is deterministic: seeded random numbers, maths that is bit-identical on Linux, Windows and macOS, and all game state in plain tables that are hashed every tick. So a replay is a test and a bug report at once, and &lt;code&gt;voxcade check&lt;/code&gt; plays every one and says whether it still runs as recorded. The same replays run on the title screen in attract mode, as an arcade machine would.&lt;/li&gt;&lt;li&gt;&lt;strong&gt;One MCP server.&lt;/strong&gt; &lt;code&gt;voxcade mcp&lt;/code&gt; hands an agent the frame, the game&#x27;s state, the checks and the API as tools, and &lt;code&gt;claude mcp add voxcade -- voxcade mcp&lt;/code&gt; is the whole setup in Claude Code.&lt;/li&gt;&lt;/ul&gt;
+&lt;p&gt;The IDE goes one step further. Logic and assets on the left, one editor in the middle, voxel and level editors beside it, PLAY and BUILD — and a console with Claude Code in it, one conversation per game. Through the IDE&#x27;s own MCP tools the agent sees what you see: the open file and the cursor, errors down to file, line and tick, the running frame. It can act too: show you a file at a line, start the game and stop it. It edits through the files, and the IDE takes its changes in.&lt;/p&gt;
+&lt;h2&gt;What plays today&lt;/h2&gt;
+&lt;p&gt;A handful of small games already run on it, each in a different genre — shooters, a jump &amp;amp; run, a puzzle game, a farming sim — and each there to prove a part of the engine. One of them is written in Rust instead of Lua, to show that the second way in works too.&lt;/p&gt;
+&lt;p&gt;Sound and music are synthesized: a SID-like synth, and songs written in MML, a music notation an agent can write as well as a person.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;Voxcade is a prototype, and the repository stays private while it grows. When there is something to play, it will be here. Questions until then: &lt;a href=&quot;mailto:mail@sacrvm.dev&quot;&gt;mail@sacrvm.dev&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Insert coin.&lt;/em&gt;&lt;/p&gt;</content>
+  </entry>
   <entry>
     <title>Hello, CachyOS — new machine, new OS, one move</title>
     <link href="https://sacrvm.dev/blog/2026-10-14-hello-cachyos.html"/>
