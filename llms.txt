@@ -31,6 +31,13 @@ nothing from third-party servers. GitHub account: https://github.com/SACRVM.
   artifacts in the Claude window, backed by a local service reached over
   MCP: shared knowledge base, cross-project messages, scheduled jobs,
   blueprints. Until v0.30.0 it was a native Windows shell.
+- [The Fishbowl](https://github.com/SACRVM/the-fishbowl): self-hosted
+  personal memory and assistant — notes, todos, calendar, contacts, mail
+  (IMAP/SMTP) and files on one desktop in the browser; each workspace,
+  personal or shared, is its own SQLite database in its own folder. Search
+  by words and by meaning with a local multilingual model. An MCP server
+  with 40 tools and scoped API keys; agent writes wait for review, secrets
+  never reach an agent. .NET 10, vanilla JS on SACRVM APPKIT, AGPL-3.0.
 - After Match: a multiplayer social world built in Unity — custom avatar base,
   server-authoritative netcode, self-updating dedicated server. In
   development; repository currently private.
