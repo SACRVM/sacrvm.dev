@@ -115,6 +115,18 @@
             "description": "A multiplayer social world built in Unity: custom avatar base, server-authoritative netcode, self-updating dedicated server. In development; repository currently private.",
             "author": { "@id": "https://sacrvm.dev/#person" }
           }
+        },
+        {
+          "@type": "ListItem",
+          "position": 7,
+          "item": {
+            "@type": "SoftwareApplication",
+            "name": "Voxcade",
+            "description": "A voxel arcade engine in Rust: classic 2D genres rebuilt in destructible voxels across a full-screen world. Built for AI agents: games are Lua in a deterministic sandbox, so an agent can see, replay and check a game without playing it, through an MCP server or the IDE's built-in Claude Code console. In development; repository currently private.",
+            "applicationCategory": "GameApplication",
+            "operatingSystem": "Linux, Windows, macOS",
+            "author": { "@id": "https://sacrvm.dev/#person" }
+          }
         }
       ]
     }
@@ -387,6 +399,24 @@ dialog form{margin-top:22px}
       </div>
     </button>
 
+    <button class="project project-private" id="voxcade-card" type="button">
+      <div class="project-head">
+        <span class="project-name">Voxcade</span>
+        <span class="chip">IN DEVELOPMENT</span>
+      </div>
+      <p>
+        A voxel arcade engine: the classic 2D genres rebuilt in little cubes
+        that blow apart, across a world that fills the whole screen. Built
+        for agents from the first commit: games are plain Lua, deterministic
+        down to the bit, so an agent can see, replay and check a game
+        without playing it &mdash; over MCP, or from the IDE's own Claude
+        Code console. The repository stays private while it grows.
+      </p>
+      <div class="apps">
+        <span class="chip">RUST</span><span class="chip">LUA</span><span class="chip">MCP</span><span class="chip">AGENT-FRIENDLY</span>
+      </div>
+    </button>
+
     <!-- One card per project. Cards link out only to repositories a visitor
          can open today; private work gets a card that says so when clicked.
          The SHIPPING chip is for things you can download right now. -->
@@ -473,12 +503,14 @@ dialog form{margin-top:22px}
 (function(){
   'use strict';
 
-  /* The private-project card opens the dialog; backdrop click closes it.
+  /* The private-project cards open the dialog; backdrop click closes it.
      Wired before the reduced-motion gate: the dialog is not motion. */
-  var card = document.getElementById('aftermatch-card');
+  var cards = document.querySelectorAll('.project-private');
   var dlg = document.getElementById('private-dialog');
-  if (card && dlg && dlg.showModal){
-    card.addEventListener('click', function(){ dlg.showModal(); });
+  if (cards.length && dlg && dlg.showModal){
+    Array.prototype.forEach.call(cards, function(card){
+      card.addEventListener('click', function(){ dlg.showModal(); });
+    });
     dlg.addEventListener('click', function(e){ if (e.target === dlg) dlg.close(); });
   }
 

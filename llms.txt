@@ -34,6 +34,13 @@ nothing from third-party servers. GitHub account: https://github.com/SACRVM.
 - After Match: a multiplayer social world built in Unity — custom avatar base,
   server-authoritative netcode, self-updating dedicated server. In
   development; repository currently private.
+- Voxcade: a voxel arcade engine in Rust (wgpu, SDL3) — classic 2D genres
+  rebuilt in destructible voxels across a full-screen world. Built for AI
+  agents: everything in a game is text, the Lua API documents itself, and
+  the simulation is deterministic, so an agent can see a game (headless
+  screenshots, state as JSON), replay it and check it without playing it.
+  An MCP server, and an IDE with Claude Code built in. In development;
+  repository currently private.
 
 ## Pages
 
