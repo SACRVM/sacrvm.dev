@@ -133,9 +133,24 @@ dialog form{margin-top:24px}
 
 .no-js-list{columns:2;gap:48px;font-size:15px;line-height:2}
 
+/* On a phone the board would show a third of itself, with its centre off
+   screen. Below 720px the repositories become a list instead: the name,
+   what it uses, how many use it. A tap opens the same card a click on a
+   box opens; each row is a thumb's height. */
+.repo-list{display:none;list-style:none;border-top:1px solid var(--ink-14)}
+.repo-list button{
+  display:block;width:100%;text-align:left;font:inherit;color:inherit;
+  background:none;border:0;border-bottom:1px solid var(--ink-14);
+  padding:12px 0;cursor:pointer;
+}
+.repo-list .n{display:block;font-family:var(--mono);font-size:13px;letter-spacing:.04em}
+.repo-list .r{display:block;font-size:13px;color:var(--ink-70);margin-top:2px}
+
 @media (max-width:720px){
   dialog{padding:22px 20px}
   .no-js-list{columns:1}
+  .board-scroll{display:none}
+  .repo-list{display:block}
 }
 </style>
 </head>
@@ -150,8 +165,8 @@ dialog form{margin-top:24px}
     <p>
       Twenty-four public repositories on <a href="https://github.com/SACRVM">github.com/SACRVM</a>,
       and who uses whom. Lines fly direct, the loners float free &mdash; and
-      the site you are reading sits this one out. Click a box for the dense
-      version and the links.
+      the site you are reading sits this one out. Click a box (on a phone,
+      a name) for the dense version and the links.
     </p>
     <div class="legend">
       <span><svg width="34" height="10" aria-hidden="true"><line x1="0" y1="5" x2="26" y2="5" stroke="currentColor"/><path d="M26 2 32 5 26 8 Z" fill="currentColor"/></svg> USES</span>
@@ -166,6 +181,8 @@ dialog form{margin-top:24px}
       <svg class="board" id="board" viewBox="-10 0 1086 860" role="group"
            aria-label="Dependency map of all public SACRVM repositories"></svg>
     </div>
+
+    <ul class="repo-list" id="repo-list" aria-label="All public repositories"></ul>
 
     <noscript>
       <ul class="no-js-list">
@@ -459,8 +476,12 @@ dialog form{margin-top:24px}
 
   /* -- Nodes ---------------------------------------------------------------- */
 
+  /* DOM order is reading order, row by row and left to right, so Tab walks
+     the picture instead of the array. */
   var nodeEls = {};
-  NODES.forEach(function(n){
+  NODES.slice().sort(function(a, b){
+    return (Math.round(a.y / 90) - Math.round(b.y / 90)) || (a.x - b.x);
+  }).forEach(function(n){
     var g = el('g', { 'class':'node', tabindex:0, role:'button',
       'data-id':n.id, 'aria-label':n.id + ' — show description and links' });
     /* Inner group carries the press animation, outer carries the drift. */
@@ -581,6 +602,23 @@ dialog form{margin-top:24px}
     });
   });
 
+  /* -- The phone list: the same repositories, the same card ---------------- */
+
+  var list = document.getElementById('repo-list');
+  NODES.slice().sort(function(a, b){ return a.id < b.id ? -1 : 1; }).forEach(function(n){
+    var uses = relNames(n.id, 'uses'), usedBy = relNames(n.id, 'usedBy'), rel = [];
+    if (uses.length) rel.push('uses ' + uses.join(', '));
+    if (usedBy.length) rel.push('used by ' + usedBy.length);
+    var li = document.createElement('li');
+    li.innerHTML = '<button type="button" data-goto="' + n.id + '"><span class="n">' + n.id +
+      '</span>' + (rel.length ? '<span class="r">' + rel.join(' · ') + '</span>' : '') + '</button>';
+    list.appendChild(li);
+  });
+  list.addEventListener('click', function(ev){
+    var b = ev.target.closest('button[data-goto]');
+    if (b) select(b.getAttribute('data-goto'));
+  });
+
   var hash = decodeURIComponent(location.hash.replace('#',''));
   if (hash && byId[hash]) setTimeout(function(){ select(hash, true); }, 350);
 
@@ -590,6 +628,10 @@ dialog form{margin-top:24px}
      and anyone who wants the quiet version without an OS setting. */
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (reduced || /(^|[?&])still\b/.test(location.search)) return;
+
+  /* A board hidden behind the phone list gets no motion at all: nothing to
+     draw in, nothing to drift, no battery spent on it. */
+  if (!board.getClientRects().length) return;
 
   /* Traces draw themselves in, solid first, then the dashed runtime layer
      and the boxes fade up. */
