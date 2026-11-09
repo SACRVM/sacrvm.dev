@@ -1,9 +1,12 @@
 /* ============================================================================
    SACRVM — shared base. Every page links this file.
 
-   Two colours, and nothing else: celadon paper, near-black ink. Every grey is
-   the ink at reduced opacity, every hover is the two colours swapping places.
-   Thin 1px boxes, zero radius anywhere.
+   Two colours and one signal: celadon paper, near-black ink, and a red-orange
+   spent only where it tells people something: where the keyboard is, and
+   the one thing a page is for. Like the yellow equals key on Braun's ET 66,
+   it is scarce on purpose. Every grey is the ink at reduced opacity, every
+   hover is the two colours swapping places. Thin 1px boxes, zero radius
+   anywhere.
 
    Fonts are served from this host on purpose — no request ever leaves for a
    third-party server, and the legal page says so out loud.
@@ -54,6 +57,10 @@
   --ink-45: rgba(18,18,17,.45);
   --ink-14: rgba(18,18,17,.14);
   --wash:   rgba(18,18,17,.06);
+  /* Ink on it reads 5.1:1. Against the paper it is only 2.1:1, so it never
+     stands alone: every signal keeps an ink edge, and nothing depends on
+     seeing the colour. */
+  --signal: #E4572E;
   --line:  var(--ink);
   --maxw:  960px;
   --sans:  'Instrument Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
@@ -97,7 +104,26 @@ body{
 
 a{color:inherit}
 
-:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+/* Focus is the signal. A keyboard user scanning a page full of thin ink
+   boxes needs the one they are on to be the one with colour; the ink
+   outline stays, so it holds without colour vision too. */
+:focus-visible{
+  outline:2px solid var(--ink);outline-offset:3px;
+  background-color:var(--signal);color:var(--ink);
+}
+
+/* The one main action of a page, at most one per page: the signal again,
+   in a box tall enough for a thumb (44px). */
+.reach{margin-top:26px}
+.cta{
+  display:inline-block;
+  font-family:var(--mono);font-size:11px;letter-spacing:.2em;
+  border:1px solid var(--ink);background:var(--signal);color:var(--ink);
+  padding:13px 18px;text-decoration:none;
+  transition:background .15s ease,color .15s ease;
+}
+.cta .addr{letter-spacing:.04em;margin-left:.6em}
+.cta:hover{background:var(--ink);color:var(--paper)}
 
 .page{max-width:var(--maxw);margin:0 auto}
 

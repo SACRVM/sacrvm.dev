@@ -61,8 +61,14 @@
   font-family:var(--mono);font-size:11px;letter-spacing:.04em;
   fill:var(--ink);text-rendering:geometricPrecision;
 }
-.board .node:hover rect,.board .node.sel rect{fill:var(--ink)}
-.board .node:hover text,.board .node.sel text{fill:var(--paper)}
+.board .node:hover rect{fill:var(--ink)}
+.board .node:hover text{fill:var(--paper)}
+
+/* The box the keyboard is on, and the box whose card is open, carry the
+   signal: lit neighbours stay paper, so the one box Enter opens is never
+   one of twelve that look the same. */
+.board .node:focus-visible rect,.board .node.sel rect{fill:var(--signal);stroke-width:2}
+.board .node:focus-visible text,.board .node.sel text{fill:var(--ink)}
 
 /* The click: a quick press-and-release before the dialog opens. Scale
    lives on an inner group so it never fights the drift's translate. */

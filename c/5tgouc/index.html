@@ -14,7 +14,8 @@
 <script src="/assets/site.js" defer></script>
 <style>
 /* The card landing. Reached by QR from the printed card, linked from
-   nowhere, and kept out of the sitemap on purpose. */
+   nowhere, and kept out of the sitemap on purpose. Whoever scanned the card
+   came to save the contact, so that button carries the page's one signal. */
 
 .head{padding:20px 0 52px}
 .head h1{font-size:26px;font-weight:600;letter-spacing:-.01em}
@@ -33,8 +34,8 @@
 .save-btn{
   display:inline-block;
   font-family:var(--mono);font-size:11px;letter-spacing:.25em;
-  border:1px solid var(--ink);background:none;color:var(--ink);
-  padding:12px 22px;cursor:pointer;
+  border:1px solid var(--ink);background:var(--signal);color:var(--ink);
+  padding:14px 22px;cursor:pointer;
   transition:background .15s ease,color .15s ease;
 }
 .save-btn:hover{background:var(--ink);color:var(--paper)}
