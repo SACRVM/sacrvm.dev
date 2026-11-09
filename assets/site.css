@@ -54,7 +54,7 @@
   --paper: #A1C9C8;
   --ink:   #121211;
   --ink-70: rgba(18,18,17,.70);
-  --ink-45: rgba(18,18,17,.45);
+  --ink-45: rgba(18,18,17,.45);   /* lines only: as text it reads 2.65:1 */
   --ink-14: rgba(18,18,17,.14);
   --wash:   rgba(18,18,17,.06);
   /* Ink on it reads 5.1:1. Against the paper it is only 2.1:1, so it never
@@ -150,13 +150,16 @@ section{position:relative;border-top:1px solid var(--line);padding:56px 0}
 site-nav{display:block;padding:24px 0}
 site-nav .bar{display:flex;justify-content:space-between;align-items:center;gap:16px 24px;flex-wrap:wrap}
 site-nav a{
-  font-family:var(--mono);font-size:10px;letter-spacing:.25em;
-  color:var(--ink-45);text-decoration:none;
+  font-family:var(--mono);font-size:11px;letter-spacing:.25em;
+  color:var(--ink-70);text-decoration:none;
 }
 site-nav a:hover{color:var(--ink)}
-site-nav .brand{color:var(--ink-70);letter-spacing:.28em}
-site-nav .links{display:flex;gap:24px;align-items:center}
-site-nav .here{color:var(--ink);border:1px solid var(--ink);padding:5px 11px}
+site-nav .brand{color:var(--ink);letter-spacing:.28em}
+/* Every link wears the box the current page wears, empty until it is the
+   current one: the targets are the same size, and nothing shifts. */
+site-nav .links{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+site-nav .links a{border:1px solid transparent;padding:5px 11px}
+site-nav .links a.here{color:var(--ink);border-color:var(--ink)}
 
 /* -- <site-footer>: hairline, copyright, the legal link ---------------------- */
 
@@ -165,11 +168,11 @@ site-footer .foot{
   display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
   border-top:1px solid var(--line);
   padding:20px 0 56px;
-  font-family:var(--mono);font-size:10px;letter-spacing:.18em;
-  color:var(--ink-45);
+  font-family:var(--mono);font-size:11px;letter-spacing:.18em;
+  color:var(--ink-70);
 }
 site-footer .foot-nav{display:flex;gap:22px}
-site-footer a{text-decoration:none;color:var(--ink-45)}
+site-footer a{text-decoration:none;color:var(--ink-70)}
 site-footer a:hover{color:var(--ink)}
 
 /* -- Blog: baked static pages — shared here so every entry stays style-free -- */
@@ -187,7 +190,7 @@ site-footer a:hover{color:var(--ink)}
   color:var(--ink-70);text-decoration:none;
 }
 .blog-head .back:hover{color:var(--ink)}
-.blog-head .date{font-family:var(--mono);font-size:12px;letter-spacing:.08em;color:var(--ink-45)}
+.blog-head .date{font-family:var(--mono);font-size:12px;letter-spacing:.08em;color:var(--ink-70)}
 .blog-head h1{font-size:26px;font-weight:600;letter-spacing:-.01em}
 .blog-head .date+h1{margin-top:10px}
 .blog-head p{margin-top:8px;color:var(--ink-70);font-size:15px;max-width:68ch}
@@ -215,7 +218,7 @@ site-footer a:hover{color:var(--ink)}
 .entry-nav>*{flex:1}
 .entry-nav a{text-decoration:none}
 .entry-nav .newer{text-align:right}
-.entry-nav .lbl{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.25em;color:var(--ink-45)}
+.entry-nav .lbl{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.25em;color:var(--ink-70)}
 .entry-nav .t{display:block;font-size:14px;font-weight:600;margin-top:6px}
 .entry-nav a:hover .lbl{color:var(--ink)}
 .entry-nav a:hover .t{text-decoration:underline}
@@ -228,7 +231,7 @@ site-footer a:hover{color:var(--ink)}
 
 .entries{padding-top:32px;padding-bottom:52px}
 .entry-row{display:block;padding:16px 0;border-bottom:1px solid var(--ink-14);text-decoration:none}
-.entry-row .date{font-family:var(--mono);font-size:12px;letter-spacing:.08em;color:var(--ink-45)}
+.entry-row .date{font-family:var(--mono);font-size:12px;letter-spacing:.08em;color:var(--ink-70)}
 .entry-row .t{display:block;font-size:17px;font-weight:600;margin-top:4px}
 .entry-row .sub{display:block;font-size:14px;color:var(--ink-70);margin-top:2px}
 .entry-row:hover .t{text-decoration:underline}
@@ -239,6 +242,12 @@ site-footer a:hover{color:var(--ink)}
 @media (max-width:720px){
   body{padding:0 18px}
   section{padding:44px 0}
+  /* A phone is held in one hand and tapped with a thumb: every way off
+     the page gets 44px of height. */
+  site-nav .links{gap:0}
+  site-nav .links a{padding:13px 7px}
+  site-footer .foot-nav{flex-wrap:wrap;gap:0 18px}
+  site-footer .foot-nav a{display:inline-block;padding:13px 0}
 }
 
 @media (prefers-reduced-motion:reduce){
