@@ -234,30 +234,14 @@
 
 .apps{margin-top:18px;display:flex;flex-wrap:wrap;gap:8px}
 
-/* A private project is a button, not a link: clicking opens the dialog. */
-.project-private{
-  width:100%;text-align:left;font:inherit;line-height:inherit;
-  background:none;color:inherit;cursor:pointer;
-}
+/* A card that links out says so, the way the GitHub link above does. The
+   arrow is decoration for screen readers: the empty alt keeps it silent. */
+a.project .project-name::after{content:' \2197';content:' \2197' / ''}
 
-/* -- The dialog: one thin box, mid-page ------------------------------------- */
-
-dialog{
-  margin:auto;   /* the global reset removed the UA centering — restore it */
-  border:1px solid var(--line);background:var(--paper);color:var(--ink);
-  padding:30px 34px;max-width:400px;
-}
-dialog::backdrop{background:rgba(18,18,17,.45)}
-dialog p{font-size:15px;color:var(--ink-70)}
-dialog form{margin-top:22px}
-
-.dialog-close{
-  font-family:var(--mono);font-size:10px;letter-spacing:.2em;
-  border:1px solid var(--ink);background:none;color:var(--ink);
-  padding:8px 16px;cursor:pointer;
-  transition:background .15s ease,color .15s ease;
-}
-.dialog-close:hover{background:var(--ink);color:var(--paper)}
+/* A private project is neither a link nor a button: there is nothing to
+   open yet, and its text says so. No hover swap, which would promise a
+   click. */
+.project-private:hover{background:none;color:inherit}
 
 /* -- Principles: two open columns, no boxes ---------------------------------- */
 
@@ -450,7 +434,7 @@ dialog form{margin-top:22px}
       </div>
     </a>
 
-    <button class="project project-private" id="aftermatch-card" type="button">
+    <div class="project project-private" id="aftermatch-card">
       <div class="project-head">
         <span class="project-name">After Match</span>
         <span class="chip">IN DEVELOPMENT</span>
@@ -463,9 +447,9 @@ dialog form{margin-top:22px}
       <div class="apps">
         <span class="chip">UNITY</span><span class="chip">FISHNET</span><span class="chip">DEDICATED SERVER</span>
       </div>
-    </button>
+    </div>
 
-    <button class="project project-private" id="voxcade-card" type="button">
+    <div class="project project-private" id="voxcade-card">
       <div class="project-head">
         <span class="project-name">Voxcade</span>
         <span class="chip">IN DEVELOPMENT</span>
@@ -481,18 +465,13 @@ dialog form{margin-top:22px}
       <div class="apps">
         <span class="chip">RUST</span><span class="chip">LUA</span><span class="chip">MCP</span><span class="chip">AGENT-FRIENDLY</span>
       </div>
-    </button>
+    </div>
 
     <!-- One card per project. Cards link out only to repositories a visitor
-         can open today; private work gets a card that says so when clicked.
+         can open today; private work gets a card that says so, and no click.
          The SHIPPING chip is for things you can download right now. -->
 
   </section>
-
-  <dialog id="private-dialog">
-    <p>Private repository &mdash; more public information coming soon.</p>
-    <form method="dialog"><button class="dialog-close">CLOSE</button></form>
-  </dialog>
 
   <section>
     <h2 class="tab">HOW I WORK</h2>
@@ -568,17 +547,6 @@ dialog form{margin-top:22px}
    Fixed 1ch cells, so nothing moves but the glyphs. */
 (function(){
   'use strict';
-
-  /* The private-project cards open the dialog; backdrop click closes it.
-     Wired before the reduced-motion gate: the dialog is not motion. */
-  var cards = document.querySelectorAll('.project-private');
-  var dlg = document.getElementById('private-dialog');
-  if (cards.length && dlg && dlg.showModal){
-    Array.prototype.forEach.call(cards, function(card){
-      card.addEventListener('click', function(){ dlg.showModal(); });
-    });
-    dlg.addEventListener('click', function(e){ if (e.target === dlg) dlg.close(); });
-  }
 
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
