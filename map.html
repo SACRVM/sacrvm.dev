@@ -21,7 +21,7 @@
 <script src="assets/site.js" defer></script>
 <style>
 /* ============================================================================
-   The map. Twenty-three public repositories as one constellation: 1px boxes
+   The map. Twenty-four public repositories as one constellation: 1px boxes
    scattered off-grid, straight lines flying box to box. Solid lines are
    code dependencies (arrow points at the thing being used), dashed lines
    are runtime relations. Lines may cross — that is the weather up here.
@@ -142,7 +142,7 @@ dialog form{margin-top:24px}
   <header class="map-head">
     <h1>The map</h1>
     <p>
-      Twenty-three public repositories on <a href="https://github.com/SACRVM">github.com/SACRVM</a>,
+      Twenty-four public repositories on <a href="https://github.com/SACRVM">github.com/SACRVM</a>,
       and who uses whom. Lines fly direct, the loners float free &mdash; and
       the site you are reading sits this one out. Click a box for the dense
       version and the links.
@@ -154,7 +154,7 @@ dialog form{margin-top:24px}
   </header>
 
   <section>
-    <h2 class="tab">23 PUBLIC REPOSITORIES</h2>
+    <h2 class="tab">24 PUBLIC REPOSITORIES</h2>
 
     <div class="board-scroll">
       <svg class="board" id="board" viewBox="-10 0 1086 860" role="group"
@@ -186,6 +186,7 @@ dialog form{margin-top:24px}
         <li><a href="https://github.com/SACRVM/grok-mcp">grok-mcp</a></li>
         <li><a href="https://github.com/SACRVM/admin-discord-mcp-bot">admin-discord-mcp-bot</a></li>
         <li><a href="https://github.com/SACRVM/claude-code-statusline">claude-code-statusline</a></li>
+        <li><a href="https://github.com/SACRVM/rams-design-for-use">rams-design-for-use</a></li>
       </ul>
     </noscript>
 
@@ -304,7 +305,11 @@ dialog form{margin-top:24px}
 
     { id:'claude-code-statusline', x:925, y:805, lang:'SHELL',
       blurb:'A status line for Claude Code showing real usage straight from Anthropic’s rate-limit numbers — no self-invented limits, no token guessing. Project, branch, model, context bar, 5-hour and 7-day budgets with reset countdowns. One shell script, Catppuccin Mocha, no jq.',
-      links:[['SOURCE', GH+'claude-code-statusline']] }
+      links:[['SOURCE', GH+'claude-code-statusline']] },
+
+    { id:'rams-design-for-use', x:420, y:815, lang:'MARKDOWN',
+      blurb:'Dieter Rams’ design philosophy applied to how software is used — apps, tools and games alike, through every channel people operate them with: mouse, keyboard, controller, pen, touch, voice. A Claude Code plugin with one skill and one idea at its core: you design for other people, never for yourself or the AI. A way of thinking, not a rulebook — no fixed values, a short workflow and a review format, applied together with the person in front of the screen. CC BY 4.0.',
+      links:[['SOURCE', GH+'rams-design-for-use']] }
   ];
 
   /* kind 'uses' = code dependency (vendored kit/ or component, NuGet reference),

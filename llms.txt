@@ -38,6 +38,12 @@ nothing from third-party servers. GitHub account: https://github.com/SACRVM.
   by words and by meaning with a local multilingual model. An MCP server
   with 40 tools and scoped API keys; agent writes wait for review, secrets
   never reach an agent. .NET 10, vanilla JS on SACRVM APPKIT, AGPL-3.0.
+- [rams-design-for-use](https://github.com/SACRVM/rams-design-for-use):
+  Dieter Rams' design philosophy applied to how software is used: a Claude
+  Code plugin. You design for other people, never for yourself or the AI.
+  One skill for apps, tools and games, through every channel people use
+  (mouse, keyboard, controller, pen, touch, voice); a way of thinking with a
+  short workflow and a review format, not a rulebook. CC BY 4.0.
 - After Match: a multiplayer social world built in Unity — custom avatar base,
   server-authoritative netcode, self-updating dedicated server. In
   development; repository currently private.
