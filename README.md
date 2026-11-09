@@ -7,8 +7,12 @@ requests**: the fonts are served from this host (`assets/fonts/`), nothing is
 loaded from third-party servers, no cookies are set — the legal page says so
 out loud, and the browser's network tab proves it.
 
-Two colours and nothing else — celadon paper `#A1C9C8`, near-black ink
-`#121211`; every grey is the ink at reduced opacity, every hover swaps the two.
+Two colours and one signal — celadon paper `#A1C9C8`, near-black ink
+`#121211`, and a red-orange `#E4572E` spent only where it tells people
+something: the element the keyboard is on, and at most one main action per
+page. Like the yellow equals key on Braun's ET 66, it is scarce on purpose.
+Every grey is the ink at reduced opacity (text never below 70 %), every hover
+swaps the two.
 Thin 1px boxes, zero border-radius anywhere. Type: Martian Mono for the
 wordmark and labels, Instrument Sans for prose.
 
@@ -78,7 +82,16 @@ Deployment after that is `git push`.
   project. The `SHIPPING` chip is for things a visitor can actually download
   today — everything else gets no chip rather than an optimistic one.
 - Do not list a repository that is still private. A card that 404s is worse than
-  no card.
+  no card. Private work gets a plain `<div class="project project-private">`:
+  no link, no button.
+- The signal (`--signal`) marks focus, and at most one main action per page
+  (`<a class="cta">`). Never use it for labels, headings or decoration; it
+  always keeps its ink edge, because against the paper it is only 2.1:1.
+- Text colour is `--ink` or `--ink-70`. `--ink-45` reads 2.65:1 and is for
+  rules and underlines only.
+- The navigation is written twice on purpose: in `assets/site.js` and as the
+  no-JS markup inside every page's `<site-nav>` (and in `tools/bake-blog.py`).
+  Change a link in all of them.
 
 ## Open
 
