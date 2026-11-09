@@ -9,7 +9,10 @@
 
   /* <site-nav page="home|blog|cv|imprint"> — the top navigation. Brand on
      the left, the site's pages on the right, the one you are on marked.
-     Root-absolute hrefs: blog pages live a directory deep. */
+     Root-absolute hrefs: blog pages live a directory deep. Every page also
+     carries this exact markup inside its <site-nav>, so the way around
+     works without JavaScript: change a link here, change it there too
+     (the pages and tools/bake-blog.py). */
   class SiteNav extends HTMLElement{
     connectedCallback(){
       var page = this.getAttribute('page') || '';
