@@ -234,9 +234,9 @@
 
 .apps{margin-top:18px;display:flex;flex-wrap:wrap;gap:8px}
 
-/* A card that links out says so, the way the GitHub link above does. The
-   arrow is decoration for screen readers: the empty alt keeps it silent. */
-a.project .project-name::after{content:' \2197';content:' \2197' / ''}
+/* A card leaves the site in a new tab: the arrow sits on the name, not
+   after the chips, and a screen reader hears that a tab will open. */
+a.project .project-name::after{content:'\00a0\2197';content:'\00a0\2197' / ', opens in a new tab'}
 
 /* A private project is neither a link nor a button: there is nothing to
    open yet, and its text says so. No hover swap, which would promise a
@@ -294,7 +294,7 @@ a.project .project-name::after{content:' \2197';content:' \2197' / ''}
       </div>
       <div class="meta-row">
         <span class="meta-key">GITHUB</span>
-        <a href="https://github.com/SACRVM">github.com/SACRVM ↗</a>
+        <a href="https://github.com/SACRVM" target="_blank" rel="noopener">github.com/SACRVM</a>
       </div>
       <div class="meta-row">
         <span class="meta-key">STACK</span>
@@ -310,7 +310,7 @@ a.project .project-name::after{content:' \2197';content:' \2197' / ''}
   <section>
     <h2 class="tab">WHAT I BUILD</h2>
 
-    <a class="project" href="https://just.sacrvm.dev/">
+    <a class="project" href="https://just.sacrvm.dev/" target="_blank" rel="noopener">
       <div class="project-head">
         <span class="project-name">J.U.S.T. — Just Useful Sound Tools</span>
         <span class="chip">SHIPPING</span>
@@ -326,7 +326,7 @@ a.project .project-name::after{content:' \2197';content:' \2197' / ''}
       </div>
     </a>
 
-    <a class="project" href="https://github.com/SACRVM/sacrvm-appkit">
+    <a class="project" href="https://github.com/SACRVM/sacrvm-appkit" target="_blank" rel="noopener">
       <div class="project-head">
         <span class="project-name">SACRVM APPKIT</span>
         <span class="chip">SHIPPING</span>
@@ -344,7 +344,7 @@ a.project .project-name::after{content:' \2197';content:' \2197' / ''}
       </div>
     </a>
 
-    <a class="project" href="https://github.com/SACRVM/retro-crt">
+    <a class="project" href="https://github.com/SACRVM/retro-crt" target="_blank" rel="noopener">
       <div class="project-head">
         <span class="project-name">Retro.Crt</span>
         <span class="chip">SHIPPING</span>
@@ -361,7 +361,7 @@ a.project .project-name::after{content:' \2197';content:' \2197' / ''}
       </div>
     </a>
 
-    <a class="project" href="https://github.com/SACRVM/husky">
+    <a class="project" href="https://github.com/SACRVM/husky" target="_blank" rel="noopener">
       <div class="project-head">
         <span class="project-name">Husky</span>
         <span class="chip">SHIPPING</span>
@@ -378,7 +378,7 @@ a.project .project-name::after{content:' \2197';content:' \2197' / ''}
       </div>
     </a>
 
-    <a class="project" href="https://github.com/SACRVM/firepit-ai">
+    <a class="project" href="https://github.com/SACRVM/firepit-ai" target="_blank" rel="noopener">
       <div class="project-head">
         <span class="project-name">Firepit</span>
         <span class="chip">SHIPPING</span>
@@ -397,7 +397,7 @@ a.project .project-name::after{content:' \2197';content:' \2197' / ''}
       </div>
     </a>
 
-    <a class="project" href="https://github.com/SACRVM/the-fishbowl">
+    <a class="project" href="https://github.com/SACRVM/the-fishbowl" target="_blank" rel="noopener">
       <div class="project-head">
         <span class="project-name">The Fishbowl</span>
         <span class="chip">SHIPPING</span>
@@ -415,7 +415,7 @@ a.project .project-name::after{content:' \2197';content:' \2197' / ''}
       </div>
     </a>
 
-    <a class="project" href="https://github.com/SACRVM/rams-design-for-use">
+    <a class="project" href="https://github.com/SACRVM/rams-design-for-use" target="_blank" rel="noopener">
       <div class="project-head">
         <span class="project-name">rams-design-for-use</span>
         <span class="chip">SHIPPING</span>

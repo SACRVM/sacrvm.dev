@@ -87,6 +87,9 @@ Deployment after that is `git push`.
 - The signal (`--signal`) marks focus, and at most one main action per page
   (`<a class="cta">`). Never use it for labels, headings or decoration; it
   always keeps its ink edge, because against the paper it is only 2.1:1.
+- A link that leaves sacrvm.dev gets `target="_blank" rel="noopener"`
+  (the blog baker adds it to markdown links by itself). Never type the ↗:
+  `assets/site.css` draws it, with "opens in a new tab" for screen readers.
 - Text colour is `--ink` or `--ink-70`. `--ink-45` reads 2.65:1 and is for
   rules and underlines only.
 - The navigation is written twice on purpose: in `assets/site.js` and as the

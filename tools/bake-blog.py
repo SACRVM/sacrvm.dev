@@ -34,6 +34,15 @@ SITE = "https://sacrvm.dev"
 
 # --- markdown ---------------------------------------------------------------
 
+def link(m) -> str:
+    """A markdown link; one that leaves sacrvm.dev opens a new tab (the
+    site's CSS adds the arrow and the words for screen readers)."""
+    text, href = m[1], m[2]
+    leaves = re.match(r"https?://", href) and not re.match(r"https?://(www\.)?sacrvm\.dev(/|$)", href)
+    extra = ' target="_blank" rel="noopener"' if leaves else ''
+    return f'<a href="{href}"{extra}>{text}</a>'
+
+
 def inline(s: str) -> str:
     s = html.escape(s, quote=False)
     parts = re.split(r"(`[^`]+`)", s)          # protect code spans
@@ -41,7 +50,7 @@ def inline(s: str) -> str:
         if p.startswith("`") and p.endswith("`"):
             parts[i] = "<code>" + p[1:-1] + "</code>"
         else:
-            p = re.sub(r"\[([^\]]+)\]\(([^)\s]+)\)", r'<a href="\2">\1</a>', p)
+            p = re.sub(r"\[([^\]]+)\]\(([^)\s]+)\)", link, p)
             p = re.sub(r"\*\*([^*]+)\*\*", r"<strong>\1</strong>", p)
             p = re.sub(r"\*([^*]+)\*", r"<em>\1</em>", p)
             parts[i] = p

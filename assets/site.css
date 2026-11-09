@@ -127,6 +127,12 @@ a{color:inherit}
 .cta .addr{letter-spacing:.04em;margin-left:.6em}
 .cta:hover{background:var(--ink);color:var(--paper)}
 
+/* A link that leaves the site opens a new tab, and says so: the arrow for
+   the eye, the words for a screen reader, because a new tab takes the Back
+   button away. Typed arrows would drift; this is the only one. */
+a[target="_blank"]::after{content:'\00a0\2197';content:'\00a0\2197' / ', opens in a new tab'}
+a.project[target="_blank"]::after{content:none}
+
 .page{max-width:var(--maxw);margin:0 auto}
 
 /* -- Sections: a hairline, and the label as a tab sitting on it -------------- */
