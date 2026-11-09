@@ -106,10 +106,12 @@ a{color:inherit}
 
 /* Focus is the signal. A keyboard user scanning a page full of thin ink
    boxes needs the one they are on to be the one with colour; the ink
-   outline stays, so it holds without colour vision too. */
+   outline stays, so it holds without colour vision too. !important on
+   purpose: buttons that set background:none (dialog close, the map's
+   relation links) must not silence it. */
 :focus-visible{
   outline:2px solid var(--ink);outline-offset:3px;
-  background-color:var(--signal);color:var(--ink);
+  background-color:var(--signal) !important;color:var(--ink) !important;
 }
 
 /* The one main action of a page, at most one per page: the signal again,
