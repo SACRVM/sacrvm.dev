@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Voxcade 0.4.2 — insert coin — SACRVM</title>
+<meta name="description" content="The voxel arcade engine is out: five games, a launcher, an IDE with Claude Code in it and play across the internet, for Windows and Linux, free under the zlib licence, with its source open on GitHub.">
+<link rel="canonical" href="https://sacrvm.dev/blog/2026-11-10-voxcade-0-4-2.html">
+<meta property="og:site_name" content="SACRVM">
+<meta property="og:title" content="Voxcade 0.4.2 — insert coin — SACRVM">
+<meta property="og:description" content="The voxel arcade engine is out: five games, a launcher, an IDE with Claude Code in it and play across the internet, for Windows and Linux, free under the zlib licence, with its source open on GitHub.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://sacrvm.dev/blog/2026-11-10-voxcade-0-4-2.html">
+<meta property="og:image" content="https://sacrvm.dev/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="article:published_time" content="2026-11-10">
+<link rel="alternate" type="application/atom+xml" title="SACRVM — Blog" href="/blog/feed.xml">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="stylesheet" href="/assets/site.css">
+<script src="/assets/site.js" defer></script>
+</head>
+<body>
+
+<div class="page">
+
+  <site-nav page="blog"><nav class="bar"><a class="brand" href="/">SACRVM.DEV</a><div class="links"><a href="/">HOME</a><a href="/map.html">MAP</a><a href="/blog/" class="here" aria-current="page">BLOG</a><a href="/cv.html">CV</a><a href="/imprint.html">IMPRINT</a></div></nav></site-nav>
+
+  <header class="blog-head">
+    <a class="back" href="/blog/">&larr; BLOG</a>
+    <div class="date">2026-11-10</div>
+    <h1>Voxcade 0.4.2 — insert coin</h1>
+  </header>
+
+  <article class="prose">
+<p>Twelve days ago I wrote that Voxcade was a prototype in a private repository and that there was nothing to download yet. Today there is. Voxcade 0.4.2 is out for Windows and Linux, it is free under the zlib licence, and the <a href="https://github.com/SACRVM/voxcade" target="_blank" rel="noopener">source is on GitHub</a>. The downloads, how to install and a quick start live on its own site, <a href="https://voxca.de/" target="_blank" rel="noopener">voxca.de</a>.</p>
+<h2>What you get</h2>
+<p>One folder. Nothing to install: unpack it and start Voxcade.</p>
+<ul><li><strong>The launcher.</strong> It lists the games. PLAY starts one, EDIT opens it in the IDE, and NEW GAME begins one of your own from a template: a jump &amp; run, a shooter, or empty.</li><li><strong>Five games</strong>, each a folder of Lua and voxels, each in another genre: More Blood, a desert run'n'gun; Voxkeep, a jump &amp; run in a castle at night; Sokovox, Sokoban with David W. Skinner's 155 Microban puzzles; Pulsar, a space shooter whose waves come on the song's bars, for two; and BunnyFarm, a farming game with a whole farm year, in German, English and French.</li><li><strong>The IDE.</strong> The code with the API's names offered as you type, the game playing right beside it, its errors pointing at the line. Scenarios that start a run anywhere, editors for voxel models and for levels of blocks, HELP with the API by example, BUILD to pack a game for passing on — and a console with Claude Code in it, one conversation per game, seeing the IDE over MCP.</li><li><strong>Playing together.</strong> Up to four at one screen, as at an arcade machine. On the home network, or across the internet by a code of six signs, like <code>DX67A3</code>: send it in the chat, no ports to open, and friends can join a game already running.</li><li><strong>New versions by themselves.</strong> The launcher says when one is there, and UPDATE NOW fetches it, checks its checksum and puts it in place. Your games, settings and saves stay.</li></ul>
+<h2>Free, and open</h2>
+<p>Voxcade is under the zlib licence, the one <a href="https://love2d.org/" target="_blank" rel="noopener">LÖVE</a> has, and LÖVE showed the way for more than the licence. Use it for nothing, make games with it, give them away or sell them: a game you make with Voxcade is yours. The five games and the templates come under the same terms, to learn from and to build on.</p>
+<p>The engine, the games, the IDE and the tools are all in the <a href="https://github.com/SACRVM/voxcade" target="_blank" rel="noopener">repository</a>. Pull requests are welcome; <code>CONTRIBUTING.md</code> says what to check first. A bug report helps most with a replay attached: F9 keeps the run you just played, and since every run plays the same way every time, the replay <em>is</em> the bug.</p>
+<h2>The part that finds the other players</h2>
+<p>Playing across the internet needed something in the middle: a place where a host opens a room and gets its code, where guests find the room by that code, and a relay for the machines whose routers will not let them reach each other. That is <a href="https://github.com/SACRVM/matchmaker" target="_blank" rel="noopener">matchmaker</a>, a program of its own and public too. It has no accounts and no database — a room lives exactly as long as its host stays connected — and it can run under <a href="https://github.com/SACRVM/husky" target="_blank" rel="noopener">Husky</a>, which keeps it up and installs its new releases. It was made for Voxcade and is meant for any peer-to-peer game, in any engine: over iroh, or over a WebSocket from a browser, Unity, Godot or anything else.</p>
+<h2>Still built for agents</h2>
+<p>Nothing from the <a href="/blog/2026-10-29-voxcade.html">first post</a> went away on the way to a release. Everything in a game is text, the simulation is deterministic down to the bit, and every game keeps scenarios that begin a run late. So the command line can play a game without a window and show what happened:</p>
+<pre><code>voxcade shot games/voxkeep --frames 120 --input "right:60;right+jump:20" --out x.png
+voxcade inspect games/sokovox --frames 300 --input "up:20;left:40"
+voxcade check games/bunnyfarm</code></pre>
+<p>A picture, the game's state as JSON, every replay checked against how it was recorded. <code>voxcade mcp</code> hands the same to an agent as tools. That is how a game is tested here, and how an agent sees what it built.</p>
+<h2>Good to know</h2>
+<ul><li><strong>Windows</strong> may warn that it protected your PC: the program is not signed yet. <em>More info</em>, then <em>Run anyway</em>.</li><li><strong>Linux</strong> needs Vulkan drivers and a current system: Ubuntu 24.04, Linux Mint 22, Fedora 40, Debian 13 or later.</li><li><strong>macOS</strong> is not part of this release; it builds from source.</li><li><strong>Version 0.4</strong> means what it says: early, and in use. The Lua API may still change before 1.0.</li></ul>
+<p>What comes next: ready-made rules for more genres — RPGs, adventures, strategy, racing — and a game jam mode, up to four people typing in the same files of one IDE while an agent builds what the group agreed on.</p>
+<p>Voxcade is free and stays free. If it is useful to you, there is <a href="https://github.com/sponsors/SACRVM" target="_blank" rel="noopener">GitHub Sponsors</a> — but making a game with it and showing it helps more than anything.</p>
+<p><a href="https://voxca.de/" target="_blank" rel="noopener">Download it at voxca.de</a>.</p>
+<p><em>Insert coin.</em></p>
+  </article>
+
+  <nav class="entry-nav">
+    <a rel="prev" href="/blog/2026-11-09-you-are-not-the-user.html"><span class="lbl">&larr; OLDER</span><span class="t">rams-design-for-use — teaching an AI that it is not the user</span></a>
+    <a class="index" href="/blog/">&larr; BLOG</a>
+    <span></span>
+  </nav>
+
+  <site-footer page="blog"><a href="/">Home</a></site-footer>
+
+</div>
+
+</body>
+</html>
