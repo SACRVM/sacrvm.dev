@@ -21,7 +21,7 @@
 <script src="assets/site.js" defer></script>
 <style>
 /* ============================================================================
-   The map. Twenty-four public repositories as one constellation: 1px boxes
+   The map. Twenty-seven public repositories as one constellation: 1px boxes
    scattered off-grid, straight lines flying box to box. Solid lines are
    code dependencies (arrow points at the thing being used), dashed lines
    are runtime relations. Lines may cross — that is the weather up here.
@@ -161,7 +161,7 @@ dialog form{margin-top:24px}
   <header class="map-head">
     <h1>The map</h1>
     <p>
-      Twenty-four public repositories on <a href="https://github.com/SACRVM" target="_blank" rel="noopener">github.com/SACRVM</a>,
+      Twenty-seven public repositories on <a href="https://github.com/SACRVM" target="_blank" rel="noopener">github.com/SACRVM</a>,
       and who uses whom. Lines fly direct, the loners float free &mdash; and
       the site you are reading sits this one out. Click a box (on a phone,
       a name) for the dense version and the links.
@@ -173,10 +173,10 @@ dialog form{margin-top:24px}
   </header>
 
   <section>
-    <h2 class="tab">24 PUBLIC REPOSITORIES</h2>
+    <h2 class="tab">27 PUBLIC REPOSITORIES</h2>
 
     <div class="board-scroll">
-      <svg class="board" id="board" viewBox="-10 0 1086 860" role="group"
+      <svg class="board" id="board" viewBox="-10 0 1086 950" role="group"
            aria-label="Dependency map of all public SACRVM repositories"></svg>
     </div>
 
@@ -208,6 +208,9 @@ dialog form{margin-top:24px}
         <li><a href="https://github.com/SACRVM/admin-discord-mcp-bot" target="_blank" rel="noopener">admin-discord-mcp-bot</a></li>
         <li><a href="https://github.com/SACRVM/claude-code-statusline" target="_blank" rel="noopener">claude-code-statusline</a></li>
         <li><a href="https://github.com/SACRVM/rams-design-for-use" target="_blank" rel="noopener">rams-design-for-use</a></li>
+        <li><a href="https://github.com/SACRVM/voxcade" target="_blank" rel="noopener">voxcade</a></li>
+        <li><a href="https://github.com/SACRVM/matchmaker" target="_blank" rel="noopener">matchmaker</a></li>
+        <li><a href="https://github.com/SACRVM/voxca.de" target="_blank" rel="noopener">voxca.de</a></li>
       </ul>
     </noscript>
 
@@ -320,7 +323,7 @@ dialog form{margin-top:24px}
       blurb:'A local MCP server wrapping the xAI Grok API, so Claude Code has a second opinion on call: chat with sessions, a fast non-reasoning lane, a multi-agent mode for the hard problems — plus image generation, editing, vision and video. One background process, many parallel clients, loopback-only.',
       links:[['SOURCE', GH+'grok-mcp'],['RELEASES', GH+'grok-mcp/releases']] },
 
-    { id:'admin-discord-mcp-bot', x:165, y:810, lang:'C#',
+    { id:'admin-discord-mcp-bot', x:560, y:895, lang:'C#',
       blurb:'Full Discord guild administration for AI agents, over the REST API only: 62 tools across channels, roles, members, events, webhooks, emojis. Multi-tenant — the bot token arrives per request — and every write is dryRun by default: the agent proposes, you confirm. Self-hosted, no gateway socket, no presence.',
       links:[['SOURCE', GH+'admin-discord-mcp-bot'],['RELEASES', GH+'admin-discord-mcp-bot/releases']] },
 
@@ -330,11 +333,23 @@ dialog form{margin-top:24px}
 
     { id:'rams-design-for-use', x:420, y:815, lang:'MARKDOWN',
       blurb:'Dieter Rams’ design philosophy applied to how software is used — apps, tools and games alike, through every channel people operate them with: mouse, keyboard, controller, pen, touch, voice. A Claude Code plugin with one skill and one idea at its core: you design for other people, never for yourself or the AI. A way of thinking, not a rulebook — no fixed values, a short workflow and a review format, applied together with the person in front of the screen. CC BY 4.0.',
-      links:[['SOURCE', GH+'rams-design-for-use']] }
+      links:[['SOURCE', GH+'rams-design-for-use']] },
+
+    { id:'voxcade', x:55, y:890, lang:'RUST',
+      blurb:'A voxel arcade engine in Rust: every classic 2D genre in little cubes that blow apart, across a world that fills the screen. A game is a folder of Lua in a deterministic sandbox, so replays, headless shots and checks work for every one — for people, and for agents over MCP or the IDE’s own Claude Code console. Five games, a launcher, the IDE, play across the internet. Version 0.4.2 for Windows and Linux; network games find each other through the matchmaker. zlib.',
+      links:[['SOURCE', GH+'voxcade'],['VOXCA.DE','https://voxca.de/'],['RELEASES', GH+'voxcade/releases']] },
+
+    { id:'matchmaker', x:60, y:770, lang:'RUST',
+      blurb:'Game codes and a relay for peer-to-peer games, in one program: a host opens a room and gets a code of six signs, guests find it by that code, and machines that cannot reach each other talk through iroh’s relay. No accounts, no database — a room lives as long as its host stays connected. Made for Voxcade, meant for any engine, over iroh or a WebSocket. Runs under the Husky launcher. MIT.',
+      links:[['SOURCE', GH+'matchmaker'],['RELEASES', GH+'matchmaker/releases']] },
+
+    { id:'voxca.de', x:175, y:905, lang:'HTML',
+      blurb:'The website of Voxcade: the downloads, how to install, a quick start to a first game of your own, and a post for every release, in English and German. Plain static HTML on GitHub Pages, baked from one template per page and one file of words per language. No cookies, no tracking, nothing loaded from other servers.',
+      links:[['SOURCE', GH+'voxca.de'],['LIVE','https://voxca.de/']] }
   ];
 
-  /* kind 'uses' = code dependency (vendored kit/ or component, NuGet reference),
-     kind 'run'  = runtime relation (installs on the desktop; HTTP redirect). */
+  /* kind 'uses' = code dependency (vendored kit/ or component, NuGet reference, Cargo crate),
+     kind 'run'  = runtime relation (installs on the desktop; runs under Husky). */
   var EDGES = [
     { from:'sacrvm-desktop',      to:'sacrvm-appkit', kind:'uses' },
     { from:'sacrvm-calculator',   to:'sacrvm-appkit', kind:'uses' },
@@ -357,6 +372,8 @@ dialog form{margin-top:24px}
     { from:'husky',               to:'retro-crt',     kind:'uses' },
     { from:'the-fishbowl',        to:'husky',         kind:'run' },
     { from:'the-fishbowl',        to:'retro-crt',     kind:'uses' },
+    { from:'voxcade',             to:'matchmaker',    kind:'uses' },
+    { from:'matchmaker',          to:'husky',         kind:'run' },
     { from:'sacrvm-calculator',   to:'sacrvm-desktop', kind:'run' },
     { from:'sacrvm-notes',        to:'sacrvm-desktop', kind:'run' },
     { from:'color-bucket',        to:'sacrvm-desktop', kind:'run' },
@@ -374,7 +391,7 @@ dialog form{margin-top:24px}
   /* The board's own coordinates, and the margin a drifting box has to keep
      to them. Nothing masks the edge — a box that wanders past the viewBox
      is simply outside the picture and gets sheared off. */
-  var VB_X = -10, VB_Y = 0, VB_W = 1086, VB_H = 860, RIM = 4;
+  var VB_X = -10, VB_Y = 0, VB_W = 1086, VB_H = 950, RIM = 4;
 
   /* The clock starts at a random point, so no two loads look alike. */
   var drift = { t: Math.random() * 100, frozen: false, hovered: null };
