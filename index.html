@@ -137,9 +137,15 @@
           "@type": "ListItem",
           "position": 8,
           "item": {
-            "@type": "VideoGame",
-            "name": "After Match",
-            "description": "A multiplayer social world built in Unity: custom avatar base, server-authoritative netcode, self-updating dedicated server. In development; repository currently private.",
+            "@type": "SoftwareApplication",
+            "name": "Voxcade",
+            "url": "https://voxca.de/",
+            "description": "A voxel arcade engine in Rust: every classic 2D genre rebuilt in destructible voxels across a full-screen world. Five games, a launcher, an IDE with Claude Code built in, and play across the internet by a six-sign code. Games are Lua in a deterministic sandbox, so an agent can see, replay and check a game without playing it. Version 0.4.2, free under the zlib licence, source on GitHub.",
+            "applicationCategory": "GameApplication",
+            "operatingSystem": "Windows, Linux",
+            "softwareVersion": "0.4.2",
+            "license": "https://opensource.org/license/zlib",
+            "codeRepository": "https://github.com/SACRVM/voxcade",
             "author": { "@id": "https://sacrvm.dev/#person" }
           }
         },
@@ -147,11 +153,9 @@
           "@type": "ListItem",
           "position": 9,
           "item": {
-            "@type": "SoftwareApplication",
-            "name": "Voxcade",
-            "description": "A voxel arcade engine in Rust: classic 2D genres rebuilt in destructible voxels across a full-screen world. Built for AI agents: games are Lua in a deterministic sandbox, so an agent can see, replay and check a game without playing it, through an MCP server or the IDE's built-in Claude Code console. In development; repository currently private.",
-            "applicationCategory": "GameApplication",
-            "operatingSystem": "Linux, Windows, macOS",
+            "@type": "VideoGame",
+            "name": "After Match",
+            "description": "A multiplayer social world built in Unity: custom avatar base, server-authoritative netcode, self-updating dedicated server. In development; repository currently private.",
             "author": { "@id": "https://sacrvm.dev/#person" }
           }
         }
@@ -433,6 +437,24 @@ a.project .project-name::after{content:'\00a0\2197';content:'\00a0\2197' / ', op
       </div>
     </a>
 
+    <a class="project" href="https://voxca.de/" target="_blank" rel="noopener" id="voxcade-card">
+      <div class="project-head">
+        <span class="project-name">Voxcade</span>
+        <span class="chip">SHIPPING</span>
+      </div>
+      <p>
+        A voxel arcade engine: the classic 2D genres rebuilt in little cubes
+        that blow apart, across a world that fills the whole screen. Five
+        games, a launcher, an IDE with Claude Code in it, and play across the
+        internet by a code of six signs. Games are plain Lua, deterministic
+        down to the bit, so an agent can see, replay and check a game without
+        playing it. Version 0.4.2 for Windows and Linux, free under zlib.
+      </p>
+      <div class="apps">
+        <span class="chip">RUST</span><span class="chip">LUA</span><span class="chip">MCP</span><span class="chip">ZLIB</span>
+      </div>
+    </a>
+
     <div class="project project-private" id="aftermatch-card">
       <div class="project-head">
         <span class="project-name">After Match</span>
@@ -445,24 +467,6 @@ a.project .project-name::after{content:'\00a0\2197';content:'\00a0\2197' / ', op
       </p>
       <div class="apps">
         <span class="chip">UNITY</span><span class="chip">FISHNET</span><span class="chip">DEDICATED SERVER</span>
-      </div>
-    </div>
-
-    <div class="project project-private" id="voxcade-card">
-      <div class="project-head">
-        <span class="project-name">Voxcade</span>
-        <span class="chip">IN DEVELOPMENT</span>
-      </div>
-      <p>
-        A voxel arcade engine: the classic 2D genres rebuilt in little cubes
-        that blow apart, across a world that fills the whole screen. Built
-        for agents from the first commit: games are plain Lua, deterministic
-        down to the bit, so an agent can see, replay and check a game
-        without playing it &mdash; over MCP, or from the IDE's own Claude
-        Code console. The repository stays private while it grows.
-      </p>
-      <div class="apps">
-        <span class="chip">RUST</span><span class="chip">LUA</span><span class="chip">MCP</span><span class="chip">AGENT-FRIENDLY</span>
       </div>
     </div>
 

@@ -44,16 +44,19 @@ nothing from third-party servers. GitHub account: https://github.com/SACRVM.
   One skill for apps, tools and games, through every channel people use
   (mouse, keyboard, controller, pen, touch, voice); a way of thinking with a
   short workflow and a review format, not a rulebook. CC BY 4.0.
+- [Voxcade](https://voxca.de/): a voxel arcade engine in Rust (wgpu, SDL3) —
+  every classic 2D genre rebuilt in destructible voxels across a full-screen
+  world. Version 0.4.2 for Windows and Linux: five games, a launcher, an IDE
+  with Claude Code built in, play at one screen and across the internet by a
+  six-sign code (through [matchmaker](https://github.com/SACRVM/matchmaker)).
+  Built for AI agents: everything in a game is text, the Lua API documents
+  itself, and the simulation is deterministic, so an agent can see a game
+  (headless screenshots, state as JSON), replay it and check it without
+  playing it, also over an MCP server. Free under the zlib licence; source
+  at https://github.com/SACRVM/voxcade.
 - After Match: a multiplayer social world built in Unity — custom avatar base,
   server-authoritative netcode, self-updating dedicated server. In
   development; repository currently private.
-- Voxcade: a voxel arcade engine in Rust (wgpu, SDL3) — classic 2D genres
-  rebuilt in destructible voxels across a full-screen world. Built for AI
-  agents: everything in a game is text, the Lua API documents itself, and
-  the simulation is deterministic, so an agent can see a game (headless
-  screenshots, state as JSON), replay it and check it without playing it.
-  An MCP server, and an IDE with Claude Code built in. In development;
-  repository currently private.
 
 ## Pages
 
